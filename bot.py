@@ -53,14 +53,14 @@ def welcome(m):
     cid = m.chat.id
     markup = types.InlineKeyboardMarkup()
     b = types.InlineKeyboardButton("Help",callback_data='help')
-    c = types.InlineKeyboardButton("About",callback_data='amir')
+    c = types.InlineKeyboardButton("About",callback_data='pouria')
     markup.add(b,c)
     nn = types.InlineKeyboardButton("Inline Mode", switch_inline_query='')
-    oo = types.InlineKeyboardButton("Channel", url='https://telegram.me/offlineteam')
+    oo = types.InlineKeyboardButton("Channel", url='https://telegram.me/CyberTM')
     markup.add(nn,oo)
     id = m.from_user.id
     redis.sadd('memberspy',id)
-    bot.send_message(cid, "Hi \n\n Welcome To TweenRoBOT \n\n Please Choose One :)", disable_notification=True, reply_markup=markup)
+    bot.send_message(cid, "Hi \n\n Welcome To CyberBot \n\n Please Choose One :)", disable_notification=True, reply_markup=markup)
 
 #################################################################################################################################################################################################
 
@@ -68,10 +68,10 @@ def welcome(m):
 def callback_inline(call):
      if call.message:
         if call.data == "help":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Coming Soon :D")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Coming Soon!")
      if call.message:
-        if call.data == "amir":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="TweenRoBOT Created By @This_Is_Amir And Written In Python")
+        if call.data == "pouria":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @ThisIsPouria And Written In Python")
      if call.message:
         if call.data == "sticker":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
@@ -103,7 +103,7 @@ def callback_inline(call):
 
 @bot.message_handler(commands=['stats'])
 def send_stats(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         ban = str(redis.scard('banlist'))
         usrs = str(redis.scard('memberspy'))
         gps = str(redis.scard('chats'))
@@ -115,20 +115,20 @@ def send_stats(m):
 
 @bot.message_handler(commands=['ban'])
 def kick(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         ids = m.text.split()[1]
         redis.sadd('banlist',int(ids))
-        bot.send_message(int(ids), '<code>you Are Banned :(</code>',parse_mode='HTML')
+        bot.send_message(int(ids), '<code>you Are Banned!</code>',parse_mode='HTML')
         bot.send_message(m.chat.id, 'Banned :D')
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['unban'])
 def send_stats(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         ids = m.text.split()[1]
         redis.srem('banlist',int(ids))
-        bot.send_message(int(ids), '<code>you Are UnBanned :)</code>',parse_mode='HTML')
+        bot.send_message(int(ids), '<code>you Are UnBanned!</code>',parse_mode='HTML')
         bot.send_message(m.chat.id, 'UnBanned :D')
 
 #################################################################################################################################################################################################
@@ -139,15 +139,15 @@ def qr(message):
     if str(banlist) == 'False':
         text = message.text.replace("/webshot ","")
         urllib.urlretrieve("http://api.screenshotmachine.com/?key=b645b8&size=X&url={}".format(text), 'webshot.jpg')
-        bot.send_photo(message.chat.id, open('webshot.jpg'), caption=" @OffLiNeTeam")
+        bot.send_photo(message.chat.id, open('webshot.jpg'), caption=" @CyberTM")
 
 #################################################################################################################################################################################################
 
-#@bot.message_handler(commands=['echo'])
+@bot.message_handler(commands=['echo'])
 def tts(message):
     markup = types.ForceReply(selective=False)
     print message.text
-    bot.send_message(message.chat.id,'send me words to echo:', reply_markup=markup)
+    bot.send_message(message.chat.id,'Send Me Words To Echo:', reply_markup=markup)
 
 #################################################################################################################################################################################################
 
@@ -163,17 +163,17 @@ def qr(message):
     if str(banlist) == 'False':
         text = m.text.replace("/qr ","")
         urllib.urlretrieve("https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={}".format(text), 'qr.jpg')
-        bot.send_photo(message.chat.id, open('qr.jpg'), caption=" @OffLiNeTeam")
+        bot.send_photo(message.chat.id, open('qr.jpg'), caption=" @CyberTM")
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['vc'])
+@bot.message_handler(commands=['voice'])
 def qr(message):
     banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-        text = message.text.replace("/vc ","")
-        urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}".format(text), '@offlineteam.ogg')
-        bot.send_document(message.chat.id, open('@offlineteam.ogg'), caption=" @OffLiNeTeam")
+        text = message.text.replace("/voice ","")
+        urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}".format(text), '@CyberTM.ogg')
+        bot.send_document(message.chat.id, open('@CyberTM.ogg'), caption=" @CyberTM")
 
 #################################################################################################################################################################################################
 
@@ -192,19 +192,19 @@ def hi(m):
     name = m.new_chat_member.first_name
     title = m.chat.title
     id = m.new_chat_member.id
-    if id == 206992491:
+    if id == 175636120:
         redis.sadd('chats',ids)
         bot.send_message(m.chat.id, 'Hi :D Please Start Me In Pravite', parse_mode='Markdown')
     else:
-        bot.send_message(m.chat.id, '_hi_ `{}` _Welcome To_ `{}`'.format(name,title), parse_mode='Markdown')
+        bot.send_message(m.chat.id, '_Hi_ `{}` _Welcome To_ `{}`'.format(name,title), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['cleanban'])
 def kick(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         redis.delete('banlist')
-        bot.send_message(m.chat.id, '<code>Cleaned :(</code>',parse_mode='HTML')
+        bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
 
 
 
@@ -213,13 +213,13 @@ def kick(m):
 @bot.message_handler(content_types=['left_chat_member'])
 def hi(m):
     name = m.left_chat_member.first_name
-    bot.send_message(m.chat.id, '_Bye_ `{}`'.format(name), parse_mode='Markdown')
+    bot.send_message(m.chat.id, '_GoodBye_ `{}`'.format(name), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['kick'])
 def kick(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         text = m.text.split()[1]
         bot.kick_chat_member(m.chat.id, text)
         bot.send_message(m.chat.id, '`User` *{}* `has been kicked`'.format(text), parse_mode='Markdown')
@@ -269,7 +269,7 @@ def answer(m):
 
 @bot.message_handler(commands=['leave'])
 def leavehandler(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         bot.leave_chat(m.chat.id)
 
 #################################################################################################################################################################################################
@@ -327,7 +327,7 @@ def music(m):
         urllib.urlretrieve("{}".format(image), "song.png")
         bot.send_message(m.chat.id, "*Artist* : ```{}``` \n *Name* : ```{}```".format(Artist,name), parse_mode="Markdown")
         bot.send_sticker(m.chat.id, open('song.png'))
-        bot.send_document(m.chat.id, open('song.ogg'), caption=" @OffLiNeTeam")
+        bot.send_document(m.chat.id, open('song.ogg'), caption=" @CyberTM")
 
 #################################################################################################################################################################################################
 
@@ -579,11 +579,11 @@ def sport(message):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['cal'])
+@bot.message_handler(commands=['calc'])
 def clac(m):
     banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False': 
-        text = m.text.replace("/cal ","")
+        text = m.text.replace("/calc ","")
         res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text)).read()
         bot.send_message(m.chat.id, "_{}_ = `{}`".format(text,res), parse_mode="Markdown", disable_web_page_preview=True)
 
@@ -594,29 +594,29 @@ def send(m):
     user = m.from_user.username
     Msg = "Send Msg : "
     masg = m.text
-    bot.send_message(223404066 , "TestMsg")
+    bot.send_message(175636120 , "TestMsg")
     print(user + Msg + masg )
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['c'])
+@bot.message_handler(commands=['feedback'])
 def feedback(m):    
     senderid = m.chat.id
     first = m.from_user.first_name
     usr = m.from_user.username
     str = m.text
-    txt = str.replace('/c', '')
+    txt = str.replace('/feedback', '')
     bot.send_message(senderid, "_Thank Your Msg Posted admin_", parse_mode="Markdown")
-    bot.send_message(223404066, "msg : {}\nid : {}\nname : {}\nUsername : @{}".format(txt,senderid,first,usr))
+    bot.send_message(175636120, "msg : {}\nid : {}\nname : {}\nUsername : @{}".format(txt,senderid,first,usr))
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['j'])
+@bot.message_handler(commands=['answer'])
 def j(m):
     sudo = config
     tmt = m.from_user.id
     idA, cid = m.chat.id, m.chat.id
     if str(tmt) not in config.is_sudo:
-        bot.send_message(cid, "`SikTir`", parse_mode="Markdown")
+        bot.send_message(cid, "`You Are Not Sudo!`", parse_mode="Markdown")
         return
     to_id = m.text.split()[1]
     txt = m.text.split()[2:]
@@ -649,7 +649,7 @@ def any_msg(message):
         callback_button = types.InlineKeyboardButton(text="Callback", callback_data="test")
         switch_button = types.InlineKeyboardButton(text="Switch", switch_inline_query="Telegram")
         keyboard.add(url_button, callback_button, switch_button)
-        bot.send_message(message.chat.id, "Please Choose One :D", reply_markup=keyboard)
+        bot.send_message(message.chat.id, "Please Choose One!", reply_markup=keyboard)
 
 #################################################################################################################################################################################################
 
@@ -664,7 +664,7 @@ def time(m):
 
 @bot.message_handler(commands=['ch'])
 def time(m):
-    amir = m.text.replace("/send ","")
+    pouria = m.text.replace("/send ","")
     bot.send_message(-1001052290909, "{}".format(amir), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
@@ -688,7 +688,7 @@ def send_message(m):
     groupname = m.chat.title
     groupid = m.chat.id
     redis.sadd('group','{}'.format(m.chat.id))
-    bot.send_message(-133494595, "#new_chat \n\n name : {} id : {}".format(groupname,groupid), parse_mode="Markdown")
+    bot.send_message(-1070099034, "New_chat \n\n name : {} id : {}".format(groupname,groupid), parse_mode="Markdown")
     bot.send_message(m.chat.id, "Hi all")
 
 #################################################################################################################################################################################################
@@ -757,7 +757,7 @@ def info(m):
 
 @bot.message_handler(commands=['setlink'])
 def clac(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         text = m.text.replace("/setlink ","")
         redis.hset("gp:link","{}".format(m.chat.id),"link: {}".format(text))
         bot.send_message(m.chat.id, "`This Link Seted` {}".format(text), parse_mode="Markdown")
@@ -777,14 +777,14 @@ def send_welcome(message):
     button = types.KeyboardButton(text='Share Location',request_location=True)
     button2 = types.KeyboardButton(text='Share Number',request_contact=True)
     markup.add(button, button2)
-    bot.send_message(message.chat.id, 'Please Chose One :', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Please Chose One!', reply_markup=markup)
 
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['setrank'])
 def clac(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         text = m.text.split()[1]
         tezt = m.text.split()[2]
         redis.hset("user:rank","{}".format(text),"{}".format(tezt))
@@ -803,7 +803,7 @@ def clac(m):
 
 @bot.message_handler(commands=['bc'])
 def clac(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         text = m.text.replace("/bc ","")
         rd = redis.smembers('memberspy')
         for id in rd:
@@ -816,10 +816,10 @@ def clac(m):
 
 @bot.message_handler(commands=['delrank'])
 def kick(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         id = m.text.replace("/delrank ","")
         rank = redis.hdel("user:rank","{}".format(id))
-        bot.send_message(m.chat.id, '<code>Cleaned :(</code>',parse_mode='HTML')
+        bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
 
 #################################################################################################################################################################################################
 
@@ -842,7 +842,7 @@ def music(m):
     link3 = parsed_json['response'][3]['link']
     link4 = parsed_json['response'][4]['link']
     link5 = parsed_json['response'][5]['link']
-    bot.send_message(m.chat.id, "*Title* : `{}` \n\n [Link]({}) \n\n *Title* : `{}` \n\n [Link]({}) ".format(Artist,link,Artist1,link1), parse_mode="Markdown")
+    bot.send_message(m.chat.id, "*Title* : `{}` \n\n [Download]({}) \n\n *Title* : `{}` \n\n [Download]({}) ".format(Artist,link,Artist1,link1), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -857,7 +857,7 @@ def tostick(message):
           file_id = message.reply_to_message.sticker.file_id
           id = message.from_user.id
           redis.hset('stickers',id,file_id)
-          bot.send_message(message.chat.id, '<code>Seted :)</code>',parse_mode='HTML')
+          bot.send_message(message.chat.id, '<code>Sticker Has Been Set!</code>',parse_mode='HTML')
 
 #################################################################################################################################################################################################
 
@@ -906,7 +906,7 @@ def welcome(m):
     else:
       cid = m.chat.id
       usr = m.from_user.first_name
-      bot.send_message(cid, "You'r Not Sudo User :D\n\n Just Suck IT {}".format(usr))
+      bot.send_message(cid, "You Are Not Sudo Mr.{}".format(usr))
 
 #################################################################################################################################################################################################
 
@@ -929,10 +929,10 @@ def tostick(message):
 
 @bot.message_handler(commands=['sethelp'])
 def clac(m):
-    if m.from_user.id ==  223404066:
+    if m.from_user.id ==  175636120:
         text = m.text.replace("/sethelp","")
         redis.set("help","{}".format(text))
-        bot.send_message(m.chat.id, "`Seted` {}".format(text), parse_mode="Markdown")
+        bot.send_message(m.chat.id, "`New Help Has Been Set!` {}".format(text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -978,7 +978,7 @@ def ip(m):
 @bot.message_handler(commands=['sind'])
 def welcome(m):
     rrr = m.from_user.id
-    if rrr == 223404066:
+    if rrr == 175636120:
       cid = m.chat.id
       eee = m.text.split()[1]
       photo = open(eee, 'rb')
@@ -986,7 +986,7 @@ def welcome(m):
     else:
       cid = m.chat.id
       usr = m.from_user.first_name
-      bot.send_message(cid, "You'r Not Sudo User :D\n\n Just Suck IT {}".format(usr))
+      bot.send_message(cid, "You Are Not Sudo Mr.{}".format(usr))
 
 #################################################################################################################################################################################################
 
@@ -1001,7 +1001,7 @@ def welcome(m):
     member = bot.get_chat_members_count(cid)
     user = bot.get_chat_member(m.chat.id, cid)
     if m.chat.type == 'group':
-      bot.send_message(m.chat.id, "`Gp Name` : *{}* \n `Gp ID` : *{}* \n `Gp Type` : *{}* \n `Admin` : *{}* \n `Member` : *{}* \n `Users` : *{}*".format(name,cid,type,admin,member,user), parse_mode='Markdown')
+      bot.send_message(m.chat.id, "`Group Name` : *{}* \n `Group ID` : *{}* \n `Group Type` : *{}* \n `Admin` : *{}* \n `Member` : *{}* \n `Users` : *{}*".format(name,cid,type,admin,member,user), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
@@ -1022,13 +1022,13 @@ def clac(m):
 @bot.message_handler(commands=['fwd'])
 def feed_back(message):
 	markup = types.InlineKeyboardMarkup()
-	b = types.InlineKeyboardButton("Cancel🚫",callback_data='cancel')
+	b = types.InlineKeyboardButton("Cancel!",callback_data='cancel')
 	msg = bot.send_message(message.chat.id, "Send Me Your Message Or Fwd Some Things", reply_markup=markup)
 	bot.register_next_step_handler(msg, process_pm)
 	
 def process_pm(message):
 	text = message.text
-	bot.forward_message(223404066, message.from_user.id, message_id=message.message_id)
+	bot.forward_message(175636120, message.from_user.id, message_id=message.message_id)
 
 #################################################################################################################################################################################################
 
@@ -1042,18 +1042,3 @@ def ss(m):
 #################################################################################################################################################################################################
 bot.polling(True)
 #end
-
-#  ___   __  __ _       _   _     _____                                                                                              
-# / _ \ / _|/ _| |   (_) \ | | __|_   _|__  __ _ _ __ ___                                                                            
-#| | | | |_| |_| |   | |  \| |/ _ \| |/ _ \/ _  |  _   _ \                                                                           
-#| |_| |  _|  _| |___| | |\  |  __/| |  __/ (_| | | | | | |                                                                          
- #\___/|_| |_| |_____|_|_| \_|\___||_|\___|\__,_|_| |_| |_|                                                                                                 
-#Bot WrittedBy @This_Is_Amir
-#MIT License (MIT)
-#Special Tnx To @Negative
-
-
-
-
-
-
