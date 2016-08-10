@@ -1018,6 +1018,48 @@ def clac(m):
     bot.send_contact(m.chat.id, phone_number="{}".format(number), first_name="{}".format(m.from_user.first_name))
 
 #################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def image(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'image.jpg')
+    bot.send_photo(message.chat.id, open('image.jpg'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def video(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'video.mp4')
+    bot.send_photo(message.chat.id, open('video.mp4'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def file(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'file.zip')
+    bot.send_photo(message.chat.id, open('file.zip'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def music(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'music.mp3')
+    bot.send_photo(message.chat.id, open('music.mp3'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def picture(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'picture.png')
+    bot.send_photo(message.chat.id, open('picture.png'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def sticker(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'sticker.webp')
+    bot.send_photo(message.chat.id, open('sticker.webp'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
 
 @bot.message_handler(commands=['fwd'])
 def feed_back(message):
