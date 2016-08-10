@@ -5,8 +5,8 @@ Set `Bot Token` And `Admin Id` And `Realm Id` In `Config.py`
 ```sh
 # Let's install the bot.
 cd $HOME
-git clone https://github.com/ThisIsAmir/TweenRoBot.git
-cd TweenRoBot
+git clone https://github.com/PouriaDev/python-telegram-bot.git
+cd python-telegram-bot
 chmod +x launch.sh
 ./launch.sh install
 
@@ -17,8 +17,8 @@ If You Have Any Eror Use This Command
 
 # Source Creator
 
-[ThisISAmir](https://telegram.me/This_is_amir)
+[ThisIsPouria](https://telegram.me/ThisIsPouria)
 
 # Telegram channel :
 
-[OFFLINETEAM](https://telegram.me/offlineteam)
+[CyberTeam](https://telegram.me/CyberTM)
