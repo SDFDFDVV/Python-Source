@@ -1060,6 +1060,13 @@ def sticker(m):
     bot.send_photo(message.chat.id, open('sticker.webp'), caption="@CyberTM")
     
 #################################################################################################################################################################################################
+@bot.message_handler(commands=['download'])
+def apk(m):
+    text = message.text.split()[1]
+    urllib.urlretrieve('{}'.format(text), 'apk.apk')
+    bot.send_photo(message.chat.id, open('apk.apk'), caption="@CyberTM")
+    
+#################################################################################################################################################################################################
 
 @bot.message_handler(commands=['fwd'])
 def feed_back(message):
