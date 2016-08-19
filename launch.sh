@@ -22,8 +22,8 @@ elif [ "$1" = "install" ]; then
   sudo pip install telebot
   sudo pip install logging
   sudo apt-get install python2.7
-  git clone https://github.com/ThisIsAmir/TweenRoBot.git
-  cd TweenRoBot
+  git clone https://github.com/PouriaDev/python-telegram-bot.git
+  cd python-telegram-bot
 
 
 elif [ "$1" = "fix" ]; then
@@ -32,7 +32,7 @@ elif [ "$1" = "fix" ]; then
   git clone https://github.com/eternnoir/pyTelegramBotAPI.git
   cd pyTelegramBotAPI
   sudo python setup.py install
-  pip install pytelegrambotapi --upgrade
+  sudo pip install pytelegrambotapi --upgrade
   cd $HOME
   cd python-telegram-bot
 
