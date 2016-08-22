@@ -383,30 +383,6 @@ def query_text(query):
     joke = types.InlineQueryResultArticle('4', 'Joke', types.InputTextMessageContent('{}'.format(last)),thumb_url='http://uupload.ir/files/sfxc_download.jpg')
     
     
-    
-    url = req.get('http://exchange.nalbandan.com/api.php?action=json')
-    data = url.json()
-    date = data['dollar']['date']
-    dollar = data['dollar']['persian']
-    dollar1 = data['dollar']['value']
-    dollar_rasmi = data['dollar_rasmi']['persian']
-    dollar_rasmi1 = data['dollar_rasmi']['value']
-    euro = data['euro']['persian']
-    euro1 = data['euro']['value']
-    gold_per_geram = data['gold_per_geram']['persian']
-    gold_per_geram1 = data['gold_per_geram']['value']
-    coin_new = data['coin_new']['persian']
-    coin_new1 = data['coin_new']['value']
-    pond = data['pond']['persian']
-    pond1 = data['pond']['value']
-    derham = data['coin_old']['persian']
-    derham1 = data['coin_old']['value']
-    coin_old = data['coin_old']['persian']
-    coin_old1 = data['coin_old']['value']
-    time_tmp = 'http://uupload.ir/files/66yl_download_(2).png'
-    dollar = types.InlineQueryResultArticle('3', 'Dollar', types.InputTextMessageContent("قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode='Markdown'), thumb_url=time_tmp)    
-    
-    
     url = req.get('http://api.gpmod.ir/time/')
     data = url.json()
     FAdate = data['FAdate']
@@ -419,10 +395,6 @@ def query_text(query):
 
 #################################################################################################################################################################################################
 
-
-# -*- coding: utf-8 -*-
-
-from config import *
 
 @bot.inline_handler(lambda query: len(query.query.split()) == 1)
 @bot.inline_handler(lambda query: len(query.query.split()) == 2)
