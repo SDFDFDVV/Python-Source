@@ -1,32 +1,15 @@
-# -*- coding: utf-8 -*-
 import telebot
-import logging
-import json
-import os
-import redis as redis
-import config
-import random
-import requests as req
-import arrow
-import commands
-import urllib2
-import urllib
-import requests
-import telebot
-import ConfigParser
-from telebot import types
+import re
+from urllib import urlretrieve as dw
 import sys
+import os
+#import color
 reload(sys)
 sys.setdefaultencoding("utf-8")
-redis = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
-bot = telebot.TeleBot(config.token)
 
-f = "\n \033[01;30m Bot Firstname: {} \033[0m".format(bot.get_me().first_name)
-u = "\n\n \033[01;34m Bot username: {} \033[0m".format(bot.get_me().username)
-i = "\n\n \033[01;32m Bot ID: {} \033[0m".format(bot.get_me().id)
-c = "\n\n \033[01;31m Thank You Dady :)  I`m Fully Online Now :D \033[0m"
-print(f + u + i + c)
-bot.send_message(config.is_sudo,"`Im` *Online* `With All The` *Power*", parse_mode='markdown')
+bot = telebot.TeleBot('240545787:AAES2RUFXo25Xj8jibytoD2Vm0w0IR8q0Ag')
+admin = 175636120
+botusername = '@Cyber_KingDom_Bot'
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['shorten'])
