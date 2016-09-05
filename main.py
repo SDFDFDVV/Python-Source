@@ -7,7 +7,6 @@ import sys
 import json
 import os
 import random
-import wikipedia
 import base64
 import urllib
 import urllib2
@@ -546,21 +545,6 @@ def feedback(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['answer'])
-def j(m):
-    tmt = m.from_user.id
-    idA, cid = m.chat.id, m.chat.id
-    if str(tmt) not 142141024:
-        bot.send_message(cid, "`You Are Not Sudo!`", parse_mode="Markdown")
-        return
-    to_id = m.text.split()[1]
-    txt = m.text.split()[2:]
-    text = ' '.join(txt)
-    from_id = m.from_user.username
-    bot.send_message(to_id, "{} Answer : \n ```{}```".format(from_id,text), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['uptime'])
 def uptime(m):
     if m.from_user.id == config.is_sudo:
@@ -955,44 +939,6 @@ def feed_back(message):
 def process_pm(message):
 	text = message.text
 	bot.forward_message(175636120, message.from_user.id, message_id=message.message_id)
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['bold'])
-def bold(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text1 = m.text.replace('/bold', '')
-bot.send_message(m.chat.id, '<b>{}</b>'.format(text1), parse_mode="HTML")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['italic'])
-def italic(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.replace('/italic', '')
-bot.send_message(m.chat.id, '<i>{}</i>'.format(text), parse_mode="HTML")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['code'])
-def code(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.replace('/code', '')
-bot.send_message(m.chat.id, '<code>{}</code>'.format(text), parse_mode="HTML")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(regexp='^(/love) (.*) (.*)')
-def sticker(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-    	text = m.text.split()[1]
-    	textx = m.text.split()[2]
-        r = req.get("http://www.iloveheartstudio.com/-/p.php?t={}".format(text)"%20%EE%BB%AE%20{}".format(textx)"&bc=000000&tc=FFFFFF&hc=ff0000&f=c&uc=true&ts=true&ff=PNG&w=500&ps=sq","sticker.png")
-        bot.send_sticker(m.chat.id, open('sticker.png'))
         
 #################################################################################################################################################################################################
 
