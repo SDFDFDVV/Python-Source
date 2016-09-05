@@ -974,6 +974,7 @@ def italic(m):
         text = m.text.replace('/italic', '')
 bot.send_message(m.chat.id, '<i>{}</i>'.format(text), parse_mode="HTML")
 
+#################################################################################################################################################################################################
 
 @bot.message_handler(commands=['code'])
 def code(m):
@@ -981,6 +982,18 @@ def code(m):
     if str(banlist) == 'False':
         text = m.text.replace('/code', '')
 bot.send_message(m.chat.id, '<code>{}</code>'.format(text), parse_mode="HTML")
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(regexp='^(/love) (.*) (.*)')
+def sticker(m):
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+    if str(banlist) == 'False':
+    	text = m.text.split()[1]
+    	textx = m.text.split()[2]
+        r = req.get("http://www.iloveheartstudio.com/-/p.php?t={}".format(text)"%20%EE%BB%AE%20{}".format(textx)"&bc=000000&tc=FFFFFF&hc=ff0000&f=c&uc=true&ts=true&ff=PNG&w=500&ps=sq","sticker.png")
+        bot.send_sticker(m.chat.id, open('sticker.png'))
+        
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['cmd'])
