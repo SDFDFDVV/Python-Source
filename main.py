@@ -530,7 +530,7 @@ def send(m):
     user = m.from_user.username
     Msg = "Send Msg : "
     masg = m.text
-    bot.send_message(175636120 , "TestMsg")
+    bot.send_message(142141024 , "TestMsg")
     print(user + Msg + masg )
 #################################################################################################################################################################################################
 
@@ -542,7 +542,7 @@ def feedback(m):
     str = m.text
     txt = str.replace('/feedback', '')
     bot.send_message(senderid, "_Thank Your Msg Posted admin_", parse_mode="Markdown")
-    bot.send_message(175636120, "msg : {}\nid : {}\nname : {}\nUsername : @{}".format(txt,senderid,first,usr))
+    bot.send_message(142141024, "msg : {}\nid : {}\nname : {}\nUsername : @{}".format(txt,senderid,first,usr))
 
 #################################################################################################################################################################################################
 
@@ -550,7 +550,7 @@ def feedback(m):
 def j(m):
     tmt = m.from_user.id
     idA, cid = m.chat.id, m.chat.id
-    if str(tmt) not is_sudo:
+    if str(tmt) not 142141024:
         bot.send_message(cid, "`You Are Not Sudo!`", parse_mode="Markdown")
         return
     to_id = m.text.split()[1]
