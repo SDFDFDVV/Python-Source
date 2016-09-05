@@ -27,7 +27,7 @@ def send_pic(m):
     if str(banlist) == 'False':
         text = m.text.replace("/shorten ","")
         res = urllib.urlopen("http://yeo.ir/api.php?url={}".format(text)).read()
-        bot.send_message(m.chat.id, "`Your Short Link :` [Link]({})".format(res), parse_mode="Markdown", disable_web_page_preview=True)
+        bot.send_message(m.chat.id, "*Your Short Link :* {}".format(res), parse_mode="Markdown", disable_web_page_preview=True)
 
 #################################################################################################################################################################################################
 
@@ -60,7 +60,7 @@ def welcome(m):
 def callback_inline(call):
      if call.message:
         if call.data == "help":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Coming Soon!")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="List of Commands :\n/start\nStart The Robot\n\n/shorten [URL]\nLink Shortener\n\n/pic\nGet Random Picture\n\n/webshot [URL]\nGet Screenshot from URL\n\n/echo\nEcho the Word\n\n/qr [Text]\nGet Qr Code\n\n/voice [Text]\nConvert Text to Voice\n\n/tex [Text]\nGet Picture from text\n\n/kickme\nExit from Group\n\n/id\nGet Your ID\n\n/me\nGet Your Information\n\n/imdb [Movie Name]\n\nGet Information about a movie\n\n/ip [Site address]\nGet Site ip\n\n/food\nGet Picture of food\n\n/arz\nGet arz news\n\n/mean [Text]\nMeaning Words\n\n/sport\nGet Sport Picture\n\n/calc [formulas]\nDo math formulas\n\n/feedback [Text]\nSend Message to admin\n\n/sticker\nConvert photo to sticker\n\n/photo\nConvert sticker to photo\n\n/info\nGet Your Information\n\n/rank\nSee Yout rank\n\n/music [Music name]\nSearch music\n\n/setsticker\nSet Your Sticker\n\n/cap [Text]\nWrite Text Under Photo\n\n/about\nShow Group Information\n\n/setphone [Phone number]\nSet Your Phone number in the bot\n\n/myphone\nShow Your Phone number\n\n/download [URL.format]\nDownload something for You")
      if call.message:
         if call.data == "pouria":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
@@ -556,7 +556,7 @@ def uptime(m):
 @bot.message_handler(commands=['md'])
 def time(m):
         pouria = m.text.replace("/md ","")
-        bot.send_message(m.chat.id, "{}".format(amir), parse_mode="Markdown")
+        bot.send_message(m.chat.id, "{}".format(pouria), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -565,14 +565,14 @@ def time(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         pouria = m.text.replace("/echo ","")
-        bot.send_message(m.chat.id, "{}".format(amir), parse_mode="Markdown")
+        bot.send_message(m.chat.id, "{}".format(pouria), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['ch'])
 def time(m):
     pouria = m.text.replace("/send ","")
-    bot.send_message(-1001052290909, "{}".format(amir), parse_mode="Markdown")
+    bot.send_message(-1001052290909, "{}".format(pouria), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -890,21 +890,21 @@ def image(m):
 def video(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'video.mp4')
-    bot.send_photo(message.chat.id, open('video.mp4'), caption="@CyberTM")
+    bot.send_video(message.chat.id, open('video.mp4'), caption="@CyberTM")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def file(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'file.zip')
-    bot.send_photo(message.chat.id, open('file.zip'), caption="@CyberTM")
+    bot.send_document(message.chat.id, open('file.zip'), caption="@CyberTM")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def music(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'music.mp3')
-    bot.send_photo(message.chat.id, open('music.mp3'), caption="@CyberTM")
+    bot.send_document(message.chat.id, open('music.mp3'), caption="@CyberTM")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
@@ -918,14 +918,14 @@ def picture(m):
 def sticker(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'sticker.webp')
-    bot.send_photo(message.chat.id, open('sticker.webp'), caption="@CyberTM")
+    bot.send_sticker(message.chat.id, open('sticker.webp'), caption="@CyberTM")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def apk(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'apk.apk')
-    bot.send_photo(message.chat.id, open('apk.apk'), caption="@CyberTM")
+    bot.send_document(message.chat.id, open('apk.apk'), caption="@CyberTM")
     
 #################################################################################################################################################################################################
 
@@ -938,7 +938,7 @@ def feed_back(message):
 	
 def process_pm(message):
 	text = message.text
-	bot.forward_message(175636120, message.from_user.id, message_id=message.message_id)
+	bot.forward_message(142141024, message.from_user.id, message_id=message.message_id)
         
 #################################################################################################################################################################################################
 
