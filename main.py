@@ -60,7 +60,7 @@ def welcome(m):
 def callback_inline(call):
      if call.message:
         if call.data == "help":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="List of Commands :\n/start\nStart The Robot\n\n/shorten [URL]\nLink Shortener\n\n/pic\nGet Random Picture\n\n/webshot [URL]\nGet Screenshot from URL\n\n/echo\nEcho the Word\n\n/qr [Text]\nGet Qr Code\n\n/voice [Text]\nConvert Text to Voice\n\n/tex [Text]\nGet Picture from text\n\n/kickme\nExit from Group\n\n/id\nGet Your ID\n\n/me\nGet Your Information\n\n/imdb [Movie Name]\n\nGet Information about a movie\n\n/ip [Site address]\nGet Site ip\n\n/food\nGet Picture of food\n\n/arz\nGet arz news\n\n/mean [Text]\nMeaning Words\n\n/sport\nGet Sport Picture\n\n/calc [formulas]\nDo math formulas\n\n/feedback [Text]\nSend Message to admin\n\n/sticker\nConvert photo to sticker\n\n/photo\nConvert sticker to photo\n\n/info\nGet Your Information\n\n/rank\nSee Yout rank\n\n/music [Music name]\nSearch music\n\n/setsticker\nSet Your Sticker\n\n/cap [Text]\nWrite Text Under Photo\n\n/about\nShow Group Information\n\n/setphone [Phone number]\nSet Your Phone number in the bot\n\n/myphone\nShow Your Phone number\n\n/download [URL.format]\nDownload something for You")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Comming Soon...")
      if call.message:
         if call.data == "pouria":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
