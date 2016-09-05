@@ -477,34 +477,16 @@ def gif(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['mean'])
-def time(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+@bot.message_handler(regexp='^(/mean) (.*)')
+def mean(m):
+    banlist = rediss.sismember('banlist_arrow', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-        pouria = m.text.replace("/mean ","")
-        url = "http://api.vajehyab.com/v2/public/?q={}".format(amir)
-        response = urllib.urlopen(url)
-        data = response.read()
-        parsed_json = json.loads(data)
-        title = parsed_json['data']['title']
-        text = parsed_json['data']['text']
-        source = parsed_json['data']['source']
-        bot.send_message(m.chat.id, "*\xDA\xA9\xD9\x84\xD9\x85\xD9\x87* : ``` {} ``` \n *\xD9\x85\xD8\xB9\xD9\x86\xDB\x8C* :  ``` {} ``` \n *\xD9\x85\xD9\x86\xD8\xA8\xD8\xB9* : ``` {} ```".format(title,text,source), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['big'])
-def answer(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        x = m.text.replace("/big ","")
-        f=x.upper
-        bot.send_message(m.chat.id, f())
-
-#################################################################################################################################################################################################
-
-
-
+        text = m.text.split()[1]
+        r = req.get('http://api.vajehyab.com/v2/public/?q={}'.format(text))
+        json_data = r.json()
+        textx = json_data['data']['text']
+        bot.send_message(m.chat.id, textx)
+        
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['tr'])
@@ -591,18 +573,6 @@ def uptime(m):
 def time(m):
         pouria = m.text.replace("/md ","")
         bot.send_message(m.chat.id, "{}".format(amir), parse_mode="Markdown")
-		
-#################################################################################################################################################################################################
-@bot.message_handler(content_types=["keyboard"])
-def any_msg(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        keyboard = types.InlineKeyboardMarkup(row_width=2)
-        url_button = types.InlineKeyboardButton(text="URL", url="https://ya.ru")
-        callback_button = types.InlineKeyboardButton(text="Callback", callback_data="test")
-        switch_button = types.InlineKeyboardButton(text="Switch", switch_inline_query="Telegram")
-        keyboard.add(url_button, callback_button, switch_button)
-        bot.send_message(message.chat.id, "Please Choose One!", reply_markup=keyboard)
 
 #################################################################################################################################################################################################
 
@@ -710,7 +680,7 @@ def info(m):
 
 @bot.message_handler(commands=['setlink'])
 def clac(m):
-    if m.from_user.id ==  175636120:
+    if m.from_user.id == 142141024:
         text = m.text.replace("/setlink ","")
         rediss.hset("gp:link","{}".format(m.chat.id),"link: {}".format(text))
         bot.send_message(m.chat.id, "`This Link Seted` {}".format(text), parse_mode="Markdown")
@@ -721,17 +691,6 @@ def clac(m):
 def clac(m):
     link = rediss.hget("gp:link","{}".format(m.chat.id))
     bot.send_message(m.chat.id, "{}".format(link), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['tist'])
-def send_welcome(message):
-    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    button = types.KeyboardButton(text='Share Location',request_location=True)
-    button2 = types.KeyboardButton(text='Share Number',request_contact=True)
-    markup.add(button, button2)
-    bot.send_message(message.chat.id, 'Please Chose One!', reply_markup=markup)
-
 
 #################################################################################################################################################################################################
 
@@ -997,6 +956,31 @@ def process_pm(message):
 	text = message.text
 	bot.forward_message(175636120, message.from_user.id, message_id=message.message_id)
 
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['bold'])
+def bold(m):
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+    if str(banlist) == 'False':
+        text1 = m.text.replace('/bold', '')
+bot.send_message(m.chat.id, '<b>{}</b>'.format(text1), parse_mode="HTML")
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['italic'])
+def italic(m):
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+    if str(banlist) == 'False':
+        text = m.text.replace('/italic', '')
+bot.send_message(m.chat.id, '<i>{}</i>'.format(text), parse_mode="HTML")
+
+
+@bot.message_handler(commands=['code'])
+def code(m):
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+    if str(banlist) == 'False':
+        text = m.text.replace('/code', '')
+bot.send_message(m.chat.id, '<code>{}</code>'.format(text), parse_mode="HTML")
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['cmd'])
