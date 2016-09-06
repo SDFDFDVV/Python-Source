@@ -869,49 +869,49 @@ def clac(m):
 def image(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'image.jpg')
-    bot.send_photo(message.chat.id, open('image.jpg'), caption="@CyberCH")
+    bot.send_photo(m.chat.id, open('image.jpg'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def video(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'video.mp4')
-    bot.send_video(message.chat.id, open('video.mp4'), caption="@CyberCH")
+    bot.send_video(m.chat.id, open('video.mp4'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def file(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'file.zip')
-    bot.send_document(message.chat.id, open('file.zip'), caption="@CyberCH")
+    bot.send_document(m.chat.id, open('file.zip'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def music(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'music.mp3')
-    bot.send_document(message.chat.id, open('music.mp3'), caption="@CyberCH")
+    bot.send_document(m.chat.id, open('music.mp3'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def picture(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'picture.png')
-    bot.send_photo(message.chat.id, open('picture.png'), caption="@CyberCH")
+    bot.send_photo(m.chat.id, open('picture.png'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def sticker(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'sticker.webp')
-    bot.send_sticker(message.chat.id, open('sticker.webp'), caption="@CyberCH")
+    bot.send_sticker(m.chat.id, open('sticker.webp'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def apk(m):
     text = m.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'apk.apk')
-    bot.send_document(message.chat.id, open('apk.apk'), caption="@CyberCH")
+    bot.send_document(m.chat.id, open('apk.apk'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 
