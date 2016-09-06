@@ -100,7 +100,7 @@ def send_stats(m):
         usrs = str(rediss.scard('memberspy'))
         gps = str(rediss.scard('chats'))
         supergps = str(rediss.scard('supergroups'))
-        text = '`Users` : *{}* \n\n `Groups` : *{}* \n\n `BanList` : *{}*'.format(usrs,gps,supergps,ban)
+        text = '*Users* : *{}* \n\n*Groups* : *{}* \n\n*BanList* : *{}*'.format(usrs,gps,supergps,ban)
         bot.send_message(m.chat.id,text,parse_mode='Markdown')
 
 #################################################################################################################################################################################################
@@ -110,7 +110,7 @@ def kick(m):
     if m.from_user.id == 142141024:
         ids = m.text.split()[1]
         rediss.sadd('banlist',int(ids))
-        bot.send_message(int(ids), '<code>You Are Banned!</code>',parse_mode='HTML')
+        bot.send_message(int(ids), '<b>You Are Banned!</b>',parse_mode='HTML')
         bot.send_message(m.chat.id, 'Banned!')
 
 #################################################################################################################################################################################################
@@ -120,7 +120,7 @@ def send_stats(m):
     if m.from_user.id == 142141024:
         ids = m.text.split()[1]
         rediss.srem('banlist',int(ids))
-        bot.send_message(int(ids), '<code>You Are UnBanned!</code>',parse_mode='HTML')
+        bot.send_message(int(ids), '<b>You Are UnBanned!</b>',parse_mode='HTML')
         bot.send_message(m.chat.id, 'UnBanned!')
 
 #################################################################################################################################################################################################
@@ -132,14 +132,6 @@ def qr(message):
         text = message.text.replace("/webshot ","")
         urllib.urlretrieve("http://api.screenshotmachine.com/?key=b645b8&size=X&url={}".format(text), 'webshot.jpg')
         bot.send_photo(message.chat.id, open('webshot.jpg'), caption=" @CyberCH")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['echo'])
-def tts(message):
-    markup = types.ForceReply(selective=False)
-    print message.text
-    bot.send_message(message.chat.id,'Send Me Words To Echo:', reply_markup=markup)
 
 #################################################################################################################################################################################################
 
@@ -156,16 +148,6 @@ def qr(message):
         text = m.text.replace("/qr ","")
         urllib.urlretrieve("https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={}".format(text), 'qr.jpg')
         bot.send_photo(message.chat.id, open('qr.jpg'), caption=" @CyberCH")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['voice'])
-def qr(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = message.text.replace("/voice ","")
-        urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}".format(text), 'Cyber.ogg')
-        bot.send_audio(message.chat.id, open('Cyber.ogg'), caption=" @CyberCH")
 
 #################################################################################################################################################################################################
 
@@ -186,7 +168,7 @@ def hi(m):
     id = m.new_chat_member.id
     if id == 142141024:
         rediss.sadd('chats',ids)
-        bot.send_message(m.chat.id, 'Hi :D Please Start Me In Pravite', parse_mode='Markdown')
+        bot.send_message(m.chat.id, 'Hi!\nPlease Start Me In Pravite', parse_mode='Markdown')
     else:
         bot.send_message(m.chat.id, '*Hi* `{}` *Welcome To* `{}`'.format(name,title), parse_mode='Markdown')
 
@@ -196,7 +178,7 @@ def hi(m):
 def kick(m):
     if m.from_user.id == 142141024:
         rediss.delete('banlist')
-        bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
+        bot.send_message(m.chat.id, '<b>Cleaned!</b>',parse_mode='HTML')
 
 
 
@@ -205,7 +187,7 @@ def kick(m):
 @bot.message_handler(content_types=['left_chat_member'])
 def hi(m):
     name = m.left_chat_member.first_name
-    bot.send_message(m.chat.id, '_GoodBye_ `{}`'.format(name), parse_mode='Markdown')
+    bot.send_message(m.chat.id, '*GoodBye* `{}`'.format(name), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
@@ -214,7 +196,7 @@ def kick(m):
     if m.from_user.id == 142141024:
         text = m.text.split()[1]
         bot.kick_chat_member(m.chat.id, text)
-        bot.send_message(m.chat.id, '`User` *{}* `has been kicked`'.format(text), parse_mode='Markdown')
+        bot.send_message(m.chat.id, '_User_ *{}* _has been kicked!_'.format(text), parse_mode='Markdown')
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['kickme'])
@@ -253,7 +235,7 @@ def answer(m):
           name = m.from_user.first_name
           user = m.from_user.username
           photo = rediss.hget('stickers',id)
-          bot.send_message(m.chat.id, "`Name` : *{}* \n `UserName` = *{}* \n `GlobalRank` : *{}* \n `Position In Group` : *{}* \n\n `Msgs` : *{}*".format(name,user,rank,text,msgs), parse_mode="Markdown")
+          bot.send_message(m.chat.id, "*Name* : {} \n*UserName* = @{} \n*GlobalRank* : {} \n*Position In Group* : {} \n\n*Msgs* : {}".format(name,user,rank,text,msgs), parse_mode="Markdown")
           bot.send_sticker(m.chat.id,photo)
         except:
           bot.send_photo(m.chat.id, 'AgADBAADq6cxG3LsuA4NhfzrLPeDz-qCWBkABEgaS8eAZRQfsEkBAAEC',caption="Please Submit One Sticker For Your")
@@ -371,7 +353,7 @@ def query_text(query):
     thumb_url = 'http://uupload.ir/files/7d23_download.png'
     info = types.InlineQueryResultArticle('1',
                                           'Your Info',
-                                          types.InputTextMessageContent('` Username` : @{}\nYour ` First Name` : *{}*\n` Your LastName` : *{}*\n` Your ID` :  *{}*'.format(user,name,lname,uid), parse_mode="Markdown"),
+                                          types.InputTextMessageContent('*Username* : @{} \n*Your First Name* : *{}* \n*Your LastName* : *{}* \n*Your ID* : *{}*'.format(user,name,lname,uid), parse_mode="Markdown"),
                                           reply_markup=markup,
                                           thumb_url=thumb_url)
 
@@ -541,7 +523,7 @@ def feedback(m):
     str = m.text
     txt = str.replace('/feedback', '')
     bot.send_message(senderid, "_Thank Your Msg Posted admin_", parse_mode="Markdown")
-    bot.send_message(142141024, "msg : {}\nid : {}\nname : {}\nUsername : @{}".format(txt,senderid,first,usr))
+    bot.send_message(142141024, "Msg : {}\nID : {}\nName : {}\nUsername : @{}".format(txt,senderid,first,usr))
 
 #################################################################################################################################################################################################
 
@@ -654,7 +636,11 @@ def info(m):
       last = m.from_user.last_name
       profs = bot.get_user_profile_photos(id)
       count = profs.total_count
-      cap = 'First name :\n{}\nLast Name :\n{}\nUsername :\n@{}\nUser ID :\n{}'.format(first,last,user,id)
+      url = req.get('http://api.gpmod.ir/time/')
+      data = url.json()
+      ENdate = data['ENdate']
+      ENtime = data['ENtime']
+      cap = 'First name : {}\nLast Name : {}\nUsername : @{}\nUser ID : {}\nDate : {}\nTime : {}'.format(first,last,user,id,ENdate,ENtime)
     if int(count) == 0 :
       bot.send_photo(m.chat.id,open('personun.png'),caption='{}'.format(cap))
     else:
@@ -862,7 +848,7 @@ def welcome(m):
     member = bot.get_chat_members_count(cid)
     user = bot.get_chat_member(m.chat.id, cid)
     if m.chat.type == 'group':
-      bot.send_message(m.chat.id, "`Group Name` : *{}* \n `Group ID` : *{}* \n `Group Type` : *{}* \n `Admin` : *{}* \n `Member` : *{}* \n `Users` : *{}*".format(name,cid,type,admin,member,user), parse_mode='Markdown')
+      bot.send_message(m.chat.id, "*Group Name* : *{}* \n*Group ID* : *{}* \n*Group Type* : *{}* \n*Admin* : *{}* \n*Member* : *{}* \n*Users* : *{}*".format(name,cid,type,admin,member,user), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
