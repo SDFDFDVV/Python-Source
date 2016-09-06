@@ -48,11 +48,11 @@ def welcome(m):
     c = types.InlineKeyboardButton("About",callback_data='pouria')
     markup.add(b,c)
     nn = types.InlineKeyboardButton("Inline Mode", switch_inline_query='')
-    oo = types.InlineKeyboardButton("Channel", url='https://telegram.me/CyberTM')
+    oo = types.InlineKeyboardButton("Channel", url='https://telegram.me/CyberCH')
     markup.add(nn,oo)
     id = m.from_user.id
     rediss.sadd('memberspy',id)
-    bot.send_message(cid, "Hi \n\n Welcome To CyberBot \n\n Please Choose One :)", disable_notification=True, reply_markup=markup)
+    bot.send_message(cid, "Hi \n\nWelcome To CyberBot \n\nPlease Choose One :)", disable_notification=True, reply_markup=markup)
 
 #################################################################################################################################################################################################
 
@@ -60,7 +60,7 @@ def welcome(m):
 def callback_inline(call):
      if call.message:
         if call.data == "help":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Comming Soon...")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Comming Soon!")
      if call.message:
         if call.data == "pouria":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
@@ -131,7 +131,7 @@ def qr(message):
     if str(banlist) == 'False':
         text = message.text.replace("/webshot ","")
         urllib.urlretrieve("http://api.screenshotmachine.com/?key=b645b8&size=X&url={}".format(text), 'webshot.jpg')
-        bot.send_photo(message.chat.id, open('webshot.jpg'), caption=" @CyberTM")
+        bot.send_photo(message.chat.id, open('webshot.jpg'), caption=" @CyberCH")
 
 #################################################################################################################################################################################################
 
@@ -155,7 +155,7 @@ def qr(message):
     if str(banlist) == 'False':
         text = m.text.replace("/qr ","")
         urllib.urlretrieve("https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={}".format(text), 'qr.jpg')
-        bot.send_photo(message.chat.id, open('qr.jpg'), caption=" @CyberTM")
+        bot.send_photo(message.chat.id, open('qr.jpg'), caption=" @CyberCH")
 
 #################################################################################################################################################################################################
 
@@ -164,8 +164,8 @@ def qr(message):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
         text = message.text.replace("/voice ","")
-        urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}".format(text), '@CyberTM.ogg')
-        bot.send_document(message.chat.id, open('@CyberTM.ogg'), caption=" @CyberTM")
+        urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}".format(text), 'Cyber.ogg')
+        bot.send_audio(message.chat.id, open('Cyber.ogg'), caption=" @CyberCH")
 
 #################################################################################################################################################################################################
 
@@ -188,7 +188,7 @@ def hi(m):
         rediss.sadd('chats',ids)
         bot.send_message(m.chat.id, 'Hi :D Please Start Me In Pravite', parse_mode='Markdown')
     else:
-        bot.send_message(m.chat.id, '_Hi_ `{}` _Welcome To_ `{}`'.format(name,title), parse_mode='Markdown')
+        bot.send_message(m.chat.id, '*Hi* `{}` *Welcome To* `{}`'.format(name,title), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
@@ -312,7 +312,7 @@ def music(m):
         urllib.urlretrieve("{}".format(image), "song.png")
         bot.send_message(m.chat.id, "*Artist* : ```{}``` \n *Name* : ```{}```".format(Artist,name), parse_mode="Markdown")
         bot.send_sticker(m.chat.id, open('song.png'))
-        bot.send_document(m.chat.id, open('song.ogg'), caption=" @CyberTM")
+        bot.send_document(m.chat.id, open('song.ogg'), caption=" @CyberCH")
 
 #################################################################################################################################################################################################
 
@@ -883,49 +883,49 @@ def clac(m):
 def image(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'image.jpg')
-    bot.send_photo(message.chat.id, open('image.jpg'), caption="@CyberTM")
+    bot.send_photo(message.chat.id, open('image.jpg'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def video(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'video.mp4')
-    bot.send_video(message.chat.id, open('video.mp4'), caption="@CyberTM")
+    bot.send_video(message.chat.id, open('video.mp4'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def file(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'file.zip')
-    bot.send_document(message.chat.id, open('file.zip'), caption="@CyberTM")
+    bot.send_document(message.chat.id, open('file.zip'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def music(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'music.mp3')
-    bot.send_document(message.chat.id, open('music.mp3'), caption="@CyberTM")
+    bot.send_document(message.chat.id, open('music.mp3'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def picture(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'picture.png')
-    bot.send_photo(message.chat.id, open('picture.png'), caption="@CyberTM")
+    bot.send_photo(message.chat.id, open('picture.png'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def sticker(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'sticker.webp')
-    bot.send_sticker(message.chat.id, open('sticker.webp'), caption="@CyberTM")
+    bot.send_sticker(message.chat.id, open('sticker.webp'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['download'])
 def apk(m):
     text = message.text.split()[1]
     urllib.urlretrieve('{}'.format(text), 'apk.apk')
-    bot.send_document(message.chat.id, open('apk.apk'), caption="@CyberTM")
+    bot.send_document(message.chat.id, open('apk.apk'), caption="@CyberCH")
     
 #################################################################################################################################################################################################
 
