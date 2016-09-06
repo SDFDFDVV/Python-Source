@@ -125,29 +125,9 @@ def send_stats(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['webshot'])
-def qr(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = message.text.replace("/webshot ","")
-        urllib.urlretrieve("http://api.screenshotmachine.com/?key=b645b8&size=X&url={}".format(text), 'webshot.jpg')
-        bot.send_photo(message.chat.id, open('webshot.jpg'), caption=" @CyberCH")
-
-#################################################################################################################################################################################################
-
 #@bot.message_handler(func=lambda message: True)
 def set_stats(message):
     bot.reply_to(message, message.text)
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['qr'])
-def qr(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.replace("/qr ","")
-        urllib.urlretrieve("https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={}".format(text), 'qr.jpg')
-        bot.send_photo(message.chat.id, open('qr.jpg'), caption=" @CyberCH")
 
 #################################################################################################################################################################################################
 
@@ -825,18 +805,6 @@ def aparat(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(regexp='^(/code) (.*)')
-def ip(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.split()[1]
-        r = requests.get('http://bot-negative23.rhcloud.com/s.php?text={}'.format(text))
-        json_data = r.json()
-        code = json_data['base64']
-        bot.send_message(m.chat.id, "`{}`".format(code), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['about'])
 def welcome(m):
     cid = m.chat.id
@@ -925,15 +893,6 @@ def feed_back(message):
 def process_pm(message):
 	text = message.text
 	bot.forward_message(142141024, message.from_user.id, message_id=message.message_id)
-        
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['cmd'])
-def ss(m):
-    text = m.text.replace("/cmd","")
-    cc = os.popen("{}".format(text)).read()
-    bot.send_message(m.chat.id, "```{}```".format(cc), parse_mode="Markdown")
-
 
 #################################################################################################################################################################################################
 bot.polling(True)
