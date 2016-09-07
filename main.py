@@ -391,6 +391,33 @@ def qq(q):
 
 #################################################################################################################################################################################################
 
+@bot.message_handler(regexp='^(/git) (.*)')
+def gif(m):
+    text = m.text.split()[1]
+    r = requests.get('https://api.github.com/users/{}'.format(text))
+    json_data = r.json()
+    if 'id' in json_data:
+        url_html = json_data['html_url']
+        typee = json_data['type']
+        name = json_data['name']
+        company = json_data['company']
+        blog = json_data['blog']
+        location = json_data['location']
+        bio = json_data['bio']
+        public_repos = json_data['public_repos']
+        followers = json_data['followers']
+        following = json_data['following']
+        avatar_url = json_data['avatar_url']
+        urllib.urlretrieve("{}".format(avatar_url), "git.png")
+        bot.send_sticker(m.chat.id, open('git.png'))
+        bot.send_message(m.chat.id, 'Name : <b>{}</b>\nType : <b>{}</b>\nCompany : <b>{}</b>\nblog : <code>{}</code>\nlocation : <b>{}</b>\nbio : <i>{}</i>\n\nUrl : <code>{}</code>\nfollowers : <code>{}</code>\nfollowing : <code>{}</code>\nRepos : <code>{}</code>\n\xE2\x97\xBC \xE2\x97\xBB \xE2\x97\xBC \xE2\x97\xBB \xE2\x97\xBC \xE2\x97\xBB \xE2\x97\xBC \n@taylor_team'.format(name,typee,company,blog,location,bio,url_html,followers,following,public_repos), parse_mode='HTML')
+        print 'bot send git command'
+    if 'message' in json_data:
+        bot.send_message(m.chat.id, 'Error \n/git [username]')
+        return
+
+#################################################################################################################################################################################################
+
 @bot.inline_handler(lambda query: len(query.query.split()) == 1)
 def qq(q):
     text = q.query
@@ -408,11 +435,10 @@ def qq(q):
         followers = json_data['followers']
         following = json_data['following']
         avatar_url = json_data['avatar_url']
-        tmp = 'http://ntanjerome.org/wp-content/themes/tanji/images/iconmonstr-github-9-icon.png'
+        tmp = 'http://ericsteinborn.com/github-for-cats/img/ironcat.png'
+        gitss = types.InlineQueryResultArticle('1', 'Git username\xE2\x9C\x8F\xEF\xB8\x8F', types.InputTextMessageContent('Name : <b>{}</b>\nUrl : <b>{}</b>\nBlog : <b>{}</b>\nLocation : <b>{}</b>\nBio : <i>{}</i>\n\nRepos : <code>{}</code>\nfollowers : <code>{}</code>\nfollowing : <code>{}</code>'.format(name,url_html,blog,location,bio,public_repos,followers,following), parse_mode="HTML"), thumb_url=tmp)
         avatarr = types.InlineQueryResultPhoto('2', '{}'.format(avatar_url), '{}'.format(avatar_url), description='avatar', caption='Name : {}\nUrl : {}\nBlog : {}\nLocation : {}\nBio : {}\n\nRepos : {}'.format(name,url_html,blog,location,bio,public_repos))
-        bot.answer_inline_query(q.id, [avatarr], cache_time=1)
-
-
+        bot.answer_inline_query(q.id, [gitss, avatarr], cache_time=1)
 
 #################################################################################################################################################################################################
 
@@ -428,18 +454,45 @@ def mean(m):
         
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['tr'])
-def music(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text =  m.text.split()[1]
-        tezt =  m.text.split()[2:]
-        opener = urllib2.build_opener()
-        f = opener.open('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20160119T111342Z.fd6bf13b3590838f.6ce9d8cca4672f0ed24f649c1b502789c9f4687a&format=plain&lang={}&text={}'.format(text,tezt))
-        parsed_json = json.loads(f.read())
-        text=parsed_json["text"][0]
-        bot.send_message(m.chat.id, "```{}```".format(text), parse_mode="Markdown")
+@bot.message_handler(commands=['gif'])
+def aparat(m):
+    text = m.text.replace('/gif ','')
+    url = "http://www.flamingtext.com/net-fu/image_output.cgi?_comBuyRedirect=false&script=blue-fire&text={}&symbol_tagname=popular&fontsize=70&fontname=futura_poster&fontname_tagname=cool&textBorder=15&growSize=0&antialias=on&hinting=on&justify=2&letterSpacing=0&lineSpacing=0&textSlant=0&textVerticalSlant=0&textAngle=0&textOutline=off&textOutline=false&textOutlineSize=2&textColor=%230000CC&angle=0&blueFlame=on&blueFlame=false&framerate=75&frames=5&pframes=5&oframes=4&distance=2&transparent=off&transparent=false&extAnim=gif&animLoop=on&animLoop=false&defaultFrameRate=75&doScale=off&scaleWidth=240&scaleHeight=120&&_=1469943010141".format(text)
+    res = urllib.urlopen(url)
+    parsed_json = json.loads(res.read())
+    gif = parsed_json['src']
+    link = parsed_json['gimpHost']
+    urllib.urlretrieve("{}".format(gif), "aaa.gif")
+    bot.send_document(m.chat.id, open('aaa.gif'), caption="@CyberCH")
 
+#################################################################################################################################################################################################
+    
+@bot.message_handler(commands=['stickerpro'])
+def aparat(m):
+    text = m.text.replace('/stickerpro ','')
+    url = "https://assets.imgix.net/examples/clouds.jpg?blur=150&w=150&h=150&fit=crop&txt={}&txtsize=50&txtclr=blue&txtalign=middle,center&txtfont=Futura%20Condensed%20Medium&mono=ff6598cc".format(text)
+    res = urllib.urlopen(url)
+    urllib.urlretrieve("{}".format(url), "aaa.png")
+    bot.send_sticker(m.chat.id, open('aaa.jpg'))
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['qr'])
+def code(message):
+    text = message.text.split()[1]
+    urllib.urlretrieve("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl={}".format(text), 'qr.jpg')
+    bot.send_photo(message.chat.id, open('qr.jpg'))
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['imagepro'])
+def aparat(m):
+    text = m.text.replace('/imagepro ','')
+    url = "https://assets.imgix.net/examples/clouds.jpg?blur=150&w=150&h=150&fit=crop&txt={}&txtsize=50&txtclr=blue&txtalign=middle,center&txtfont=Futura%20Condensed%20Medium&mono=ff6598cc".format(text)
+    res = urllib.urlopen(url)
+    urllib.urlretrieve("{}".format(url), "aaa.png")
+    bot.send_photo(m.chat.id, open('aaa.jpg'), caption="@CyberCH")
+    
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['sport'])
@@ -662,29 +715,6 @@ def kick(m):
         id = m.text.replace("/delrank ","")
         rank = rediss.hdel("user:rank","{}".format(id))
         bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['music'])
-def music(m):
-    text = m.text.replace("/music ","")
-    req = urllib2.Request("http://api.gpmod.ir/music.search/?v=2&q={}&count=30".format(text))
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    parsed_json = json.loads(f.read())
-    Artist = parsed_json['response'][0]['title']
-    Artist1 = parsed_json['response'][1]['title']
-    Artist2 = parsed_json['response'][2]['title']
-    Artist3 = parsed_json['response'][3]['title']
-    Artist4 = parsed_json['response'][4]['title']
-    Artist5 = parsed_json['response'][5]['title']
-    link = parsed_json['response'][0]['link']
-    link1 = parsed_json['response'][1]['link']
-    link2 = parsed_json['response'][2]['link']
-    link3 = parsed_json['response'][3]['link']
-    link4 = parsed_json['response'][4]['link']
-    link5 = parsed_json['response'][5]['link']
-    bot.send_message(m.chat.id, "*Title* : `{}` \n\n [Download]({}) \n\n *Title* : `{}` \n\n [Download]({}) ".format(Artist,link,Artist1,link1), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
