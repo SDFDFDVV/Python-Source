@@ -412,29 +412,7 @@ def qq(q):
         avatarr = types.InlineQueryResultPhoto('2', '{}'.format(avatar_url), '{}'.format(avatar_url), description='avatar', caption='Name : {}\nUrl : {}\nBlog : {}\nLocation : {}\nBio : {}\n\nRepos : {}'.format(name,url_html,blog,location,bio,public_repos))
         bot.answer_inline_query(q.id, [avatarr], cache_time=1)
 
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['arz'])
-def gif(m):
-    r = requests.get('http://exchange.nalbandan.com/api.php?action=json')
-    json_data = r.json()
-    date = json_data['dollar']['date']
-    dollar = json_data['dollar']['persian']
-    dollar1 = json_data['dollar']['value']
-    dollar_rasmi = json_data['dollar_rasmi']['persian']
-    dollar_rasmi1 = json_data['dollar_rasmi']['value']
-    euro = json_data['euro']['persian']
-    euro1 = json_data['euro']['value']
-    gold_per_geram = json_data['gold_per_geram']['persian']
-    gold_per_geram1 = json_data['gold_per_geram']['value']
-    coin_new = json_data['coin_new']['persian']
-    coin_new1 = json_data['coin_new']['value']
-    pond = json_data['pond']['persian']
-    pond1 = json_data['pond']['value']
-    derham = json_data['coin_old']['persian']
-    derham1 = json_data['coin_old']['value']
-    coin_old = json_data['coin_old']['persian']
-    coin_old1 = json_data['coin_old']['value']
-    bot.send_message(m.chat.id, "قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n {} به قیمت {} تومن \n\n {} به قیمت {} تومن \n\n {} به قیمت {} تومن  \n\n {} به قیمت {} تومن  \n\n {} به قیمت {} تومن  \n\n {} به قیمت {} تومن  \n\n {} به قیمت {} تومن  \n\n {} به قیمت {} تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode="Markdown")        
+
 
 #################################################################################################################################################################################################
 
@@ -544,7 +522,7 @@ def answer(m):
     if str(banlist) == 'False':
         x = m.text.replace("/number ","")
         a = len(x)
-        bot.send_message(m.chat.id, "`Number Of Your Text : ` {}".format(a), parse_mode="Markdown")
+        bot.send_message(m.chat.id, "*Number Of Your Text :* {}".format(a), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -557,7 +535,7 @@ def send_message(m):
     groupname = m.chat.title
     groupid = m.chat.id
     rediss.sadd('group','{}'.format(m.chat.id))
-    bot.send_message(-1070099034, "New_chat \n\n name : {} id : {}".format(groupname,groupid), parse_mode="Markdown")
+    bot.send_message(-142141024, "New_chat \n\n name : {} id : {}".format(groupname,groupid), parse_mode="Markdown")
     bot.send_message(m.chat.id, "Hi all")
 
 #################################################################################################################################################################################################
@@ -620,7 +598,9 @@ def info(m):
       data = url.json()
       ENdate = data['ENdate']
       ENtime = data['ENtime']
-      cap = 'First name : {}\nLast Name : {}\nUsername : @{}\nUser ID : {}\nDate : {}\nTime : {}'.format(first,last,user,id,ENdate,ENtime)
+      text = bot.get_chat_member(m.chat.id, m.from_user.id).status
+      rank = rediss.hget("user:rank","{}".format(id))
+      cap = 'First name : {}\nLast Name : {}\nUsername : @{}\nUser ID : {}\nDate : {}\nTime : {}\nGlobalRank : {}\nPost : {}'.format(first,last,user,id,ENdate,ENtime,rank,text)
     if int(count) == 0 :
       bot.send_photo(m.chat.id,open('personun.png'),caption='{}'.format(cap))
     else:
@@ -719,12 +699,14 @@ def tostick(message):
           file_id = message.reply_to_message.sticker.file_id
           id = message.from_user.id
           rediss.hset('stickers',id,file_id)
-          bot.send_message(message.chat.id, '<code>Sticker Has Been Set!</code>',parse_mode='HTML')
+          bot.send_message(message.chat.id, '<b>Sticker Has Been Set!</b>',parse_mode='HTML')
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(content_types=['photo','sticker','document','video','audio','voice'])
 def send_photo_id(message):
+  text = m.text.replace("/fileid")
+  if message.reply_to_message:
     if message.photo:
         bot.send_message(message.chat.id, "File ID :\n" + message.photo[1].file_id)
     if message.sticker:
@@ -805,7 +787,7 @@ def aparat(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['about'])
+@bot.message_handler(commands=['gpinfo'])
 def welcome(m):
     cid = m.chat.id
     id = m.from_user.id
