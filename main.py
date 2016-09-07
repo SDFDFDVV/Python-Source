@@ -9,6 +9,9 @@ from time import sleep
 import sys
 import json
 import os
+import logging
+import subprocess
+import requests
 import random
 import base64
 import urllib
@@ -64,37 +67,37 @@ def n(m):
             msg = bot.send_message(m.chat.id, '*Downloading.....*',parse_mode='Markdown')
             dw(text,'file.png')
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
-            bot.send_photo(m.chat.id, open('file.png'),caption='@CyberCH')
+            bot.send_photo(m.chat.id, open('file.png'),caption='@ImagedlBot')
             os.remove('file.png')
         if re.match('(ftp|http)://.*\.(apk)$',text):
             msg = bot.send_message(m.chat.id, '*Downloading .....*',parse_mode='Markdown')
             dw(text,'app.apk')
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
-            bot.send_document(m.chat.id, open('app.apk'),caption='@CyberCH')
+            bot.send_document(m.chat.id, open('app.apk'),caption='@ImagedlBot')
             os.remove('app.apk')
         if re.match('(ftp|http|https)://.*\.(html|htm)$',text):
             msg = bot.send_message(m.chat.id, '* Downloading .....*',parse_mode='Markdown')
             dw(text,'file.html')
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
-            bot.send_document(m.chat.id, open('file.html'),caption='@CyberCH')
+            bot.send_document(m.chat.id, open('file.html'),caption='@ImagedlBot')
             os.remove('file.html')
         if re.match('(ftp|http|https)://.*\.(jpg)$',text):
             msg = bot.send_message(m.chat.id, '* Downloading .....*',parse_mode='Markdown')
             dw(text,'s.jpg')
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
-            bot.send_photo(m.chat.id, open('s.jpg') ,caption='@CyberCH')
+            bot.send_photo(m.chat.id, open('s.jpg') ,caption='@ImagedlBot' )
             os.remove('s.jpg')
         if re.match('(ftp|http|https)://.*\.(gif)$',text):
             msg = bot.send_message(m.chat.id, '* Downloading .....*',parse_mode='Markdown')
             dw(text,'s.gif')
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
-            bot.send_photo(m.chat.id, open('s.gif'),caption='@CyberCH')
+            bot.send_photo(m.chat.id, open('s.gif'),caption='@ImagedlBot')
             os.remove('s.gif')
         if re.match('(ftp|http|https)://.*\.(zip|rar)$',text):
             msg = bot.send_message(m.chat.id, '* Downloading .....*',parse_mode='Markdown')
             dw(text,'file.zip')
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
-            bot.send_document(m.chat.id, open('file.zip'),caption='@CyberCH')
+            bot.send_document(m.chat.id, open('file.zip'),caption='@ImagedlBot')
             os.remove('file.zip')
         if re.match('(ftp|http|https)://.*\.(webp)$',text):
             msg = bot.send_message(m.chat.id, '* Downloading .....*',parse_mode='Markdown')
@@ -102,8 +105,56 @@ def n(m):
             bot.edit_message_text("*Downloaded*\n\n [ █████████ ] 100%\n*I'm Uploading file in telegram server please wait!*", m.chat.id, msg.message_id, parse_mode="Markdown")
             bot.send_sticker(m.chat.id, open('file.webp'))
             os.remove('file.webp')
+    if m.chat.type == 'group' or  m.chat.type == 'supergroup':
+        if m.reply_to_message:
+            if m.reply_to_message.from_user.username == botusername:
+                if re.match('(ftp|http|https)://.*\.(png)$',text):
+                    bot.send_message(m.chat.id, '*Uploading.....*',parse_mode='Markdown')
+                    dw(text,'s.png')
+                    bot.send_photo(m.chat.id, open('s.png'))
+                    os.remove('s.png') 
+                if re.match('(ftp|http|https)://.*\.(jpg)$',text):      #
+                    bot.send_message(m.chat.id, '*Uploading.....*',parse_mode='Markdown')              # pic download File (Group by reply)
+                    dw(text,'s.jpg')                                    #
+                    bot.send_photo(m.chat.id, open('s.jpg'))          
+                    os.remove('s.jpg')
+                    print 'Remove jpg file'
+                if re.match('(ftp|http|https)://.*\.(zip)$',text):
+                    bot.send_message(m.chat.id, '*Uploading.....*',parse_mode='Markdown')              #
+                    dw(text,'file.zip')                                 # zip files
+                    bot.send_photo(m.chat.id, open('file.zip'))         #
+                    os.remove('file.zip')
+                    print 'Remove zip file'
 
 #################################################################################################################################################################################################
+
+@bot.message_handler(content_types=['video','photo','sticker','document','audio','voice'])
+def all(m):
+            if m.photo :
+                fileid = m.photo[1].file_id
+            elif m.video :
+                fileid = m.video.file_id
+            elif m.sticker :
+                fileid = m.sticker.file_id
+            elif m.document :
+                fileid = m.document.file_id
+            elif m.audio :
+                fileid = m.audio.file_id
+            elif m.voice :
+                fileid = m.voice.file_id
+            e = m.from_user.username
+            link = urllib2.Request("https://api.pwrtelegram.xyz/bot{}/getFile?file_id={}".format(token,fileid))
+            open = urllib2.build_opener()
+            f = open.open(link)
+            link1 = f.read()
+            jdat = json.loads(link1)
+            patch = jdat['result']['file_path']
+            send = 'https://storage.pwrtelegram.xyz/{}'.format(patch)
+           # bot.send_message(m.chat.id,'*File Id:*\n{}'.format(fileid),parse_mode='Markdown')
+            bot.send_message(m.chat.id,'*File Uploaded*\nYour link: {}'.format(send),parse_mode='Markdown')
+
+#################################################################################################################################################################################################
+
 @bot.message_handler(commands=['start'])
 def welcome(m):
     cid = m.chat.id
