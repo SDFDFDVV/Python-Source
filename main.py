@@ -160,8 +160,6 @@ def kick(m):
         rediss.delete('banlist')
         bot.send_message(m.chat.id, '<b>Cleaned!</b>',parse_mode='HTML')
 
-
-
 #################################################################################################################################################################################################
 
 @bot.message_handler(content_types=['left_chat_member'])
@@ -237,47 +235,6 @@ def answer(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['imdb'])
-def gif(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.replace("/imdb ","")
-        r = requests.get('http://www.omdbapi.com/?t={}'.format(text))
-        json_data = r.json()
-        Year = json_data['Year']
-        Title = json_data['Title']
-        Released = json_data['Released']
-        Runtime = json_data['Runtime']
-        Genre = json_data['Genre']
-        Director = json_data['Director']
-        Language = json_data['Language']
-        Poster = json_data['Poster']
-        urllib.urlretrieve("{}".format(Poster), "imdb.png")
-        bot.send_sticker(m.chat.id, open('imdb.png'))
-        bot.send_message(m.chat.id, "*Title* : ``` {}``` \n *Year* : ``` {}```\n *Published* : ``` {}``` \n *Runtime* : ``` {}``` \n *Genre* : ``` {}``` \n *Director* : ``` {}``` \n *Language* : ```{}```".format(Title,Year,Released,Runtime,Genre,Director,Language), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['song'])
-def music(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.replace("/song ","")
-        opener = urllib2.build_opener()
-        f = opener.open('https://api.spotify.com/v1/search?limit=1&type=track&q={}'.format(text))
-        parsed_json = json.loads(f.read())
-        Artist = parsed_json['tracks']['items'][0]['artists'][0]['name']
-        name = parsed_json['tracks']['items'][0]['name']
-        music = parsed_json['tracks']['items'][0]['preview_url']
-        urllib.urlretrieve("{}".format(music), "song.ogg")
-        image = parsed_json['tracks']['items'][0]['album']['images'][0]['url']
-        urllib.urlretrieve("{}".format(image), "song.png")
-        bot.send_message(m.chat.id, "*Artist* : ```{}``` \n *Name* : ```{}```".format(Artist,name), parse_mode="Markdown")
-        bot.send_sticker(m.chat.id, open('song.png'))
-        bot.send_document(m.chat.id, open('song.ogg'), caption=" @CyberCH")
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['food'])
 def send_sports(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
@@ -291,16 +248,6 @@ def send_sports(m):
 def keyboardHide(m):
         markup = types.ReplyKeyboardHide(selective=False)
         bot.send_message(m.chat.id, 'KeyBoard Cleaned', reply_markup=markup)
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['logo'])
-def logo(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = message.text.split()[1]
-        urllib.urlretrieve('http://logo.clearbit.com/{}?size=800'.format(text), 'logo.jpg')
-        bot.send_sticker(message.chat.id, open('logo.jpg'))
 
 #################################################################################################################################################################################################
 
@@ -383,15 +330,6 @@ def mean(m):
         textx = json_data['data']['text']
         bot.send_message(m.chat.id, textx)
         
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['sport'])
-def sport(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        urllib.urlretrieve('http://lorempixel.com/400/200/sports/OffLiNewTeam/', 'sport.jpg')
-        bot.send_sticker(message.chat.id, open('sport.jpg'))
-
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['calc'])
