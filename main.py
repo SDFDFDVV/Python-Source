@@ -278,24 +278,6 @@ def music(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(regexp='^(/ip) (.*)')
-def ip(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = m.text.split()[1]
-        r = requests.get('http://ip-api.com/json/{}?fields=262143'.format(text))
-        json_data = r.json()
-        country = json_data['country']
-        city = json_data['city']
-        isp = json_data['isp']
-        timezone = json_data['timezone']
-        lon = json_data['lon']
-        lat = json_data['lat']
-        bot.send_location(m.chat.id, lat, lon)
-        bot.send_message(m.chat.id, "*Country* : ```{}``` \n *City* : ```{}``` \n *Isp* : ```{}``` \n *Timezone* : ```{}```".format(country,city,isp,timezone), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['food'])
 def send_sports(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
@@ -351,7 +333,7 @@ def query_text(query):
     ENtime = data['ENtime']
     time_tmp = 'http://uupload.ir/files/zneb_download_(1).png'
     timesend = types.InlineQueryResultArticle('2', 'Time', types.InputTextMessageContent('`{}` : *ساعت* `{}` \n\n `{}` *Time* : `{}`'.format(FAdate,FAtime,ENdate,ENtime), parse_mode='Markdown'), thumb_url=time_tmp)
-    bot.answer_inline_query(query.id, [info, dollar, joke, timesend], cache_time=5, switch_pm_text='Start bot')
+    bot.answer_inline_query(query.id, [info, joke, timesend], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
@@ -445,7 +427,7 @@ def feedback(m):
 
 @bot.message_handler(commands=['uptime'])
 def uptime(m):
-    if m.from_user.id == config.is_sudo:
+    if m.from_user.id == 142141024:
         cc = os.popen("uptime").read()
         bot.send_message(m.chat.id, '{}'.format(cc))
 
