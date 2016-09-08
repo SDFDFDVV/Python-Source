@@ -151,7 +151,7 @@ def all(m):
             patch = jdat['result']['file_path']
             send = 'https://storage.pwrtelegram.xyz/{}'.format(patch)
            # bot.send_message(m.chat.id,'*File Id:*\n{}'.format(fileid),parse_mode='Markdown')
-            bot.send_message(m.chat.id,'*File Uploaded*\nYour link: {}'.format(send),parse_mode='Markdown')
+            bot.send_message(m.chat.id,'File Uploaded\nYour link: {}'.format(send))
 
 #################################################################################################################################################################################################
 
