@@ -115,7 +115,8 @@ def send_stats(m):
 @bot.message_handler(commands=['ban'])
 def kick(m):
     if m.from_user.id == 142141024:
-        ids = m.text.split()[1]
+      if m.reply_to_message:
+        ids = m.reply_to_message.from_user.id
         rediss.sadd('banlist',int(ids))
         bot.send_message(int(ids), '<b>You Are Banned!</b>',parse_mode='HTML')
         bot.send_message(m.chat.id, 'Banned!')
@@ -125,7 +126,8 @@ def kick(m):
 @bot.message_handler(commands=['unban'])
 def send_stats(m):
     if m.from_user.id == 142141024:
-        ids = m.text.split()[1]
+      if m.reply_to_message:
+        ids = m.reply_to_message.from_user.id
         rediss.srem('banlist',int(ids))
         bot.send_message(int(ids), '<b>You Are UnBanned!</b>',parse_mode='HTML')
         bot.send_message(m.chat.id, 'UnBanned!')
