@@ -632,22 +632,7 @@ def tostick(message):
 @bot.message_handler(commands=['help'])
 def clac(m):
     text = m.text.replace("/help","")
-    bot.send_message(m.chat.id, "*List Of Commands :*\n\n/shorten URL\n_Shorten Your Link_\n/pic\n_Sned Random Picture_\n/tex Text\n_Take Sticker From Text_\n/kickme\n_Exit From Group_\n/id\n_Get Your ID_\n/id (reply)\n_Get Users ID_\n/me\n_Show Your Information_\n/food\n_Get Food Sticker_\n/mean Text\n_Get The Meaning Of Texts_\n/feedback Text\n_Send PM To Admin_\n/bold Text\n_Bold The Text_\n/italic Text\n_Italic The Text_\n/code Text\n_Code The Text_\n/echo Text\n_Echo The Text_\n/sticker (reply to photo)\n_Convert Photo To Sticker_\n/photo (reply to sticker)\n_Convert Sticker To Photo_\n/info\n_Get Your Information_\n/link\n_Get Group Link_\n/rank\n_Show Your Rank_\n/setsticker (reply to sticker)\n_Set Sticker For Your Self_\n/cap Text (reply to photo)\n_Write Text Under The Photo_\n/gpinfo\n_Get Group Information_\n/setphone PhoneNumber\n_Set Your PhoneNumber In The Bot_\n/myphone\n_Show Your PhoneNumber_".format(text), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['gpinfo'])
-def welcome(m):
-    cid = m.chat.id
-    id = m.from_user.id
-    ids = m.chat.id
-    type = m.chat.type
-    name = m.chat.title
-    admin = bot.get_chat_administrators(cid)
-    member = bot.get_chat_members_count(cid)
-    user = bot.get_chat_member(m.chat.id, cid)
-    if m.chat.type == 'group' or m.chat.type == 'supergroup':
-      bot.send_message(m.chat.id, "*Group Name* : *{}* \n*Group ID* : *{}* \n*Group Type* : *{}* \n*Admin* : *{}* \n*Member* : *{}* \n*Users* : *{}*".format(name,cid,type,admin,member,user), parse_mode='Markdown')
+    bot.send_message(m.chat.id, "*List Of Commands :*\n\n/short URL\n_Shorten Your Link_\n/pic\n_Sned Random Picture_\n/tex Text\n_Take Sticker From Text_\n/kickme\n_Exit From Group_\n/id\n_Get Your ID_\n/id (reply)\n_Get Users ID_\n/me\n_Show Your Information_\n/food\n_Get Food Sticker_\n/mean Text\n_Get The Meaning Of Texts_\n/feedback Text\n_Send PM To Admin_\n/bold Text\n_Bold The Text_\n/italic Text\n_Italic The Text_\n/code Text\n_Code The Text_\n/echo Text\n_Echo The Text_\n/sticker (reply to photo)\n_Convert Photo To Sticker_\n/photo (reply to sticker)\n_Convert Sticker To Photo_\n/info\n_Get Your Information_\n/link\n_Get Group Link_\n/rank\n_Show Your Rank_\n/setsticker (reply to sticker)\n_Set Sticker For Your Self_\n/cap Text (reply to photo)\n_Write Text Under The Photo_\n/setphone PhoneNumber\n_Set Your PhoneNumber In The Bot_\n/myphone\n_Show Your PhoneNumber_".format(text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
