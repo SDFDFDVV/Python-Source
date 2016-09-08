@@ -28,11 +28,11 @@ is_sudo = '142141024'
 rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['shorten'])
+@bot.message_handler(commands=['short'])
 def send_pic(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-        text = m.text.replace("/shorten ","")
+        text = m.text.replace("/short ","")
         res = urllib.urlopen("http://yeo.ir/api.php?url={}".format(text)).read()
         bot.send_message(m.chat.id, "*Your Short Link :* {}".format(res), parse_mode="Markdown", disable_web_page_preview=True)
 
@@ -68,7 +68,7 @@ def welcome(m):
 def callback_inline(call):
      if call.message:
         if call.data == "help":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Comming Soon!")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Send /help Command!")
      if call.message:
         if call.data == "pouria":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
@@ -181,7 +181,8 @@ def hi(m):
 @bot.message_handler(commands=['kick'])
 def kick(m):
     if m.from_user.id == 142141024:
-        text = m.text.split()[1]
+      if m.reply_to_message:
+        text = m.reply_to_message.from_user.id
         bot.kick_chat_member(m.chat.id, text)
         bot.send_message(m.chat.id, '_User_ *{}* _has been kicked!_'.format(text), parse_mode='Markdown')
 #################################################################################################################################################################################################
@@ -192,7 +193,7 @@ def answer(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(regexp='^id')
+@bot.message_handler(regexp='^/id')
 def answer(m):
     if m.reply_to_message:
         id = m.reply_to_message.from_user.id
@@ -232,15 +233,6 @@ def answer(m):
 def leavehandler(m):
     if m.from_user.id == 142141024:
         bot.leave_chat(m.chat.id)
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['getme'])
-def answer(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
-        text = bot.get_chat_members_count(m.chat.id).status
-        bot.send_message(m.chat.id,text)
 
 #################################################################################################################################################################################################
 
@@ -637,38 +629,10 @@ def tostick(message):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['sethelp'])
-def clac(m):
-    if m.from_user.id == 142141024:
-        text = m.text.replace("/sethelp","")
-        rediss.hset("help","{}".format(text))
-        bot.send_message(m.chat.id, "`New Help Has Been Set!` {}".format(text), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['help'])
 def clac(m):
-    text = m.text.replace("/get","")
-    link = rediss.get("help")
-    bot.send_message(m.chat.id, "{}".format(link), parse_mode="Markdown")
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['aparat'])
-def aparat(m):
-    import urllib
-    import json
-    import os
-    text = m.text.split(' ',1)[1]
-    url = urllib.urlopen('http://www.aparat.com/etc/api/videoBySearch/text/'+text)
-    data = url.read()
-    js = json.loads(data)
-    title1 = js['videobysearch'][0]['title']
-    poster1 = js['videobysearch'][0]['big_poster']
-    uid1 = js['videobysearch'][0]['uid']
-    urllib.urlretrieve(poster1,'poster.png')
-    bot.send_photo(m.chat.id, open('poster.png'), caption='Title : '+title1+'\nLink : http://www.aparat.com/v/'+uid1)
-    os.remove('poster.png')
+    text = m.text.replace("/help","")
+    bot.send_message(m.chat.id, "*List Of Commands :*\n\n/shorten URL\n_Shorten Your Link_\n/pic\n_Sned Random Picture_\n/tex Text\n_Take Sticker From Text_\n/kickme\n_Exit From Group_\n/id\n_Get Your ID_\n/id (reply)\n_Get Users ID_\n/me\n_Show Your Information_\n/food\n_Get Food Sticker_\n/mean Text\n_Get The Meaning Of Texts_\n/feedback Text\n_Send PM To Admin_\n/bold Text\n_Bold The Text_\n/italic Text\n_Italic The Text_\n/code Text\n_Code The Text_\n/echo Text\n_Echo The Text_\n/sticker (reply to photo)\n_Convert Photo To Sticker_\n/photo (reply to sticker)\n_Convert Sticker To Photo_\n/info\n_Get Your Information_\n/link\n_Get Group Link_\n/rank\n_Show Your Rank_\n/setsticker (reply to sticker)\n_Set Sticker For Your Self_\n/cap Text (reply to photo)\n_Write Text Under The Photo_\n/gpinfo\n_Get Group Information_\n/setphone PhoneNumber\n_Set Your PhoneNumber In The Bot_\n/myphone\n_Show Your PhoneNumber_".format(text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -682,7 +646,7 @@ def welcome(m):
     admin = bot.get_chat_administrators(cid)
     member = bot.get_chat_members_count(cid)
     user = bot.get_chat_member(m.chat.id, cid)
-    if m.chat.type == 'group':
+    if m.chat.type == 'group' or m.chat.type == 'supergroup':
       bot.send_message(m.chat.id, "*Group Name* : *{}* \n*Group ID* : *{}* \n*Group Type* : *{}* \n*Admin* : *{}* \n*Member* : *{}* \n*Users* : *{}*".format(name,cid,type,admin,member,user), parse_mode='Markdown')
 
 #################################################################################################################################################################################################
@@ -699,55 +663,6 @@ def clac(m):
     number = rediss.hget("user:phone","{}".format(m.from_user.id))
     bot.send_contact(m.chat.id, phone_number="{}".format(number), first_name="{}".format(m.from_user.first_name))
 
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def image(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'image.jpg')
-    bot.send_photo(m.chat.id, open('image.jpg'), caption="@CyberCH")
-    
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def video(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'video.mp4')
-    bot.send_video(m.chat.id, open('video.mp4'), caption="@CyberCH")
-    
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def file(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'file.zip')
-    bot.send_document(m.chat.id, open('file.zip'), caption="@CyberCH")
-    
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def music(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'music.mp3')
-    bot.send_document(m.chat.id, open('music.mp3'), caption="@CyberCH")
-    
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def picture(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'picture.png')
-    bot.send_photo(m.chat.id, open('picture.png'), caption="@CyberCH")
-    
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def sticker(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'sticker.webp')
-    bot.send_sticker(m.chat.id, open('sticker.webp'), caption="@CyberCH")
-    
-#################################################################################################################################################################################################
-@bot.message_handler(commands=['download'])
-def apk(m):
-    text = m.text.split()[1]
-    urllib.urlretrieve('{}'.format(text), 'apk.apk')
-    bot.send_document(m.chat.id, open('apk.apk'), caption="@CyberCH")
-    
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['fwd'])
