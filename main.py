@@ -32,9 +32,12 @@ rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
 def send_pic(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      try:
         text = m.text.replace("/short ","")
         res = urllib.urlopen("http://yeo.ir/api.php?url={}".format(text)).read()
         bot.send_message(m.chat.id, "*Your Short Link :* {}".format(res), parse_mode="Markdown", disable_web_page_preview=True)
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -42,8 +45,11 @@ def send_pic(m):
 def send_pic(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      try:
         urllib.urlretrieve("https://source.unsplash.com/random", "img.jpg")
         bot.send_photo(m.chat.id, open('img.jpg'))
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -144,9 +150,12 @@ def set_stats(message):
 def qr(message):
     banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
     if str(banlist) == 'False':
+      try:
         text = message.text.replace("/tex ","")
         urllib.urlretrieve('https://assets.imgix.net/sandbox/sandboxlogo.ai?blur=500&fit=crop&w=1200&h=600&txtclr=black&txt={}&txtalign=middle%2C%20center&txtsize=150&txtline=3'.format(text), 'time.jpg')
         bot.send_sticker(message.chat.id, open('time.jpg'))
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -193,21 +202,18 @@ def answer(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(regexp='^/id')
-def answer(m):
-    if m.reply_to_message:
-        id = m.reply_to_message.from_user.id
-        bot.send_message(m.chat.id, id)
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['id'])
-def test_handler(m):
+def id_handler(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      try:
         cid = m.from_user.id
         fl = m.from_user.first_name
         bot.send_message(m.chat.id, "*{}*  Your ID = ```{}```".format(fl,cid), parse_mode="Markdown")
+      except:
+    if m.reply_to_message:
+        id = m.reply_to_message.from_user.id
+        bot.send_message(m.chat.id, id)
 
 #################################################################################################################################################################################################
 
@@ -239,9 +245,12 @@ def leavehandler(m):
 @bot.message_handler(commands=['food'])
 def send_sports(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':    
+    if str(banlist) == 'False':
+      try:
         urllib.urlretrieve("http://lorempixel.com/400/200/food/OffLiNeTeam", "food.jpg")
         bot.send_sticker(m.chat.id, open('food.jpg'))
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -325,21 +334,27 @@ def qq(q):
 def mean(m):
     banlist = rediss.sismember('banlist_arrow', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      try:
         text = m.text.split()[1]
         r = req.get('http://api.vajehyab.com/v2/public/?q={}'.format(text))
         json_data = r.json()
         textx = json_data['data']['text']
         bot.send_message(m.chat.id, textx)
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
         
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['calc'])
 def clac(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False': 
+    if str(banlist) == 'False':
+      try:
         text = m.text.replace("/calc ","")
         res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text)).read()
         bot.send_message(m.chat.id, "_{}_ = `{}`".format(text,res), parse_mode="Markdown", disable_web_page_preview=True)
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -354,6 +369,7 @@ def send(m):
 
 @bot.message_handler(commands=['feedback'])
 def feedback(m):    
+  try:
     senderid = m.chat.id
     first = m.from_user.first_name
     usr = m.from_user.username
@@ -361,6 +377,8 @@ def feedback(m):
     txt = str.replace('/feedback', '')
     bot.send_message(senderid, "_Thank Your Msg Posted admin_", parse_mode="Markdown")
     bot.send_message(142141024, "Msg : {}\nID : {}\nName : {}\nUsername : @{}".format(txt,senderid,first,usr))
+  except:
+    bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -420,9 +438,12 @@ def time(m):
 def answer(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      try:
         x = m.text.replace("/number ","")
         a = len(x)
         bot.send_message(m.chat.id, "*Number Of Your Text :* {}".format(a), parse_mode="Markdown")
+      except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -442,6 +463,7 @@ def send_message(m):
 
 @bot.message_handler(commands=['sticker'])
 def tostick(m):
+  try:
     cid = m.chat.id
     if m.reply_to_message:
       if m.reply_to_message.photo:
@@ -453,19 +475,25 @@ def tostick(m):
         urllib.urlretrieve(link, "stick.png")
         file1 = open('stick.png', 'rb')
         bot.send_sticker(cid,file1)
+  except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['clac'])
 def clac(m):
+  try:
     text = m.text.replace("/calc ","")
     res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text)).read()
     bot.send_message(m.chat.id, "{}".format(res), parse_mode="Markdown", disable_web_page_preview=True)
+  except:
+    bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['photo'])
 def tostick(m):
+  try:
     cid = m.chat.id
     if m.reply_to_message:
       if m.reply_to_message.sticker:
@@ -477,6 +505,8 @@ def tostick(m):
         urllib.urlretrieve(link, "stick1.png")
         file1 = open('stick1.png', 'rb')
         bot.send_photo(cid,file1)
+  except:
+        bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
     
 #################################################################################################################################################################################################
 
@@ -537,9 +567,12 @@ def clac(m):
 
 @bot.message_handler(commands=['rank'])
 def clac(m):
+  try:
     id = m.text.replace("/rank ","")
     rank = rediss.hget("user:rank","{}".format(id))
     bot.send_message(m.chat.id, "{}".format(rank), parse_mode="Markdown")
+  except:
+    bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -570,6 +603,7 @@ def tostick(message):
     cid = message.chat.id
     banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
     if str(banlist) == 'False':
+     try:
       if message.reply_to_message:
         if message.reply_to_message.sticker:
           token = TOKEN
@@ -577,25 +611,8 @@ def tostick(message):
           id = message.from_user.id
           rediss.hset('stickers',id,file_id)
           bot.send_message(message.chat.id, '<b>Sticker Has Been Set!</b>',parse_mode='HTML')
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(content_types=['photo','sticker','document','video','audio','voice'])
-def send_photo_id(message):
-  text = m.text.replace("/fileid")
-  if message.reply_to_message:
-    if message.photo:
-        bot.send_message(message.chat.id, "File ID :\n" + message.photo[1].file_id)
-    if message.sticker:
-        bot.send_message(message.chat.id, "File ID :\n" + message.sticker.file_id)
-    if message.document:
-        bot.send_message(message.chat.id, "File ID :\n" + message.document.file_id)
-    if message.voice:
-        bot.send_message(message.chat.id, "File ID :\n" + message.voice.file_id)
-    if message.audio:
-        bot.send_message(message.chat.id, "File ID :\n" + message.audio.file_id)
-    if message.video:
-        bot.send_message(message.chat.id, "File ID :\n" + message.video.file_id)
+     except:
+          bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -617,6 +634,7 @@ def tostick(message):
     cid = message.chat.id
     banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
     if str(banlist) == 'False':
+     try:
       if message.reply_to_message:
         if message.reply_to_message.photo:
           token = TOKEN
@@ -626,6 +644,8 @@ def tostick(message):
           rediss.hset('caption',id,file_id)
           photo = rediss.hget('caption',id)
           bot.send_photo(message.chat.id,photo,caption="{}".format(text))
+     except:
+          bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
@@ -638,9 +658,12 @@ def clac(m):
 
 @bot.message_handler(commands=['setphone'])
 def clac(m):
+  try:
     text = m.text.replace("/setphone","")
     rediss.hset("user:phone","{}".format(m.from_user.id),"{}".format(text))
     bot.send_message(m.chat.id, "`This phone` *{}* `Seted For` {}".format(text,m.from_user.username), parse_mode="Markdown")
+  except:
+    bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 @bot.message_handler(commands=['myphone'])
