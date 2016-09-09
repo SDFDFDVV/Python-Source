@@ -202,18 +202,21 @@ def answer(m):
 
 #################################################################################################################################################################################################
 
+@bot.message_handler(regexp='^id')
+def answer(m):
+    if m.reply_to_message:
+        id = m.reply_to_message.from_user.id
+bot.send_message(m.chat.id, id)
+
+#################################################################################################################################################################################################
+
 @bot.message_handler(commands=['id'])
 def id_handler(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-      try:
         cid = m.from_user.id
         fl = m.from_user.first_name
         bot.send_message(m.chat.id, "*{}*  Your ID = ```{}```".format(fl,cid), parse_mode="Markdown")
-      except:
-    if m.reply_to_message:
-        id = m.reply_to_message.from_user.id
-        bot.send_message(m.chat.id, id)
 
 #################################################################################################################################################################################################
 
