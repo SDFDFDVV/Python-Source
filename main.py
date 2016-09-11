@@ -335,7 +335,7 @@ def qq(q):
 
 @bot.message_handler(regexp='^(/mean) (.*)')
 def mean(m):
-    banlist = rediss.sismember('banlist_arrow', '{}'.format(m.from_user.id))
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
       try:
         text = m.text.split()[1]
