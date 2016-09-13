@@ -348,6 +348,33 @@ def mean(m):
         
 #################################################################################################################################################################################################
 
+@bot.message_handler(content_types=['video','photo','sticker','document','audio','voice'])
+def all(m):
+        if m.chat.type == 'private':
+            if m.photo :
+                fileid = m.photo[1].file_id
+            elif m.video :
+                fileid = m.video.file_id
+            elif m.sticker :
+                fileid = m.sticker.file_id
+            elif m.document :
+                fileid = m.document.file_id
+            elif m.audio :
+                fileid = m.audio.file_id
+            elif m.voice :
+                fileid = m.voice.file_id
+            e = m.from_user.username
+            link = urllib2.Request("https://api.pwrtelegram.xyz/bot{}/getFile?file_id={}".format(TOKEN,fileid))
+            open = urllib2.build_opener()
+            f = open.open(link)
+            link1 = f.read()
+            jdat = json.loads(link1)
+            patch = jdat['result']['file_path']
+            send = 'https://storage.pwrtelegram.xyz/{}'.format(patch)
+            bot.send_message(m.chat.id,'*File Id:*\n{}'.format(fileid),parse_mode='Markdown')
+            bot.send_message(m.chat.id,'File Uploaded\nYour link: {}'.format(send))
+
+#################################################################################################################################################################################################
 @bot.message_handler(commands=['calc'])
 def clac(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
