@@ -5,5 +5,5 @@
 cd $HOME
 git clone https://github.com/PouriaDev/python-telegram-bot.git
 cd python-telegram-bot
-python bot.py
+python main.py
 ```
