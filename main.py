@@ -22,7 +22,7 @@ import requests as req
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-TOKEN = 'TOKEN'
+TOKEN = '240545787:AAEwAOm2aKRcHVSYtLQ6gD-OBJFqCheA_OQ'
 bot = telebot.TeleBot(TOKEN)
 is_sudo = '142141024'
 rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -66,7 +66,7 @@ def welcome(m):
     markup.add(nn,oo)
     id = m.from_user.id
     rediss.sadd('memberspy',id)
-    bot.send_message(cid, "Hi \n\nWelcome To CyberBot \n\nPlease Choose One :)", disable_notification=True, reply_markup=markup)
+    bot.send_message(cid, "*Hi*\n_Welcome To CyberBot_\n*Please Choose One*", disable_notification=True, reply_markup=markup, parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
