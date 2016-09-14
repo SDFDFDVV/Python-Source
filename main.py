@@ -273,18 +273,24 @@ def query_text(query):
     lname = query.from_user.last_name
     uid = query.from_user.id
     markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton('{}'.format(lname), url="https://telegram.me/{}".format(user)))
-    thumb_url = 'http://uupload.ir/files/7d23_download.png'
-    info = types.InlineQueryResultArticle('1',
-                                          'Your Info',
-                                          types.InputTextMessageContent('*Username* : @{} \n*Your First Name* : *{}* \n*Your LastName* : *{}* \n*Your ID* : *{}*'.format(user,name,lname,uid), parse_mode="Markdown"),
-                                          reply_markup=markup,
-                                          thumb_url=thumb_url)
+    markup.add(types.InlineKeyboardButton('{}'.format(name), url="https://telegram.me/{}".format(user)))
+    thumb_url = 'http://www.hopsten.de/assets/images/iNFO_LOGO.jpg'
+    info = types.InlineQueryResultArticle('1','Your Info ',types.InputTextMessageContent('*Username : @{}\nYour First Name : {}\nYour Last Name : {}\nYour ID :  {}*'.format(user,name,lname,uid), parse_mode="Markdown"),reply_markup=markup,thumb_url=thumb_url)
 
-    text = urllib.urlopen("http://vip.opload.ir/vipdl/94/11/amirhmz/joke.db").read()
+
+    tumsss = 'http://images.clipartpanda.com/contact-clipart-contact-phone-md.png'
+    random_text = random.randint(1, 100)
+    tmpp = 'http://static.nautil.us/3006_5f268dfb0fbef44de0f668a022707b86.jpg'
+    randowm = types.InlineQueryResultArticle('2', 'Random Nmber',types.InputTextMessageContent('random NUmber : {}'.format(random_text)), thumb_url=tmpp)
+
+
+    req = urllib2.Request("http://umbrella.shayan-soft.ir/txt/joke.db")
+    opener = urllib2.build_opener()
+    f = opener.open(req)
+    text = f.read()
     text1 = text.split(",")
     last = random.choice(text1)
-    joke = types.InlineQueryResultArticle('4', 'Joke', types.InputTextMessageContent('{}'.format(last)),thumb_url='http://uupload.ir/files/sfxc_download.jpg')
+    joke = types.InlineQueryResultArticle('3', 'Joke', types.InputTextMessageContent(last.replace('',"")),thumb_url='http://up.persianscript.ir/uploadsmedia/5b63-download-2-.png')
     
     
     url = req.get('http://api.gpmod.ir/time/')
@@ -293,9 +299,20 @@ def query_text(query):
     FAtime = data['FAtime']
     ENdate = data['ENdate']
     ENtime = data['ENtime']
-    time_tmp = 'http://uupload.ir/files/zneb_download_(1).png'
+    time_tmp = 'http://a4.mzstatic.com/us/r30/Purple49/v4/c4/bf/0b/c4bf0bbe-f71c-12be-6017-818ab2594c98/icon128-2x.png'
     timesend = types.InlineQueryResultArticle('2', 'Time', types.InputTextMessageContent('`{}` : *ساعت* `{}` \n\n `{}` *Time* : `{}`'.format(FAdate,FAtime,ENdate,ENtime), parse_mode='Markdown'), thumb_url=time_tmp)
-    bot.answer_inline_query(query.id, [info, joke, timesend], cache_time=5, switch_pm_text='Start bot')
+    
+    
+    req = urllib2.Request("http://umbrella.shayan-soft.ir/txt/danestani.db")
+    opener = urllib2.build_opener()
+    f = opener.open(req)
+    text = f.read()
+    text1 = text.split(",")
+    last = random.choice(text1)
+    logo = 'https://d2vvqscadf4c1f.cloudfront.net/R1H3Ms7QSQOwRpTbUImd_science.jpg'
+    since = types.InlineQueryResultArticle('5', 'Danestani', types.InputTextMessageContent(last.replace('',"")),thumb_url=logo)
+
+    bot.answer_inline_query(query.id, [info, randowm, joke, sinse, timesend], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
