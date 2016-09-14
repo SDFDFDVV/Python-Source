@@ -288,7 +288,7 @@ def query_text(query):
     text = f.read()
     text1 = text.split(",")
     last = random.choice(text1)
-    joke = types.InlineQueryResultArticle('3', 'Joke', types.InputTextMessageContent(last.replace('',"")),thumb_url='http://up.persianscript.ir/uploadsmedia/5b63-download-2-.png')
+    joke = types.InlineQueryResultArticle('3', 'Joke', types.InputTextMessageContent(last.replace('@UmbrellaTeam',"")),thumb_url='http://up.persianscript.ir/uploadsmedia/5b63-download-2-.png')
     reqa = urllib2.Request('http://api.gpmod.ir/time/')
     openera = urllib2.build_opener()
     fa = openera.open(reqa)
@@ -308,9 +308,9 @@ def query_text(query):
     text1 = text.split(",")
     last = random.choice(text1)
     logo = 'https://d2vvqscadf4c1f.cloudfront.net/R1H3Ms7QSQOwRpTbUImd_science.jpg'
-    since = types.InlineQueryResultArticle('5', 'Danestani', types.InputTextMessageContent(last.replace('',"")),thumb_url=logo)
+    since = types.InlineQueryResultArticle('5', 'Danestani', types.InputTextMessageContent(last.replace('@UmbrellaTeam',"")),thumb_url=logo)
 
-    bot.answer_inline_query(query.id, [info, randowm, joke, sinse, timesend], cache_time=5, switch_pm_text='Start bot')
+    bot.answer_inline_query(query.id, [info, randowm, joke, since, timesend], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
