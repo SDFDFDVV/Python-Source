@@ -264,6 +264,8 @@ def keyboardHide(m):
         markup = types.ReplyKeyboardHide(selective=False)
         bot.send_message(m.chat.id, 'KeyBoard Cleaned', reply_markup=markup)
 
+#################################################################################################################################################################################################
+
 @bot.inline_handler(lambda q: q.query)
 def inline(query):
     if query.query.split()[0] == 'music':
