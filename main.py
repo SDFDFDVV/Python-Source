@@ -293,12 +293,14 @@ def query_text(query):
     joke = types.InlineQueryResultArticle('3', 'Joke', types.InputTextMessageContent(last.replace('',"")),thumb_url='http://up.persianscript.ir/uploadsmedia/5b63-download-2-.png')
     
     
-    url = req.get('http://api.gpmod.ir/time/')
-    data = url.json()
-    FAdate = data['FAdate']
-    FAtime = data['FAtime']
-    ENdate = data['ENdate']
-    ENtime = data['ENtime']
+    reqa = urllib2.Request('http://api.gpmod.ir/time/')
+    openera = urllib2.build_opener()
+    fa = openera.open(reqa)
+    parsed_jsona = json.loads(fa.read())
+    ENtime = parsed_jsona['ENtime']
+    FAtime = parsed_jsona['FAtime']
+    ENdate = parsed_jsona['ENdate']
+    FAdate = parsed_jsona['FAdate']
     time_tmp = 'http://a4.mzstatic.com/us/r30/Purple49/v4/c4/bf/0b/c4bf0bbe-f71c-12be-6017-818ab2594c98/icon128-2x.png'
     timesend = types.InlineQueryResultArticle('4', 'Time', types.InputTextMessageContent('`{}` : *ساعت* `{}` \n\n `{}` *Time* : `{}`'.format(FAdate,FAtime,ENdate,ENtime), parse_mode='Markdown'), thumb_url=time_tmp)
     
