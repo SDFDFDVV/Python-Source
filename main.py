@@ -276,13 +276,11 @@ def query_text(query):
     markup.add(types.InlineKeyboardButton('{}'.format(name), url="https://telegram.me/{}".format(user)))
     thumb_url = 'http://www.hopsten.de/assets/images/iNFO_LOGO.jpg'
     info = types.InlineQueryResultArticle('1','Your Info ',types.InputTextMessageContent('*Username : @{}\nYour First Name : {}\nYour Last Name : {}\nYour ID :  {}*'.format(user,name,lname,uid), parse_mode="Markdown"),reply_markup=markup,thumb_url=thumb_url)
-
-
+    
     tumsss = 'http://images.clipartpanda.com/contact-clipart-contact-phone-md.png'
     random_text = random.randint(1, 100)
     tmpp = 'http://static.nautil.us/3006_5f268dfb0fbef44de0f668a022707b86.jpg'
-    randowm = types.InlineQueryResultArticle('2', 'Random Nmber',types.InputTextMessageContent('random NUmber : {}'.format(random_text)), thumb_url=tmpp)
-
+    randowm = types.InlineQueryResultArticle('2', 'Random Number',types.InputTextMessageContent('Random Number : {}'.format(random_text)), thumb_url=tmpp)
 
     req = urllib2.Request("http://umbrella.shayan-soft.ir/txt/joke.db")
     opener = urllib2.build_opener()
@@ -291,8 +289,6 @@ def query_text(query):
     text1 = text.split(",")
     last = random.choice(text1)
     joke = types.InlineQueryResultArticle('3', 'Joke', types.InputTextMessageContent(last.replace('',"")),thumb_url='http://up.persianscript.ir/uploadsmedia/5b63-download-2-.png')
-    
-    
     reqa = urllib2.Request('http://api.gpmod.ir/time/')
     openera = urllib2.build_opener()
     fa = openera.open(reqa)
