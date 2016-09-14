@@ -264,6 +264,39 @@ def keyboardHide(m):
         markup = types.ReplyKeyboardHide(selective=False)
         bot.send_message(m.chat.id, 'KeyBoard Cleaned', reply_markup=markup)
 
+@bot.inline_handler(lambda q: q.query)
+def inline(query):
+    if query.query.split()[0] == 'music':
+          oo = query.query
+          input = oo.replace("music ","")
+          t5 = input.replace(" ","%20")
+          eeqq = urllib.quote(input)
+          req = urllib2.Request("http://api.gpmod.ir/music.search/?v=2&q={}&count=30".format(eeqq))
+          opener = urllib2.build_opener()
+          f = opener.open(req)
+          parsed_json = json.loads(f.read())
+          yy = random.randrange(10)
+          yy1 = random.randrange(10)
+          yy2 = random.randrange(10)
+          yy3 = random.randrange(10)
+          yy4 = random.randrange(10)
+          rrrr = parsed_json['response'][yy]['link']
+          rrrr1 = parsed_json['response'][yy1]['link']
+          rrrr2 = parsed_json['response'][yy2]['link']
+          rrrr4 = parsed_json['response'][yy3]['link']
+          rrrr5 = parsed_json['response'][yy4]['link']
+          rrrr01 = parsed_json['response'][yy]['title']
+          rrrr11 = parsed_json['response'][yy1]['title']
+          rrrr21 = parsed_json['response'][yy2]['title']
+          rrrr41 = parsed_json['response'][yy3]['title']
+          rrrr51 = parsed_json['response'][yy4]['title']
+          pic = types.InlineQueryResultAudio('1', rrrr ,'Music of {}  \n{}'.format(input,rrrr01))
+          pic1 = types.InlineQueryResultAudio('2', rrrr1 ,'Music of {}  \n{}'.format(input,rrrr11))
+          pic2 = types.InlineQueryResultAudio('3', rrrr2 ,'Music of {}  \n{}'.format(input,rrrr21))
+          pic3 = types.InlineQueryResultAudio('4', rrrr4 ,'Music of {}  \n{}'.format(input,rrrr41))
+          pic4 = types.InlineQueryResultAudio('5', rrrr5 ,'Music of {}  \n{}'.format(input,rrrr51))
+          bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4], cache_time="15")
+
 #################################################################################################################################################################################################
 
 @bot.inline_handler(lambda query: len(query.query) is 0)
@@ -310,7 +343,10 @@ def query_text(query):
     logo = 'https://d2vvqscadf4c1f.cloudfront.net/R1H3Ms7QSQOwRpTbUImd_science.jpg'
     since = types.InlineQueryResultArticle('5', 'Danestani', types.InputTextMessageContent(last.replace('@UmbrellaTeam',"")),thumb_url=logo)
 
-    bot.answer_inline_query(query.id, [info, randowm, joke, since, timesend], cache_time=5, switch_pm_text='Start bot')
+    hi_tmp = 'https://d85wutc1n854v.cloudfront.net/live/products/600x375/WB0PGGM81.png?v=1.0'
+    hi = types.InlineQueryResultArticle('6', 'Music', types.InputTextMessageContent('*@Cyber_KingDom_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
+
+    bot.answer_inline_query(query.id, [info, randowm, joke, since, timesend, hi], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
