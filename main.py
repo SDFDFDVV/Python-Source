@@ -352,42 +352,6 @@ def query_text(query):
 
 #################################################################################################################################################################################################
 
-
-@bot.inline_handler(lambda query: len(query.query.split()) == 1)
-@bot.inline_handler(lambda query: len(query.query.split()) == 2)
-@bot.inline_handler(lambda query: len(query.query.split()) == 3)
-@bot.inline_handler(lambda query: len(query.query.split()) == 4)
-@bot.inline_handler(lambda query: len(query.query.split()) == 5)
-@bot.inline_handler(lambda query: len(query.query.split()) == 6)
-@bot.inline_handler(lambda query: len(query.query.split()) == 7)
-@bot.inline_handler(lambda query: len(query.query.split()) == 8)
-@bot.inline_handler(lambda query: len(query.query.split()) == 9)
-@bot.inline_handler(lambda query: len(query.query.split()) == 10)
-def qq(q):
-    l = q.query
-    markdown = types.InlineQueryResultArticle('1', 'Markdown', types.InputTextMessageContent('{}'.format(l),parse_mode='Markdown'),thumb_url='http://uupload.ir/files/cd0k_m.jpg', description='Send Text With Markdown Styles')
-    html = types.InlineQueryResultArticle('2', 'HTML', types.InputTextMessageContent('{}'.format(l),parse_mode='HTML'),thumb_url='http://uupload.ir/files/dc49_h.jpg', description='Send Text With HTML Styles')
-    r = requests.get('https://api.github.com/users/{}'.format(l))
-    json_data = r.json()
-    if 'avatar_url' in json_data:
-        url_html = json_data['html_url']
-        typee = json_data['type']
-        name = json_data['name']
-        company = json_data['company']
-        blog = json_data['blog']
-        location = json_data['location']
-        bio = json_data['bio']
-        public_repos = json_data['public_repos']
-        followers = json_data['followers']
-        following = json_data['following']
-        avatar_url = json_data['avatar_url']
-        a = q.query
-        avatar = types.InlineQueryResultPhoto('3', '{}'.format(avatar_url), '{}'.format(avatar_url), description='avatar', caption='Name : {}\nUrl : {}\nBlog : {}\nLocation : {}\nBio : {}\n\nRepos : {}\nFollowers : {}\nFollowing : {}'.format(name,url_html,blog,location,bio,public_repos,followers,following))
-        avtar = types.InlineQueryResultPhoto('4', '{}'.format(a), '{}'.format(a), description='avatar', caption='aaa')
-        bot.answer_inline_query(q.id, [markdown, html, avatar], cache_time=1)
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(regexp='^(/mean) (.*)')
 def mean(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
