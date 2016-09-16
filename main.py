@@ -165,10 +165,10 @@ def qr(message):
 def hi(m):
     name = m.new_chat_member.first_name
     title = m.chat.title
-    id = m.new_chat_member.id
+    ids = m.new_chat_member.id
     if id == 142141024:
         rediss.sadd('chats',ids)
-        bot.send_message(m.chat.id, 'Hi!\nPlease Start Me In Pravite', parse_mode='Markdown')
+        bot.send_message(m.chat.id, '*Hi!\nPlease Start Me In Pravite*', parse_mode='Markdown')
     else:
         bot.send_message(m.chat.id, '*Hi* `{}` *Welcome To* `{}`'.format(name,title), parse_mode='Markdown')
 
@@ -218,7 +218,7 @@ def id_handler(m):
     if str(banlist) == 'False':
         cid = m.from_user.id
         fl = m.from_user.first_name
-        bot.send_message(m.chat.id, "*{}*  Your ID = ```{}```".format(fl,cid), parse_mode="Markdown")
+        bot.send_message(m.chat.id, "*Your Name = {}\n\nYour ID = {}*".format(fl,cid), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
