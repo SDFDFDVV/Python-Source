@@ -334,8 +334,17 @@ def query_text(query):
     FAdate = parsed_jsona['FAdate']
     time_tmp = 'http://a4.mzstatic.com/us/r30/Purple49/v4/c4/bf/0b/c4bf0bbe-f71c-12be-6017-818ab2594c98/icon128-2x.png'
     timesend = types.InlineQueryResultArticle('4', 'Time', types.InputTextMessageContent('`{}` : *ساعت* `{}` \n\n `{}` *Time* : `{}`'.format(FAdate,FAtime,ENdate,ENtime), parse_mode='Markdown'), thumb_url=time_tmp)
-    
-    
+
+
+    req = urllib2.Request("http://umbrella.shayan-soft.ir/txt/danestani.db")
+    opener = urllib2.build_opener()
+    f = opener.open(req)
+    text = f.read()
+    text1 = text.split(",")
+    last = random.choice(text1)
+    logo = 'https://d2vvqscadf4c1f.cloudfront.net/R1H3Ms7QSQOwRpTbUImd_science.jpg'
+    since = types.InlineQueryResultArticle('5', 'Danestani', types.InputTextMessageContent(last.replace('@UmbrellaTeam',"")),thumb_url=logo)
+
     url = urllib2.Request('http://exchange.nalbandan.com/api.php?action=json')
     openerb = urllib2.build_opener()
     fb = openera.open(url)
@@ -358,20 +367,10 @@ def query_text(query):
     coin_old = parsed_jsonb['coin_old']['persian']
     coin_old1 = parsed_jsonb['coin_old']['value']
     time_tmp = 'http://uupload.ir/files/66yl_download_(2).png'
-    dollar = types.InlineQueryResultArticle('3', 'Dollar', types.InputTextMessageContent("قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode='Markdown'), thumb_url=time_tmp)    
-
-
-    req = urllib2.Request("http://umbrella.shayan-soft.ir/txt/danestani.db")
-    opener = urllib2.build_opener()
-    f = opener.open(req)
-    text = f.read()
-    text1 = text.split(",")
-    last = random.choice(text1)
-    logo = 'https://d2vvqscadf4c1f.cloudfront.net/R1H3Ms7QSQOwRpTbUImd_science.jpg'
-    since = types.InlineQueryResultArticle('5', 'Danestani', types.InputTextMessageContent(last.replace('@UmbrellaTeam',"")),thumb_url=logo)
+    dollar = types.InlineQueryResultArticle('6', 'Dollar', types.InputTextMessageContent("قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode='Markdown'), thumb_url=time_tmp)    
 
     hi_tmp = 'https://d85wutc1n854v.cloudfront.net/live/products/600x375/WB0PGGM81.png?v=1.0'
-    hi = types.InlineQueryResultArticle('6', 'Music', types.InputTextMessageContent('*@Cyber_KingDom_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
+    hi = types.InlineQueryResultArticle('7', 'Music', types.InputTextMessageContent('*@Cyber_KingDom_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
 
     bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi], cache_time=5, switch_pm_text='Start bot')
 
