@@ -336,6 +336,29 @@ def query_text(query):
     timesend = types.InlineQueryResultArticle('4', 'Time', types.InputTextMessageContent('`{}` : *ساعت* `{}` \n\n `{}` *Time* : `{}`'.format(FAdate,FAtime,ENdate,ENtime), parse_mode='Markdown'), thumb_url=time_tmp)
     
     
+    url = req.get('http://exchange.nalbandan.com/api.php?action=json')
+    data = url.json()
+    date = data['dollar']['date']
+    dollar = data['dollar']['persian']
+    dollar1 = data['dollar']['value']
+    dollar_rasmi = data['dollar_rasmi']['persian']
+    dollar_rasmi1 = data['dollar_rasmi']['value']
+    euro = data['euro']['persian']
+    euro1 = data['euro']['value']
+    gold_per_geram = data['gold_per_geram']['persian']
+    gold_per_geram1 = data['gold_per_geram']['value']
+    coin_new = data['coin_new']['persian']
+    coin_new1 = data['coin_new']['value']
+    pond = data['pond']['persian']
+    pond1 = data['pond']['value']
+    derham = data['coin_old']['persian']
+    derham1 = data['coin_old']['value']
+    coin_old = data['coin_old']['persian']
+    coin_old1 = data['coin_old']['value']
+    time_tmp = 'http://uupload.ir/files/66yl_download_(2).png'
+    dollar = types.InlineQueryResultArticle('3', 'Dollar', types.InputTextMessageContent("قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode='Markdown'), thumb_url=time_tmp)    
+
+
     req = urllib2.Request("http://umbrella.shayan-soft.ir/txt/danestani.db")
     opener = urllib2.build_opener()
     f = opener.open(req)
@@ -348,7 +371,7 @@ def query_text(query):
     hi_tmp = 'https://d85wutc1n854v.cloudfront.net/live/products/600x375/WB0PGGM81.png?v=1.0'
     hi = types.InlineQueryResultArticle('6', 'Music', types.InputTextMessageContent('*@Cyber_KingDom_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
 
-    bot.answer_inline_query(query.id, [info, randowm, joke, since, timesend, hi], cache_time=5, switch_pm_text='Start bot')
+    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
