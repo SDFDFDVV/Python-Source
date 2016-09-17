@@ -336,25 +336,27 @@ def query_text(query):
     timesend = types.InlineQueryResultArticle('4', 'Time', types.InputTextMessageContent('`{}` : *ساعت* `{}` \n\n `{}` *Time* : `{}`'.format(FAdate,FAtime,ENdate,ENtime), parse_mode='Markdown'), thumb_url=time_tmp)
     
     
-    url = req.get('http://exchange.nalbandan.com/api.php?action=json')
-    data = url.json()
-    date = data['dollar']['date']
-    dollar = data['dollar']['persian']
-    dollar1 = data['dollar']['value']
-    dollar_rasmi = data['dollar_rasmi']['persian']
-    dollar_rasmi1 = data['dollar_rasmi']['value']
-    euro = data['euro']['persian']
-    euro1 = data['euro']['value']
-    gold_per_geram = data['gold_per_geram']['persian']
-    gold_per_geram1 = data['gold_per_geram']['value']
-    coin_new = data['coin_new']['persian']
-    coin_new1 = data['coin_new']['value']
-    pond = data['pond']['persian']
-    pond1 = data['pond']['value']
-    derham = data['coin_old']['persian']
-    derham1 = data['coin_old']['value']
-    coin_old = data['coin_old']['persian']
-    coin_old1 = data['coin_old']['value']
+    url = urllib2.Request('http://exchange.nalbandan.com/api.php?action=json')
+    openerb = urllib2.build_opener()
+    fb = openera.open(url)
+    parsed_jsonb = json.loads(fb.read())
+    date = parsed_jsonb['dollar']['date']
+    dollar = parsed_jsonb['dollar']['persian']
+    dollar1 = parsed_jsonb['dollar']['value']
+    dollar_rasmi = parsed_jsonb['dollar_rasmi']['persian']
+    dollar_rasmi1 = parsed_jsonb['dollar_rasmi']['value']
+    euro = parsed_jsonb['euro']['persian']
+    euro1 = parsed_jsonb['euro']['value']
+    gold_per_geram = parsed_jsonb['gold_per_geram']['persian']
+    gold_per_geram1 = parsed_jsonb['gold_per_geram']['value']
+    coin_new = parsed_jsonb['coin_new']['persian']
+    coin_new1 = parsed_jsonb['coin_new']['value']
+    pond = parsed_jsonb['pond']['persian']
+    pond1 = parsed_jsonb['pond']['value']
+    derham = parsed_jsonb['coin_old']['persian']
+    derham1 = parsed_jsonb['coin_old']['value']
+    coin_old = parsed_jsonb['coin_old']['persian']
+    coin_old1 = parsed_jsonb['coin_old']['value']
     time_tmp = 'http://uupload.ir/files/66yl_download_(2).png'
     dollar = types.InlineQueryResultArticle('3', 'Dollar', types.InputTextMessageContent("قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode='Markdown'), thumb_url=time_tmp)    
 
