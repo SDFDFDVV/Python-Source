@@ -148,6 +148,19 @@ def set_stats(message):
 
 #################################################################################################################################################################################################
 
+@bot.message_handler(commands=['gif'])
+def aparat(m):
+    text = m.text.replace('/gif ','')
+    url = "http://www.flamingtext.com/net-fu/image_output.cgi?_comBuyRedirect=false&script=blue-fire&text={}&symbol_tagname=popular&fontsize=70&fontname=futura_poster&fontname_tagname=cool&textBorder=15&growSize=0&antialias=on&hinting=on&justify=2&letterSpacing=0&lineSpacing=0&textSlant=0&textVerticalSlant=0&textAngle=0&textOutline=off&textOutline=false&textOutlineSize=2&textColor=%230000CC&angle=0&blueFlame=on&blueFlame=false&framerate=75&frames=5&pframes=5&oframes=4&distance=2&transparent=off&transparent=false&extAnim=gif&animLoop=on&animLoop=false&defaultFrameRate=75&doScale=off&scaleWidth=240&scaleHeight=120&&_=1469943010141".format(text)
+    res = urllib.urlopen(url)
+    parsed_json = json.loads(res.read())
+    gif = parsed_json['src']
+    link = parsed_json['gimpHost']
+    urllib.urlretrieve("{}".format(gif), "gif.gif")
+    bot.send_document(m.chat.id, open('gif.gif'), caption="@Cyber_KingDom_Bot")
+
+#################################################################################################################################################################################################
+
 @bot.message_handler(commands=['tex'])
 def qr(message):
     banlist = rediss.sismember('banlist', '{}'.format(message.from_user.id))
@@ -313,7 +326,7 @@ def query_text(query):
     info = types.InlineQueryResultArticle('1','Your Info ',types.InputTextMessageContent('*Username : @{}\nYour First Name : {}\nYour Last Name : {}\nYour ID :  {}*'.format(user,name,lname,uid), parse_mode="Markdown"),reply_markup=markup,thumb_url=thumb_url)
     
     tumsss = 'http://images.clipartpanda.com/contact-clipart-contact-phone-md.png'
-    random_text = random.randint(1, 100)
+    random_text = random.randint(1, 1000)
     tmpp = 'http://static.nautil.us/3006_5f268dfb0fbef44de0f668a022707b86.jpg'
     randowm = types.InlineQueryResultArticle('2', 'Random Number',types.InputTextMessageContent('Random Number : {}'.format(random_text)), thumb_url=tmpp)
 
@@ -324,6 +337,8 @@ def query_text(query):
     text1 = text.split(",")
     last = random.choice(text1)
     joke = types.InlineQueryResultArticle('3', 'Joke', types.InputTextMessageContent(last.replace('@UmbrellaTeam',"")),thumb_url='http://up.persianscript.ir/uploadsmedia/5b63-download-2-.png')
+
+
     reqa = urllib2.Request('http://api.gpmod.ir/time/')
     openera = urllib2.build_opener()
     fa = openera.open(reqa)
@@ -681,19 +696,6 @@ def tostick(message):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['send']) 
-def stats(message):
-    id = message.text.replace("/send ","")
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton('Sticker', callback_data='sticker'),types.InlineKeyboardButton('Document', callback_data='document'))
-    markup.add(types.InlineKeyboardButton('Photo', callback_data='photo'),types.InlineKeyboardButton('Video', callback_data='video'))
-    markup.add(types.InlineKeyboardButton('Audio', callback_data='Audio'))
-    rediss.hset('file_id',message.chat.id,'{}'.format(id))
-    bot.send_message(message.chat.id, 'Select _One_ of these `Items.:D` \n\n (Note: GIFs are Documents)', reply_markup=markup,parse_mode="Markdown")
-
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['cap'])
 def tostick(message):
     cid = message.chat.id
@@ -717,7 +719,7 @@ def tostick(message):
 @bot.message_handler(commands=['help'])
 def clac(m):
     text = m.text.replace("/help","")
-    bot.send_message(m.chat.id, "*List Of Commands :*\n\n/short URL\n_Shorten Your Link_\n/pic\n_Sned Random Picture_\n/tex Text\n_Take Sticker From Text_\n/kickme\n_Exit From Group_\n/id\n_Get Your ID_\n/me\n_Show Your Information_\n/food\n_Get Food Sticker_\n/mean Text\n_Get The Meaning Of Texts_\n/feedback Text\n_Send PM To Admin_\n/bold Text\n_Bold The Text_\n/italic Text\n_Italic The Text_\n/code Text\n_Code The Text_\n/echo Text\n_Echo The Text_\n/sticker (reply to photo)\n_Convert Photo To Sticker_\n/photo (reply to sticker)\n_Convert Sticker To Photo_\n/info\n_Get Your Information_\n/link\n_Get Group Link_\n/rank [id]\n_Show User Rank_\n/setsticker (reply to sticker)\n_Set Sticker For Your Self_\n/cap Text (reply to photo)\n_Write Text Under The Photo_\n/setphone PhoneNumber\n_Set Your PhoneNumber In The Bot_\n/myphone\n_Show Your PhoneNumber_\n\n*Get Users ID:*\nid (reply to message)\n\n*Uploader Panel:*\n_Send Your File In Private To Upload!_".format(text), parse_mode="Markdown")
+    bot.send_message(m.chat.id, "*List Of Commands :*\n\n/short URL\n_Shorten Your Link_\n/pic\n_Sned Random Picture_\n/tex Text\n_Take Sticker From Text_\n/kickme\n_Exit From Group_\n/id\n_Get Your ID_\n/me\n_Show Your Information_\n/food\n_Get Food Sticker_\n/mean Text\n_Get The Meaning Of Texts_\n/feedback Text\n_Send PM To Admin_\n/bold Text\n_Bold The Text_\n/italic Text\n_Italic The Text_\n/code Text\n_Code The Text_\n/echo Text\n_Echo The Text_\n/sticker (reply to photo)\n_Convert Photo To Sticker_\n/photo (reply to sticker)\n_Convert Sticker To Photo_\n/gif Text\n_Convert Text To Gif_\n/info\n_Get Your Information_\n/link\n_Get Group Link_\n/rank [id]\n_Show User Rank_\n/setsticker (reply to sticker)\n_Set Sticker For Your Self_\n/cap Text (reply to photo)\n_Write Text Under The Photo_\n/setphone PhoneNumber\n_Set Your PhoneNumber In The Bot_\n/myphone\n_Show Your PhoneNumber_\n\n*Get Users ID:*\nid (reply to message)\n\n*Uploader Panel:*\n_Send Your File In Private To Upload!_".format(text), parse_mode="Markdown")
 
 #################################################################################################################################################################################################
 
