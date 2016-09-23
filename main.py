@@ -111,11 +111,8 @@ def callback_inline(call):
 @bot.message_handler(commands=['stats'])
 def send_stats(m):
     if m.from_user.id == 142141024:
-        ban = str(rediss.scard('banlist'))
         usrs = str(rediss.scard('memberspy'))
-        gps = str(rediss.scard('chats'))
-        supergps = str(rediss.scard('supergroups'))
-        text = '*Users* : *{}* \n\n*Groups* : *{}* \n\n*BanList* : *{}*'.format(usrs,gps,supergps,ban)
+        text = '*Users* : *{}*'.format(usrs)
         bot.send_message(m.chat.id,text,parse_mode='Markdown')
 
 #################################################################################################################################################################################################
