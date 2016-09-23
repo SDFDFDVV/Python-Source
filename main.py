@@ -427,7 +427,7 @@ def query_text(query):
     markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@Cyber_KingDom_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
 
     weathertmp = 'http://www.freeiconspng.com/uploads/weather-icon-13.png'
-    weather = types.InlineQueryResultArticle('10',title='Weather',input_message_content=types.InputTextMessageContent('*@Cyber_KingDom_Bot weather [City]*',parse_mode='Markdown'),reply_markup=markupweather,description='weather [City]',thumb_url=weathertmp)
+    weather = types.InlineQueryResultArticle('10', 'Weather', types.InputTextMessageContent('*@Cyber_KingDom_Bot weather [City]*',parse_mode='Markdown'),reply_markup=markup, thumb_url=weathertmp)
 
     bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown, weather], cache_time=5, switch_pm_text='Start bot')
 
