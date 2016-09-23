@@ -282,38 +282,51 @@ def keyboardHide(m):
 @bot.inline_handler(lambda q: q.query)
 def inline(query):
     if query.query.split()[0] == 'markdown':
-        text = m.query.replace('markdown','')
-        it = types.InlineQueryResultArticle('1','Markdown', types.InputTextMessageContent('{}'.format(text), parse_mode='matkdown'))
+        text = query.query.replace('markdown','')
+        markdown = types.InlineQueryResultArticle('1','Markdown', types.InputTextMessageContent('{}'.format(text), parse_mode='Markdown'))
+    elif m.query.split()[0] == 'weather':
+        text = query.query.replace('weather','')
+        url = urllib2.Request('http://api.openweathermap.org/data/2.5/weather?q={}&appid=269ed82391822cc692c9afd59f4aabba'.format(text))
+        openerf = urllib2.build_opener()
+        ff = opener.open(url)
+        parsed_json = json.loads(ff.read())
+        wt = parsed_json['main']['temp']
+        feshar = parsed_json['main']['pressure']
+        wind = parsed_json['wind']['speed']
+        icon = parsed_json['weather'][0]['icon']
+        wt_data = int(wt)-273.15
+        tmp = 'http://openweathermap.org/img/w/{}.png'.format(icon)
+        weather = types.InlineQueryResultArticle('1', 'Weather', types.InputTextMessageContent('C : {}\nWind Speed : {}\nAir pressure : {}'.format(wt_data,wind,feshar)),thumb_url=tmp)
     elif query.query.split()[0] == 'music':
-          oo = query.query
-          input = oo.replace("music ","")
-          t5 = input.replace(" ","%20")
-          eeqq = urllib.quote(input)
-          req = urllib2.Request("http://api.gpmod.ir/music.search/?v=2&q={}&count=30".format(eeqq))
-          opener = urllib2.build_opener()
-          f = opener.open(req)
-          parsed_json = json.loads(f.read())
-          yy = random.randrange(10)
-          yy1 = random.randrange(10)
-          yy2 = random.randrange(10)
-          yy3 = random.randrange(10)
-          yy4 = random.randrange(10)
-          rrrr = parsed_json['response'][yy]['link']
-          rrrr1 = parsed_json['response'][yy1]['link']
-          rrrr2 = parsed_json['response'][yy2]['link']
-          rrrr4 = parsed_json['response'][yy3]['link']
-          rrrr5 = parsed_json['response'][yy4]['link']
-          rrrr01 = parsed_json['response'][yy]['title']
-          rrrr11 = parsed_json['response'][yy1]['title']
-          rrrr21 = parsed_json['response'][yy2]['title']
-          rrrr41 = parsed_json['response'][yy3]['title']
-          rrrr51 = parsed_json['response'][yy4]['title']
-          pic = types.InlineQueryResultAudio('1', rrrr ,'{}'.format(rrrr01))
-          pic1 = types.InlineQueryResultAudio('2', rrrr1 ,'{}'.format(rrrr11))
-          pic2 = types.InlineQueryResultAudio('3', rrrr2 ,'{}'.format(rrrr21))
-          pic3 = types.InlineQueryResultAudio('4', rrrr4 ,'{}'.format(rrrr41))
-          pic4 = types.InlineQueryResultAudio('5', rrrr5 ,'{}'.format(rrrr51))
-          bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4,it], cache_time="15")
+        oo = query.query
+        input = oo.replace("music ","")
+        t5 = input.replace(" ","%20")
+        eeqq = urllib.quote(input)
+        req = urllib2.Request("http://api.gpmod.ir/music.search/?v=2&q={}&count=30".format(eeqq))
+        opener = urllib2.build_opener()
+        f = opener.open(req)
+        parsed_json = json.loads(f.read())
+        yy = random.randrange(10)
+        yy1 = random.randrange(10)
+        yy2 = random.randrange(10)
+        yy3 = random.randrange(10)
+        yy4 = random.randrange(10)
+        rrrr = parsed_json['response'][yy]['link']
+        rrrr1 = parsed_json['response'][yy1]['link']
+        rrrr2 = parsed_json['response'][yy2]['link']
+        rrrr4 = parsed_json['response'][yy3]['link']
+        rrrr5 = parsed_json['response'][yy4]['link']
+        rrrr01 = parsed_json['response'][yy]['title']
+        rrrr11 = parsed_json['response'][yy1]['title']
+        rrrr21 = parsed_json['response'][yy2]['title']
+        rrrr41 = parsed_json['response'][yy3]['title']
+        rrrr51 = parsed_json['response'][yy4]['title']
+        pic = types.InlineQueryResultAudio('1', rrrr ,'{}'.format(rrrr01))
+        pic1 = types.InlineQueryResultAudio('2', rrrr1 ,'{}'.format(rrrr11))
+        pic2 = types.InlineQueryResultAudio('3', rrrr2 ,'{}'.format(rrrr21))
+        pic3 = types.InlineQueryResultAudio('4', rrrr4 ,'{}'.format(rrrr41))
+        pic4 = types.InlineQueryResultAudio('5', rrrr5 ,'{}'.format(rrrr51))
+        bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4,markdown,weather], cache_time="15")
 
 #################################################################################################################################################################################################
 
@@ -413,7 +426,10 @@ def query_text(query):
     mark_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_555.jpg'
     markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@Cyber_KingDom_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
 
-    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown], cache_time=5, switch_pm_text='Start bot')
+    weathertmp = 'http://www.freeiconspng.com/uploads/weather-icon-13.png'
+    weather = types.InlineQueryResultArticle('10',title='Weather',input_message_content=types.InputTextMessageContent('*@Cyber_KingDom_Bot weather [City]*',parse_mode='Markdown'),reply_markup=markupweather,description='weather [City]',thumb_url=weathertmp)
+
+    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown, weather], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
