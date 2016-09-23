@@ -281,7 +281,10 @@ def keyboardHide(m):
 
 @bot.inline_handler(lambda q: q.query)
 def inline(query):
-    if query.query.split()[0] == 'music':
+    if query.query.split()[0] == 'markdown':
+        text = m.query.replace('markdown','')
+        it = types.InlineQueryResultArticle('1','Markdown', types.InputTextMessageContent('{}'.format(text), parse_mode='matkdown'))
+    elif query.query.split()[0] == 'music':
           oo = query.query
           input = oo.replace("music ","")
           t5 = input.replace(" ","%20")
@@ -305,12 +308,12 @@ def inline(query):
           rrrr21 = parsed_json['response'][yy2]['title']
           rrrr41 = parsed_json['response'][yy3]['title']
           rrrr51 = parsed_json['response'][yy4]['title']
-          pic = types.InlineQueryResultAudio('1', rrrr ,'Music of {}  \n{}'.format(input,rrrr01))
-          pic1 = types.InlineQueryResultAudio('2', rrrr1 ,'Music of {}  \n{}'.format(input,rrrr11))
-          pic2 = types.InlineQueryResultAudio('3', rrrr2 ,'Music of {}  \n{}'.format(input,rrrr21))
-          pic3 = types.InlineQueryResultAudio('4', rrrr4 ,'Music of {}  \n{}'.format(input,rrrr41))
-          pic4 = types.InlineQueryResultAudio('5', rrrr5 ,'Music of {}  \n{}'.format(input,rrrr51))
-          bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4], cache_time="15")
+          pic = types.InlineQueryResultAudio('1', rrrr ,'{}'.format(rrrr01))
+          pic1 = types.InlineQueryResultAudio('2', rrrr1 ,'{}'.format(rrrr11))
+          pic2 = types.InlineQueryResultAudio('3', rrrr2 ,'{}'.format(rrrr21))
+          pic3 = types.InlineQueryResultAudio('4', rrrr4 ,'{}'.format(rrrr41))
+          pic4 = types.InlineQueryResultAudio('5', rrrr5 ,'{}'.format(rrrr51))
+          bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4,it], cache_time="15")
 
 #################################################################################################################################################################################################
 
@@ -404,10 +407,13 @@ def query_text(query):
     markup.add(li1)
     markup.add(li2)
     markup.add(li3)
-    news_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_551.jpg'
+    news_tmp = 'http://seattlefreepress.org/wp-content/uploads/2015/11/In-the-news-icon.png'
     news = types.InlineQueryResultArticle('8', 'News', types.InputTextMessageContent('1. :'+title+'\n\n2. :'+title2+'\n\n3. :'+title3), reply_markup=markup, thumb_url=news_tmp)
 
-    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news], cache_time=5, switch_pm_text='Start bot')
+    mark_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_555.jpg'
+    markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@Cyber_KingDom_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
+
+    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
