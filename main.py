@@ -281,20 +281,9 @@ def inline(query):
     if query.query.split()[0] == 'markdown':
         text = query.query.replace('markdown','')
         markdown = types.InlineQueryResultArticle('1','Markdown', types.InputTextMessageContent('{}'.format(text), parse_mode='Markdown'))
-    elif m.query.split()[0] == 'weather':
-        text = query.query.replace('weather','')
-        url = urllib2.Request('http://api.openweathermap.org/data/2.5/weather?q={}&appid=269ed82391822cc692c9afd59f4aabba'.format(text))
-        openerf = urllib2.build_opener()
-        ff = opener.open(url)
-        parsed_json = json.loads(ff.read())
-        wt = parsed_json['main']['temp']
-        feshar = parsed_json['main']['pressure']
-        wind = parsed_json['wind']['speed']
-        icon = parsed_json['weather'][0]['icon']
-        wt_data = int(wt)-273.15
-        tmp = 'http://openweathermap.org/img/w/{}.png'.format(icon)
-        weather = types.InlineQueryResultArticle('1', 'Weather', types.InputTextMessageContent('C : {}\nWind Speed : {}\nAir pressure : {}'.format(wt_data,wind,feshar)),thumb_url=tmp)
-    elif query.query.split()[0] == 'music':
+        bot.answer_inline_query(query.id, [markdown], cache_time="1")
+
+    if query.query.split()[0] == 'music':
         oo = query.query
         input = oo.replace("music ","")
         t5 = input.replace(" ","%20")
@@ -423,10 +412,7 @@ def query_text(query):
     mark_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_555.jpg'
     markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@Cyber_KingDom_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
 
-    weathertmp = 'http://www.freeiconspng.com/uploads/weather-icon-13.png'
-    weather = types.InlineQueryResultArticle('10', 'Weather', types.InputTextMessageContent('*@Cyber_KingDom_Bot weather [City]*',parse_mode='Markdown'),reply_markup=markup, thumb_url=weathertmp)
-
-    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown, weather], cache_time=5, switch_pm_text='Start bot')
+    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
