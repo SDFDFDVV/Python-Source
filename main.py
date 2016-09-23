@@ -387,7 +387,27 @@ def query_text(query):
     hi_tmp = 'https://d85wutc1n854v.cloudfront.net/live/products/600x375/WB0PGGM81.png?v=1.0'
     hi = types.InlineQueryResultArticle('7', 'Music', types.InputTextMessageContent('*@Cyber_KingDom_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
 
-    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi], cache_time=5, switch_pm_text='Start bot')
+    url1 = urllib2.Request('http://api.khabarfarsi.net/api/news/latest/1?tid=*&output=json')
+    openerc = urllib2.build_opener()
+    fc = openerc.open(url1)
+    parsed_jsonc = json.loads(fc.read())
+    title = parsed_jsonc['items'][0]['title']
+    link = parsed_jsonc['items'][0]['link']
+    title2 = parsed_jsonc['items'][1]['title']
+    link2 = parsed_jsonc['items'][1]['link']
+    title3 = parsed_jsonc['items'][2]['title']
+    link3 = parsed_jsonc['items'][2]['link']
+    markup = types.InlineKeyboardMarkup()
+    li1 = types.InlineKeyboardButton('Link 1.',url=link)
+    li2 = types.InlineKeyboardButton('Link 2.',url=link2)
+    li3 = types.InlineKeyboardButton('Link 3.',url=link3)
+    markup.add(li1)
+    markup.add(li2)
+    markup.add(li3)
+    news_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_551.jpg'
+    news = types.InlineQueryResultArticle('8', 'News', types.InputTextMessageContent('1. :'+title+'\n\n2. :'+title2+'\n\n3. :'+title3), reply_markup=markup, thumb_url=news_tmp)
+
+    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
