@@ -297,27 +297,27 @@ def inline(query):
         opener = urllib2.build_opener()
         f = opener.open(req)
         parsed_json = json.loads(f.read())
-        yy = random.randrange(10)
         yy1 = random.randrange(10)
         yy2 = random.randrange(10)
         yy3 = random.randrange(10)
         yy4 = random.randrange(10)
-        rrrr = parsed_json['response'][yy]['link']
+        yy5 = random.randrange(10)
         rrrr1 = parsed_json['response'][yy1]['link']
         rrrr2 = parsed_json['response'][yy2]['link']
-        rrrr4 = parsed_json['response'][yy3]['link']
-        rrrr5 = parsed_json['response'][yy4]['link']
-        rrrr01 = parsed_json['response'][yy]['title']
-        rrrr11 = parsed_json['response'][yy1]['title']
-        rrrr21 = parsed_json['response'][yy2]['title']
-        rrrr41 = parsed_json['response'][yy3]['title']
-        rrrr51 = parsed_json['response'][yy4]['title']
-        pic = types.InlineQueryResultAudio('1', rrrr ,'{}'.format(rrrr01))
-        pic1 = types.InlineQueryResultAudio('2', rrrr1 ,'{}'.format(rrrr11))
-        pic2 = types.InlineQueryResultAudio('3', rrrr2 ,'{}'.format(rrrr21))
+        rrrr3 = parsed_json['response'][yy3]['link']
+        rrrr4 = parsed_json['response'][yy4]['link']
+        rrrr5 = parsed_json['response'][yy5]['link']
+        rrrr01 = parsed_json['response'][yy1]['title']
+        rrrr11 = parsed_json['response'][yy2]['title']
+        rrrr21 = parsed_json['response'][yy3]['title']
+        rrrr41 = parsed_json['response'][yy4]['title']
+        rrrr51 = parsed_json['response'][yy5]['title']
+        pic = types.InlineQueryResultAudio('1', rrrr1 ,'{}'.format(rrrr01))
+        pic1 = types.InlineQueryResultAudio('2', rrrr2 ,'{}'.format(rrrr11))
+        pic2 = types.InlineQueryResultAudio('3', rrrr3 ,'{}'.format(rrrr21))
         pic3 = types.InlineQueryResultAudio('4', rrrr4 ,'{}'.format(rrrr41))
         pic4 = types.InlineQueryResultAudio('5', rrrr5 ,'{}'.format(rrrr51))
-        bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4,markdown,weather], cache_time="15")
+        bot.answer_inline_query(query.id, [pic,pic1,pic2,pic3,pic4], cache_time="15")
 
 #################################################################################################################################################################################################
 
