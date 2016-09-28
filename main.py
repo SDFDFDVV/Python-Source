@@ -26,6 +26,13 @@ TOKEN = '240545787:AAEwAOm2aKRcHVSYtLQ6gD-OBJFqCheA_OQ'
 bot = telebot.TeleBot(TOKEN)
 is_sudo = '142141024'
 rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+f = "\n \033[01;30m Bot Firstname: {} \033[0m".format(bot.get_me().first_name)
+u = "\n\n \033[01;34m Bot username: {} \033[0m".format(bot.get_me().username)
+i = "\n\n \033[01;32m Bot ID: {} \033[0m".format(bot.get_me().id)
+c = "\n\n \033[01;31m Thank You Dady :)  I`m Fully Online Now :D \033[0m"
+print(f + u + i + c)
+
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['short'])
@@ -147,6 +154,30 @@ def send_stats(m):
 #@bot.message_handler(func=lambda message: True)
 def set_stats(message):
     bot.reply_to(message, message.text)
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['setflood'])
+def sflood(m):
+    try:
+        if m.chat.id == logchat :
+            text = m.text.replace('/setflood ','')
+            r.set("maxmsgs:{}".format(botuser),int(text))
+            bot.send_message(m.chat.id,"*Flood Messages Changed To {}*".format(text),parse_mode='Markdown')
+    except Exception as e:
+        print(e)
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['setfloodtime'])
+def sft(m):
+    try:
+        if m.chat.id == logchat :
+            text = m.text.replace('/setfloodtime ','')
+            r.set("maxflood:{}".format(botuser),int(text))
+            bot.send_message(m.chat.id,"*Flood Time Changed To {}*".format(text),parse_mode='Markdown')
+    except Exception as e:
+print(e)
 
 #################################################################################################################################################################################################
 
@@ -417,7 +448,7 @@ def query_text(query):
     mark_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_555.jpg'
     markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@Cyber_KingDom_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
 
-    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, hi, news, markdown], cache_time=5, switch_pm_text='Start bot')
+    bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, news, hi, markdown], cache_time=5, switch_pm_text='Start bot')
 
 #################################################################################################################################################################################################
 
@@ -515,6 +546,24 @@ def uptime(m):
     if m.from_user.id == 142141024:
         cc = os.popen("uptime").read()
         bot.send_message(m.chat.id, '{}'.format(cc))
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(regexp='^(/sh) (.*)')
+def uptime(m):
+    if m.from_user.id == 142141024:
+        text = m.text.split()[1]
+        cc = os.popen("{}").read().format(text)
+        bot.send_message(m.chat.id, '{}'.format(cc))
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(regexp='^(/pm) (.*) (.*)')
+def uptime(m):
+    if m.from_user.id == 142141024:
+        text = m.text.split()[1]
+        tezt = m.text.split()[2]
+        bot.send_message(text, '{}'.format(tezt))
 
 #################################################################################################################################################################################################
 
