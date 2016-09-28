@@ -157,30 +157,6 @@ def set_stats(message):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['setflood'])
-def sflood(m):
-    try:
-        if m.chat.id == logchat :
-            text = m.text.replace('/setflood ','')
-            r.set("maxmsgs:{}".format(botuser),int(text))
-            bot.send_message(m.chat.id,"*Flood Messages Changed To {}*".format(text),parse_mode='Markdown')
-    except Exception as e:
-        print(e)
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(commands=['setfloodtime'])
-def sft(m):
-    try:
-        if m.chat.id == logchat :
-            text = m.text.replace('/setfloodtime ','')
-            r.set("maxflood:{}".format(botuser),int(text))
-            bot.send_message(m.chat.id,"*Flood Time Changed To {}*".format(text),parse_mode='Markdown')
-    except Exception as e:
-print(e)
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['gif'])
 def aparat(m):
     text = m.text.replace('/gif ','')
@@ -549,24 +525,6 @@ def uptime(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(regexp='^(/sh) (.*)')
-def uptime(m):
-    if m.from_user.id == 142141024:
-        text = m.text.split()[1]
-        cc = os.popen("{}").read().format(text)
-        bot.send_message(m.chat.id, '{}'.format(cc))
-
-#################################################################################################################################################################################################
-
-@bot.message_handler(regexp='^(/pm) (.*) (.*)')
-def uptime(m):
-    if m.from_user.id == 142141024:
-        text = m.text.split()[1]
-        tezt = m.text.split()[2]
-        bot.send_message(text, '{}'.format(tezt))
-
-#################################################################################################################################################################################################
-
 @bot.message_handler(commands=['md'])
 def time(m):
         pouria = m.text.replace("/md ","")
@@ -633,7 +591,7 @@ def send_message(m):
     groupname = m.chat.title
     groupid = m.chat.id
     rediss.sadd('group','{}'.format(m.chat.id))
-    bot.send_message(-142141024, "New_chat \n\n name : {} id : {}".format(groupname,groupid), parse_mode="Markdown")
+    bot.send_message(142141024, "New_chat \n\n name : {} ID : {}".format(groupname,groupid), parse_mode="Markdown")
     bot.send_message(m.chat.id, "Hi all")
 
 #################################################################################################################################################################################################
@@ -718,7 +676,7 @@ def info(m):
       ENtime = data['ENtime']
       text = bot.get_chat_member(m.chat.id, m.from_user.id).status
       rank = rediss.hget("user:rank","{}".format(id))
-      cap = 'First name : {}\nLast Name : {}\nUsername : @{}\nUser ID : {}\nDate : {}\nTime : {}\nGlobalRank : {}\nPost : {}'.format(first,last,user,id,ENdate,ENtime,rank,text)
+      cap = 'First name : {}\nLast Name : {}\nUsername : @{}\nUser ID : {}\nDate : {}\nTime : {}\nGlobalRank : {}\nPost In Group : {}'.format(first,last,user,id,ENdate,ENtime,rank,text)
     if int(count) == 0 :
       bot.send_photo(m.chat.id,open('personun.png'),caption='{}'.format(cap))
     else:
