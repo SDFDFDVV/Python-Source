@@ -28,9 +28,9 @@ is_sudo = '142141024'
 rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 f = "\n \033[01;30m Bot Firstname: {} \033[0m".format(bot.get_me().first_name)
-u = "\n\n \033[01;34m Bot username: {} \033[0m".format(bot.get_me().username)
-i = "\n\n \033[01;32m Bot ID: {} \033[0m".format(bot.get_me().id)
-c = "\n\n \033[01;31m Thank You Dady :)  I`m Fully Online Now :D \033[0m"
+u = "\n \033[01;34m Bot username: {} \033[0m".format(bot.get_me().username)
+i = "\n \033[01;32m Bot ID: {} \033[0m".format(bot.get_me().id)
+c = "\n \033[01;31m Bot Is Online Now ! \033[0m"
 print(f + u + i + c)
 
 #################################################################################################################################################################################################
@@ -87,36 +87,6 @@ def callback_inline(call):
      if call.message:
         if call.data == "pouria":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
-     if call.message:
-        if call.data == "sticker":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_sticker(call.message.chat.id, '{}'.format(r))
-     if call.message:
-        if call.data == "document":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_document(call.message.chat.id, '{}'.format(r))
-     if call.message:
-        if call.data == "video":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_video(call.message.chat.id, '{}'.format(r))
-     if call.message:
-        if call.data == "photo":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_photo(call.message.chat.id, '{}'.format(r))
-     if call.message:
-        if call.data == "Audio":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_audio(call.message.chat.id, '{}'.format(r))
-     if call.message:
-        if call.data == "vote":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Your Vote Saved!")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_message(call.message.chat.id, '{}'.format(r))
 
 #################################################################################################################################################################################################
 
@@ -208,6 +178,21 @@ def kick(m):
 def hi(m):
     name = m.left_chat_member.first_name
     bot.send_message(m.chat.id, '*GoodBye* `{}`'.format(name), parse_mode='Markdown')
+
+#################################################################################################################################################################################################
+
+@bot.message_handler(commands=['create'])
+def create(message):
+	try:
+		token = message.text.split(' ')[1]
+		url = 'https://api.telegram.org/bot{}/getMe'.format(token)
+		r = requests.get(url)
+		jdat = r.json()
+		username = jdat["result"]["username"]
+		subprocess.Popen("python main.py {}".format(token),shell=True) # You Need to Create Sample Bot To start
+		bot.send_message(message.chat.id, "Connected to @{}".format(username))
+	except IndexError:
+		bot.send_message(message.chat.id, "Token Error")
 
 #################################################################################################################################################################################################
 
@@ -582,7 +567,7 @@ def answer(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
       try:
-        x = m.text.replace("/number ","")
+        x = m.text.split()[1]
         a = len(x)
         bot.send_message(m.chat.id, "*Number Of Your Text :* {}".format(a), parse_mode="Markdown")
       except:
