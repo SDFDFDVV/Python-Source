@@ -480,7 +480,7 @@ def clac(m):
     if str(banlist) == 'False':
       try:
         text = m.text.replace("/calc ","")
-        res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text)).read()
+        res = urllib.urlopen("http://api.mathjs.org/v1/?expr={}".format(text).replace("+","%2B")).read()
         bot.send_message(m.chat.id, "_{}_ = `{}`".format(text,res), parse_mode="Markdown", disable_web_page_preview=True)
       except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
