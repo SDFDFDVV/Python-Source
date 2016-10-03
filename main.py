@@ -151,8 +151,6 @@ def send_stats(m):
 
 @bot.message_handler(commands=['gif'])
 def gif(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
     text = m.text.replace('/gif ','')
     url = "http://www.flamingtext.com/net-fu/image_output.cgi?_comBuyRedirect=false&script=blue-fire&text={}&symbol_tagname=popular&fontsize=70&fontname=futura_poster&fontname_tagname=cool&textBorder=15&growSize=0&antialias=on&hinting=on&justify=2&letterSpacing=0&lineSpacing=0&textSlant=0&textVerticalSlant=0&textAngle=0&textOutline=off&textOutline=false&textOutlineSize=2&textColor=%230000CC&angle=0&blueFlame=on&blueFlame=false&framerate=75&frames=5&pframes=5&oframes=4&distance=2&transparent=off&transparent=false&extAnim=gif&animLoop=on&animLoop=false&defaultFrameRate=75&doScale=off&scaleWidth=240&scaleHeight=120&&_=1469943010141".format(text)
     res = urllib.urlopen(url)
@@ -500,8 +498,6 @@ def clac(m):
 
 @bot.message_handler(commands=['feedback'])
 def feedback(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
   try:
     senderid = m.chat.id
     first = m.from_user.first_name
@@ -614,8 +610,6 @@ def send_message(m):
 
 @bot.message_handler(commands=['sticker'])
 def tostick(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
   try:
     cid = m.chat.id
     if m.reply_to_message:
@@ -646,8 +640,6 @@ def love(m):
 
 @bot.message_handler(commands=['photo'])
 def tostick(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
   try:
     cid = m.chat.id
     if m.reply_to_message:
@@ -667,8 +659,6 @@ def tostick(m):
 
 @bot.message_handler(regexp='^(/info)')
 def info(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
     if m.reply_to_message:
       id = m.reply_to_message.from_user.id
       user = m.reply_to_message.from_user.username
