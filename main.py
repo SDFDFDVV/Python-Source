@@ -59,9 +59,9 @@ def send_pic(m):
         bot.send_photo(m.chat.id, open('img.jpg'))
       except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
+        os.remove('img.jpg')
 
 #################################################################################################################################################################################################
-
 
 @bot.message_handler(commands=['start'])
 def welcome(m):
@@ -127,25 +127,23 @@ def send_stats(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['ban'])
+@bot.message_handler(commands=['block'])
 def kick(m):
     if m.from_user.id == 142141024:
-      if m.reply_to_message:
-        ids = m.reply_to_message.from_user.id
-        rediss.sadd('banlist',int(ids))
-        bot.send_message(int(ids), '<b>You Are Banned!</b>',parse_mode='HTML')
-        bot.send_message(m.chat.id, 'Banned!')
+        ids = m.text.split()[1]
+        rediss.sadd('blocklist',int(ids))
+        bot.send_message(int(ids), '<b>You Are Blocked!</b>',parse_mode='HTML')
+        bot.send_message(m.chat.id, 'Blocked!')
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['unban'])
+@bot.message_handler(commands=['unblock'])
 def send_stats(m):
     if m.from_user.id == 142141024:
-      if m.reply_to_message:
-        ids = m.reply_to_message.from_user.id
-        rediss.srem('banlist',int(ids))
-        bot.send_message(int(ids), '<b>You Are UnBanned!</b>',parse_mode='HTML')
-        bot.send_message(m.chat.id, 'UnBanned!')
+        ids = m.text.split()[1]
+        rediss.srem('blocklist',int(ids))
+        bot.send_message(int(ids), '<b>You Are UnBlocked!</b>',parse_mode='HTML')
+        bot.send_message(m.chat.id, 'UnBlocked!')
 
 #################################################################################################################################################################################################
 
@@ -159,6 +157,7 @@ def gif(m):
     link = parsed_json['gimpHost']
     urllib.urlretrieve("{}".format(gif), "gif.gif")
     bot.send_document(m.chat.id, open('gif.gif'), caption="@Cyber_KingDom_Bot")
+    os.remove('gif.gif')
 
 #################################################################################################################################################################################################
 
@@ -172,6 +171,7 @@ def qr(message):
         bot.send_sticker(message.chat.id, open('time.jpg'))
       except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
+	os.remove('time.jpg')
 
 #################################################################################################################################################################################################
 
@@ -188,10 +188,10 @@ def hi(m):
 
 #################################################################################################################################################################################################
 
-@bot.message_handler(commands=['cleanban'])
+@bot.message_handler(commands=['clearblocks'])
 def kick(m):
     if m.from_user.id == 142141024:
-        rediss.delete('banlist')
+        rediss.delete('blocklist')
         bot.send_message(m.chat.id, '<b>Cleaned!</b>',parse_mode='HTML')
 
 #################################################################################################################################################################################################
@@ -271,6 +271,7 @@ def send_sports(m):
         bot.send_sticker(m.chat.id, open('food.jpg'))
       except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
+	os.remove('food.jpg')
 
 #################################################################################################################################################################################################
 
@@ -440,6 +441,7 @@ def voice(m):
     if str(banlist) == 'False':
         urllib.urlretrieve("http://tts.baidu.com/text2audio?lan=en&ie=UTF-8&text={}&".format(m.text.replace('/voice', '')), "voice.ogg")
         bot.send_voice(m.chat.id, open('voice.ogg'))
+	os.remove('voice.ogg')
 
 #################################################################################################################################################################################################
 
@@ -450,6 +452,7 @@ def web(m):
     if str(banlist) == 'False':
         urllib.urlretrieve("http://api.screenshotmachine.com/?key=b645b8&size=X&url={}".format(m.text.replace('/webshot', '')), "web.jpg")
         bot.send_photo(m.chat.id, open('web.jpg'))
+	os.remove('web.jpg')
 
 #################################################################################################################################################################################################
 
@@ -622,6 +625,7 @@ def tostick(m):
         urllib.urlretrieve(link, "stick.png")
         file1 = open('stick.png', 'rb')
         bot.send_sticker(cid,file1)
+	os.remove('stick.png')
   except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
@@ -635,6 +639,7 @@ def love(m):
         tezt = m.text.split()[2]
         urllib.urlretrieve("http://www.iloveheartstudio.com/-/p.php?t={}%20%EE%BB%AE%20{}&bc=000000&tc=FFFFFF&hc=ff0000&f=c&uc=true&ts=true&ff=PNG&w=500&ps=sq".format(text,tezt), "love.png")
         bot.send_sticker(m.chat.id, open('love.png'))
+	os.remove('love.png')
 
 #################################################################################################################################################################################################
 
@@ -652,6 +657,7 @@ def tostick(m):
         urllib.urlretrieve(link, "stick1.png")
         file1 = open('stick1.png', 'rb')
         bot.send_photo(cid,file1)
+	os.remove('stick1.png')
   except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
@@ -688,8 +694,6 @@ def info(m):
 
 @bot.message_handler(commands=['setlink'])
 def clac(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
         text = m.text.replace("/setlink ","")
         rediss.hset("gp:link","{}".format(m.chat.id),"link: {}".format(text))
         bot.send_message(m.chat.id, "`This Link Seted` {}".format(text), parse_mode="Markdown")
@@ -698,8 +702,6 @@ def clac(m):
 
 @bot.message_handler(commands=['link'])
 def clac(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
     link = rediss.hget("gp:link","{}".format(m.chat.id))
     bot.send_message(m.chat.id, "{}".format(link), parse_mode="Markdown")
 
@@ -718,8 +720,6 @@ def clac(m):
 
 @bot.message_handler(commands=['rank'])
 def clac(m):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
   try:
     id = m.text.replace("/rank ","")
     rank = rediss.hget("user:rank","{}".format(id))
@@ -807,6 +807,7 @@ def keep(m):
         tect = m.text.split()[3]
         urllib.urlretrieve("http://www.keepcalmstudio.com/-/p.php?t=%EE%BB%AA%0D%0AKEEP%0D%0ACALM%0D%0A{}%0D%0A{}%0D%0A{}&bc=E31F17&tc=FFFFFF&cc=FFFFFF&uc=true&ts=true&ff=PNG&w=500&ps=sq".format(text,tezt,tect), "keep.png")
         bot.send_sticker(m.chat.id, open('keep.png'))
+	os.remove('keep.png')
 
 #################################################################################################################################################################################################
 
