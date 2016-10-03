@@ -732,6 +732,8 @@ def kick(m):
 @bot.message_handler(commands=['setsticker'])
 def tostick(message):
     cid = message.chat.id
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+    if str(banlist) == 'False':
      try:
       if message.reply_to_message:
         if message.reply_to_message.sticker:
@@ -748,6 +750,8 @@ def tostick(message):
 @bot.message_handler(commands=['cap'])
 def tostick(message):
     cid = message.chat.id
+    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
+    if str(banlist) == 'False':
      try:
       if message.reply_to_message:
         if message.reply_to_message.photo:
