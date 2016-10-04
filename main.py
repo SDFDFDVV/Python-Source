@@ -23,7 +23,7 @@ import requests as req
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-TOKEN = '240545787:AAH_ZjJe0DEMM3qFs3-x3ZZb5ue63s2oltQ'
+TOKEN = 'Your Token Here'
 bot = telebot.TeleBot(TOKEN)
 sudo = '142141024'
 rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -108,7 +108,7 @@ def callback_inline(call):
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /kickme\n\nUsage : Exit From Group!")
      if call.message:
         if call.data == "id":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /id [URL]\n\nUsage : Get Your ID!\n\n\n\n\Command : id (reply to message)\n\nGet Users ID!")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /id [URL]\n\nUsage : Get Your ID!\n\n\n\nCommand : id (reply to message)\n\nGet Users ID!")
      if call.message:
         if call.data == "me":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /me\n\nUsage : Show Your Information With Your Sticker!")
@@ -977,8 +977,6 @@ def welcome(m):
        markup.add(ff)
        gg = types.InlineKeyboardButton("Uploader Panel",callback_data='uploader')
        markup.add(gg)
-       id = m.from_user.id
-       rediss.sadd('memberspy',id)
        bot.send_message(cid, "*List Of Commands :*", disable_notification=True, reply_markup=markup, parse_mode='Markdown')
 
 #################################################################################################################################################################################################
