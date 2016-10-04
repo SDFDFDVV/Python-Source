@@ -92,30 +92,104 @@ def callback_inline(call):
         if call.data == "pouria":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
      if call.message:
+        if call.data == "short":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /short [URL]\n\nUsage : Shorten Your Link!")
+     if call.message:
+        if call.data == "pic":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /pic\n\nUsage : Send Random Picture!")
+     if call.message:
+        if call.data == "gif":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /gif [Text]\n\nUsage : Convert Text To Gif!")
+     if call.message:
+        if call.data == "tex":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /tex [Text]\n\nUsage : Write Text On The Sticker!")
+     if call.message:
+        if call.data == "kickme":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /kickme\n\nUsage : Exit From Group!")
+     if call.message:
+        if call.data == "id":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /id [URL]\n\nUsage : Get Your ID!\n\n\n\n\Command : id (reply to message)\n\nGet Users ID!")
+     if call.message:
+        if call.data == "me":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /me\n\nUsage : Show Your Information With Your Sticker!")
+     if call.message:
+        if call.data == "food":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /food\n\nUsage : Get Food Sticker!")
+     if call.message:
+        if call.data == "mean":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /mean [Text]\n\nUsage : Get The Meaning Of Text!")
+     if call.message:
+        if call.data == "voice":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /voice [Text]\n\nUsage : Convert Text To Voice!")
+     if call.message:
+        if call.data == "webshot":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /webshot [URL]\n\nUsage : Get ScreenShot From Site!")
+     if call.message:
+        if call.data == "calc":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /calc [Formulas]\n\nUsage : Calculate Your Formulas!")
+     if call.message:
+        if call.data == "feedback":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /feedback [Text]\n\nUsage : Send Message To Admin!")
+     if call.message:
+        if call.data == "bold":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /bold [Text]\n\nUsage : Bold Your Text!")
+     if call.message:
+        if call.data == "italic":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /italic [Text]\n\nUsage : Italic Your Text!")
+     if call.message:
+        if call.data == "code":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /code [Text]\n\nUsage : Code Your Text!")
+     if call.message:
+        if call.data == "hyper":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /hyper [Text] [URL]\n\nUsage : Hyperlink Your Text!")
+     if call.message:
+        if call.data == "echo":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /echo [Text]\n\nUsage : Echo Your Text!")
+     if call.message:
         if call.data == "sticker":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_sticker(call.message.chat.id, '{}'.format(r))
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /sticker (reply to photo)\n\nUsage : Convert Photo To Sticker!")
      if call.message:
-        if call.data == "document":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_document(call.message.chat.id, '{}'.format(r))
-     if call.message:
-        if call.data == "video":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_video(call.message.chat.id, '{}'.format(r))
+        if call.data == "number":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /num [Text]\n\nUsage : Count The Word Of Your Text!")
      if call.message:
         if call.data == "photo":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_photo(call.message.chat.id, '{}'.format(r))
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /photo (reply to sticker)\n\nUsage : Convert Sticker To Photo!")
      if call.message:
-        if call.data == "Audio":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=":D")
-            r = rediss.hget('file_id',call.message.chat.id)
-            bot.send_audio(call.message.chat.id, '{}'.format(r))
+        if call.data == "love":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /love [Text] [Text]\n\nUsage : Get Lovely Sticker From Texts!")
+     if call.message:
+        if call.data == "info":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /info\n\nUsage : Get Your Information!")
+     if call.message:
+        if call.data == "setlink":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /setlink [GroupLink]\n\nUsage : Set Group Link!")
+     if call.message:
+        if call.data == "link":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /link\n\nUsage : Get Group Link!")
+     if call.message:
+        if call.data == "rank":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /rank [ID]\n\nUsage : Show Users Rank!")
+     if call.message:
+        if call.data == "setsticker":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /setsticker (reply to sticker)\n\nUsage : Set Your Sticker!")
+     if call.message:
+        if call.data == "cap":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /cap [Text] (reply to photo)\n\nUsage : Write Text Under The Photo!")
+     if call.message:
+        if call.data == "keepcalm":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /keepcalm [Text] [Text] [Text]\n\nUsage : Get KeepCalm Sticker From Texts!")
+     if call.message:
+        if call.data == "setphone":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /setphone [PhoneNumber]\n\nUsage : Set Your PhoneNumber!")
+     if call.message:
+        if call.data == "myphone":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /myphone\n\nUsage : Get Your PhoneNumber!")
+     if call.message:
+        if call.data == "fwd":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /fwd\n\nUsage : Forward Message To Admin!")
+     if call.message:
+        if call.data == "uploader":
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Uploader Panel :\n\nSend Your File In Private To Upload And Get FileID")
 
 #################################################################################################################################################################################################
 
@@ -235,8 +309,10 @@ def kick(m):
 
 @bot.message_handler(commands=['kickme'])
 def answer(m):
+  if m.chat.type == "group" or m.chat.type == "supergroup":
     bot.kick_chat_member(m.chat.id, m.from_user.id)
-
+  if m.chat.type == "private":
+    bot.send_message(m.chat.id, 'Just In Group!')
 #################################################################################################################################################################################################
 
 @bot.message_handler(regexp='^id')
@@ -289,9 +365,9 @@ def send_sports(m):
       try:
         urllib.urlretrieve("http://lorempixel.com/400/200/food/OffLiNeTeam", "food.jpg")
         bot.send_sticker(m.chat.id, open('food.jpg'))
+	os.remove('food.jpg')
       except:
         bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
-	os.remove('food.jpg')
 
 #################################################################################################################################################################################################
 
@@ -724,9 +800,12 @@ def info(m):
 def clac(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      if m.chat.type == "group" or m.chat.type == "supergroup":
         text = m.text.replace("/setlink ","")
         rediss.hset("gp:link","{}".format(m.chat.id),"link: {}".format(text))
         bot.send_message(m.chat.id, "`This Link Seted` {}".format(text), parse_mode="Markdown")
+      if m.chat.type == "private":
+        bot.send_message(m.chat.id, 'Just In Group!')
 
 #################################################################################################################################################################################################
 
@@ -734,8 +813,11 @@ def clac(m):
 def clac(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
+      if m.chat.type == "group" or m.chat.type == "supergroup":
         link = rediss.hget("gp:link","{}".format(m.chat.id))
         bot.send_message(m.chat.id, "{}".format(link), parse_mode="Markdown")
+      if m.chat.type == "private":
+        bot.send_message(m.chat.id, 'Just In Group!')
 
 #################################################################################################################################################################################################
 
@@ -824,11 +906,80 @@ def tostick(message):
 #################################################################################################################################################################################################
 
 @bot.message_handler(commands=['help'])
-def clac(m):
+def welcome(m):
     banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
     if str(banlist) == 'False':
-        text = m.text.replace("/help","")
-        bot.send_message(m.chat.id, "*List Of Commands :*\n\n/short URL\n_Shorten Your Link_\n/pic\n_Send Random Picture_\n/tex Text\n_Take Sticker From Text_\n/kickme\n_Exit From Group_\n/id\n_Get Your ID_\n/me\n_Show Your Information_\n/food\n_Get Food Sticker_\n/mean Text\n_Get The Meaning Of Texts_\n/feedback Text\n_Send PM To Admin_\n/webshot URL\n_Get ScreenShot From URL_\n/voice Text\n_Convert Text To Voice_\n/love Text Text\n_Get Lovely Sticker_\n/keepcalm Text Text Text\n_Get KeppCalm Sticker_\n/bold Text\n_Bold The Text_\n/italic Text\n_Italic The Text_\n/code Text\n_Code The Text_\n/hyper Text Link\n_Hyperlink The Text_\n/echo Text\n_Echo The Text_\n/sticker (reply to photo)\n_Convert Photo To Sticker_\n/photo (reply to sticker)\n_Convert Sticker To Photo_\n/gif Text\n_Convert Text To Gif_\n/info\n_Get Your Information_\n/setlink GroupLink\n_Set Group Link_\n/link\n_Get Group Link_\n/rank ID\n_Show User Rank_\n/setsticker (reply to sticker)\n_Set Sticker For Your Self_\n/cap Text (reply to photo)\n_Write Text Under The Photo_\n/setphone PhoneNumber\n_Set Your PhoneNumber In The Bot_\n/myphone\n_Show Your PhoneNumber_\n\n*Get Users ID:*\nid (reply to message)\n\n*Uploader Panel:*\n_Send Your File In Private To Upload!_".format(text), parse_mode="Markdown")
+       cid = m.chat.id
+       markup = types.InlineKeyboardMarkup()
+       a = types.InlineKeyboardButton("Short",callback_data='short')
+       markup.add(a)
+       b = types.InlineKeyboardButton("Picture",callback_data='pic')
+       markup.add(b)
+       c = types.InlineKeyboardButton("Gif",callback_data='gif')
+       markup.add(c)
+       d = types.InlineKeyboardButton("Tex",callback_data='tex')
+       markup.add(d)
+       e = types.InlineKeyboardButton("Kickme",callback_data='kickme')
+       markup.add(e)
+       f = types.InlineKeyboardButton("ID",callback_data='id')
+       markup.add(f)
+       g = types.InlineKeyboardButton("Me",callback_data='me')
+       markup.add(g)
+       h = types.InlineKeyboardButton("Food",callback_data='food')
+       markup.add(h)
+       i = types.InlineKeyboardButton("Voice",callback_data='voice')
+       markup.add(i)
+       j = types.InlineKeyboardButton("Webshot",callback_data='webshot')
+       markup.add(j)
+       k = types.InlineKeyboardButton("Mean",callback_data='mean')
+       markup.add(k)
+       l = types.InlineKeyboardButton("Calculator",callback_data='calc')
+       markup.add(l)
+       m = types.InlineKeyboardButton("Feedback",callback_data='feedback')
+       markup.add(m)
+       n = types.InlineKeyboardButton("Bold",callback_data='bold')
+       markup.add(n)
+       o = types.InlineKeyboardButton("Italic",callback_data='italic')
+       markup.add(o)
+       p = types.InlineKeyboardButton("Code",callback_data='code')
+       markup.add(p)
+       q = types.InlineKeyboardButton("Hyperlink",callback_data='hyper')
+       markup.add(q)
+       r = types.InlineKeyboardButton("Echo",callback_data='echo')
+       markup.add(r)
+       s = types.InlineKeyboardButton("Number",callback_data='number')
+       markup.add(s)
+       t = types.InlineKeyboardButton("Sticker",callback_data='sticker')
+       markup.add(t)
+       u = types.InlineKeyboardButton("Photo",callback_data='photo')
+       markup.add(u)
+       v = types.InlineKeyboardButton("Love",callback_data='love')
+       markup.add(v)
+       w = types.InlineKeyboardButton("Info",callback_data='info')
+       markup.add(w)
+       x = types.InlineKeyboardButton("Setlink",callback_data='setlink')
+       markup.add(x)
+       y = types.InlineKeyboardButton("Link",callback_data='link')
+       markup.add(y)
+       z = types.InlineKeyboardButton("Rank",callback_data='rank')
+       markup.add(z)
+       aa = types.InlineKeyboardButton("SetSticker",callback_data='setsticker')
+       markup.add(aa)
+       bb = types.InlineKeyboardButton("KeepCalm",callback_data='keepcalm')
+       markup.add(bb)
+       cc = types.InlineKeyboardButton("SetPhone",callback_data='setphone')
+       markup.add(cc)
+       dd = types.InlineKeyboardButton("MyPhone",callback_data='myphone')
+       markup.add(dd)
+       ee = types.InlineKeyboardButton("Caption",callback_data='cap')
+       markup.add(ee)
+       ff = types.InlineKeyboardButton("Forward",callback_data='fwd')
+       markup.add(ff)
+       gg = types.InlineKeyboardButton("Uploader Panel",callback_data='uploader')
+       markup.add(gg)
+       id = m.from_user.id
+       rediss.sadd('memberspy',id)
+       bot.send_message(cid, "*List Of Commands :*", disable_notification=True, reply_markup=markup, parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
