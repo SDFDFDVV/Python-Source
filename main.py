@@ -788,9 +788,6 @@ def info(m):
           text = bot.get_chat_member(m.chat.id, m.from_user.id).status
           rank = rediss.hget("user:rank","{}".format(id))
           cap = 'First name : {}\nLast Name : {}\nUsername : @{}\nUser ID : {}\nDate : {}\nTime : {}\nGlobalRank : {}\nPost In Group : {}'.format(first,last,user,id,ENdate,ENtime,rank,text)
-        if int(count) == 0 :
-          bot.send_photo(m.chat.id,open('personun.png'),caption='{}'.format(cap))
-        else:
           fileid = profs.photos[0][2].file_id
           bot.send_photo(m.chat.id,fileid,caption='{}'.format(cap))
 
@@ -851,10 +848,7 @@ def clac(m):
         text = m.text.replace("/bc ","")
         rd = rediss.smembers('memberspy')
         for id in rd:
-            try:
                 bot.send_message(id, "{}".format(text), parse_mode="Markdown")
-            except:
-                rediss.srem('memberspy', id)
 
 #################################################################################################################################################################################################
 
