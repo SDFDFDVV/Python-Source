@@ -197,7 +197,8 @@ def callback_inline(call):
 def send_stats(m):
     if m.from_user.id == 142141024:
         usrs = str(rediss.scard('memberspy'))
-        text = '*Users : {}*'.format(usrs)
+        ban = str(rediss.scard('banlist'))
+        text = '*Users : {}\n\nBanlist : {}*'.format(usrs,ban)
         bot.send_message(m.chat.id,text,parse_mode='Markdown')
 
 #################################################################################################################################################################################################
@@ -257,8 +258,6 @@ def create(message):
 
 @bot.message_handler(commands=['tex'])
 def qr(message):
-    banlist = rediss.sismember('banlist', '{}'.format(m.from_user.id))
-    if str(banlist) == 'False':
       try:
         text = message.text.replace("/tex ","")
         urllib.urlretrieve('https://assets.imgix.net/sandbox/sandboxlogo.ai?blur=500&fit=crop&w=1200&h=600&txtclr=black&txt={}&txtalign=middle%2C%20center&txtsize=150&txtline=3'.format(text), 'time.jpg')
@@ -606,7 +605,7 @@ def feedback(m):
           str = m.text
           txt = str.replace('/feedback', '')
           bot.send_message(senderid, "_Thank Your Msg Posted admin_", parse_mode="Markdown")
-          bot.send_message(142141024, "Msg : {}\nID : {}\nName : {}\nUsername : @{}".format(txt,senderid,first,usr))
+          bot.send_message(142141024, "Message : {}\nID : {}\nName : {}\nUsername : @{}".format(txt,senderid,first,usr))
        except:
           bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
