@@ -23,9 +23,9 @@ import requests as req
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-TOKEN = 'Your Token Here'
+TOKEN = '249370837:AAHpfZn-FTiGcd69q5m5ZE-3YoFK_2kczrA'
 bot = telebot.TeleBot(TOKEN)
-sudo = '142141024'
+sudo = '134139736'
 rediss = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
@@ -74,12 +74,10 @@ def welcome(m):
        b = types.InlineKeyboardButton("Help",callback_data='help')
        markup.add(b)
        nn = types.InlineKeyboardButton("Inline Mode", switch_inline_query='')
-       markup.add(nn)
-       oo = types.InlineKeyboardButton("Channel", url='https://telegram.me/CyberCH')
        markup.add(oo)
        id = m.from_user.id
        rediss.sadd('memberspy',id)
-       bot.send_message(cid, "*Hi*\n_Welcome To CyberBot_\n*Please Choose One*", disable_notification=True, reply_markup=markup, parse_mode='Markdown')
+       bot.send_message(cid, "*Hi*\n_Welcome To Fun Bot_\n*Please Choose One*", disable_notification=True, reply_markup=markup, parse_mode='Markdown')
 
 #################################################################################################################################################################################################
 
@@ -87,10 +85,10 @@ def welcome(m):
 def callback_inline(call):
      if call.message:
         if call.data == "help":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Send /help Command!")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Send /help")
      if call.message:
         if call.data == "pouria":
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="CyberBot Created By @This_Is_Pouria And Written In Python")
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Fun Bot Creator : @reza_rph Source By Pouria")
      if call.message:
         if call.data == "short":
             bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Command : /short [URL]\n\nUsage : Shorten Your Link!")
@@ -195,7 +193,7 @@ def callback_inline(call):
 
 @bot.message_handler(commands=['stats'])
 def send_stats(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         usrs = str(rediss.scard('memberspy'))
         ban = str(rediss.scard('banlist'))
         text = '*Users : {}\n\nBanlist : {}*'.format(usrs,ban)
@@ -205,7 +203,7 @@ def send_stats(m):
 
 @bot.message_handler(commands=['ban'])
 def kick(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         ids = m.text.split()[1]
         rediss.sadd('banlist',int(ids))
         bot.send_message(int(ids), '<b>You Are Banned!</b>',parse_mode='HTML')
@@ -215,7 +213,7 @@ def kick(m):
 
 @bot.message_handler(commands=['unban'])
 def send_stats(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         ids = m.text.split()[1]
         rediss.srem('banlist',int(ids))
         bot.send_message(int(ids), '<b>You Are UnBanned!</b>',parse_mode='HTML')
@@ -234,7 +232,7 @@ def gif(m):
        gif = parsed_json['src']
        link = parsed_json['gimpHost']
        urllib.urlretrieve("{}".format(gif), "gif.gif")
-       bot.send_document(m.chat.id, open('gif.gif'), caption="@Cyber_KingDom_Bot")
+       bot.send_document(m.chat.id, open('gif.gif'), caption="@TheFun_Bot")
        os.remove('gif.gif')
 
 #################################################################################################################################################################################################
@@ -273,7 +271,7 @@ def hi(m):
     name = m.new_chat_member.first_name
     title = m.chat.title
     ids = m.new_chat_member.id
-    if id == 142141024:
+    if id == 134139736:
         rediss.sadd('chats',ids)
         bot.send_message(m.chat.id, '*Hi!\nPlease Start Me In Pravite*', parse_mode='Markdown')
     else:
@@ -283,7 +281,7 @@ def hi(m):
 
 @bot.message_handler(commands=['clearban'])
 def kick(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         rediss.delete('banlist')
         bot.send_message(m.chat.id, '<b>Cleaned!</b>',parse_mode='HTML')
 
@@ -298,7 +296,7 @@ def hi(m):
 
 @bot.message_handler(commands=['kick'])
 def kick(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
       if m.reply_to_message:
         text = m.reply_to_message.from_user.id
         bot.kick_chat_member(m.chat.id, text)
@@ -352,7 +350,7 @@ def answer(m):
 
 @bot.message_handler(commands=['leave'])
 def leavehandler(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         bot.leave_chat(m.chat.id)
 
 #################################################################################################################################################################################################
@@ -486,7 +484,7 @@ def query_text(query):
     dollar = types.InlineQueryResultArticle('6', 'Dollar', types.InputTextMessageContent("قیمت ارز رایج کشور در تاریخ : ``` {}``` \n به شرح زیر است : \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  \n\n `{}` به قیمت *{}* تومن  ".format(date,dollar,dollar1,dollar_rasmi,dollar_rasmi1,euro,euro1,gold_per_geram,gold_per_geram1,coin_new,coin_new1,pond,pond1,derham,derham1,coin_old,coin_old1), parse_mode='Markdown'), thumb_url=time_tmp)    
 
     hi_tmp = 'https://d85wutc1n854v.cloudfront.net/live/products/600x375/WB0PGGM81.png?v=1.0'
-    hi = types.InlineQueryResultArticle('7', 'Music', types.InputTextMessageContent('*@Cyber_KingDom_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
+    hi = types.InlineQueryResultArticle('7', 'Music', types.InputTextMessageContent('*@TheFun_Bot music [Music name]*', parse_mode='Markdown'), thumb_url=hi_tmp)
 
     url1 = urllib2.Request('http://api.khabarfarsi.net/api/news/latest/1?tid=*&output=json')
     openerc = urllib2.build_opener()
@@ -509,7 +507,7 @@ def query_text(query):
     news = types.InlineQueryResultArticle('8', 'News', types.InputTextMessageContent('1. :'+title+'\n\n2. :'+title2+'\n\n3. :'+title3), reply_markup=markup, thumb_url=news_tmp)
 
     mark_tmp = 'https://storage.pwrtelegram.xyz/Cyber_KingDom_Bot/photo/file_555.jpg'
-    markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@Cyber_KingDom_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
+    markdown = types.InlineQueryResultArticle('9', 'Markdown', types.InputTextMessageContent('*@TheFun_Bot markdown [Your Text]*', parse_mode='Markdown'), thumb_url=mark_tmp)
 
     bot.answer_inline_query(query.id, [info, dollar, randowm, joke, since, timesend, news, hi, markdown], cache_time=5, switch_pm_text='Start bot')
 
@@ -605,7 +603,7 @@ def feedback(m):
           str = m.text
           txt = str.replace('/feedback', '')
           bot.send_message(senderid, "_Thank Your Msg Posted admin_", parse_mode="Markdown")
-          bot.send_message(142141024, "Message : {}\nID : {}\nName : {}\nUsername : @{}".format(txt,senderid,first,usr))
+          bot.send_message(134139736, "Message : {}\nID : {}\nName : {}\nUsername : @{}".format(txt,senderid,first,usr))
        except:
           bot.send_message(m.chat.id, '*Error!*', parse_mode="Markdown")
 
@@ -613,7 +611,7 @@ def feedback(m):
 
 @bot.message_handler(commands=['uptime'])
 def uptime(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         cc = os.popen("uptime").read()
         bot.send_message(m.chat.id, '{}'.format(cc))
 
@@ -703,7 +701,7 @@ def send_message(m):
     groupname = m.chat.title
     groupid = m.chat.id
     rediss.sadd('group','{}'.format(m.chat.id))
-    bot.send_message(142141024, "New_chat \n\n name : {} ID : {}".format(groupname,groupid), parse_mode="Markdown")
+    bot.send_message(134139736, "New_chat \n\n name : {} ID : {}".format(groupname,groupid), parse_mode="Markdown")
     bot.send_message(m.chat.id, "Hi all")
 
 #################################################################################################################################################################################################
@@ -819,7 +817,7 @@ def clac(m):
 
 @bot.message_handler(commands=['setrank'])
 def clac(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         text = m.text.split()[1]
         tezt = m.text.split()[2]
         rediss.hset("user:rank","{}".format(text),"{}".format(tezt))
@@ -843,7 +841,7 @@ def clac(m):
 
 @bot.message_handler(commands=['bc'])
 def clac(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         text = m.text.replace("/bc ","")
         rd = rediss.smembers('memberspy')
         for id in rd:
@@ -853,7 +851,7 @@ def clac(m):
 
 @bot.message_handler(commands=['delrank'])
 def kick(m):
-    if m.from_user.id == 142141024:
+    if m.from_user.id == 134139736:
         id = m.text.replace("/delrank ","")
         rank = rediss.hdel("user:rank","{}".format(id))
         bot.send_message(m.chat.id, '<code>Cleaned!</code>',parse_mode='HTML')
@@ -1017,9 +1015,8 @@ def feed_back(message):
 	
 def process_pm(message):
 	text = message.text
-	bot.forward_message(142141024, message.from_user.id, message_id=message.message_id)
+	bot.forward_message(134139736, message.from_user.id, message_id=message.message_id)
 
 #################################################################################################################################################################################################
 bot.polling(True)
 #end
-
